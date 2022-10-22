@@ -1,4 +1,4 @@
-package com.jorgesanaguaray.videogamesinformation.data.remote
+package com.jorgesanaguaray.videogamesinformation.data.remote.model
 
 /**
  * Created by Jorge Sanaguaray

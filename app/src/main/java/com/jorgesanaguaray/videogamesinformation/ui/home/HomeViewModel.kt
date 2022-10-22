@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jorgesanaguaray.videogamesinformation.domain.GameItem
-import com.jorgesanaguaray.videogamesinformation.domain.GetRandomGameFromApiInteractor
-import com.jorgesanaguaray.videogamesinformation.domain.GetRandomGameFromDatabaseInteractor
+import com.jorgesanaguaray.videogamesinformation.domain.*
+import com.jorgesanaguaray.videogamesinformation.domain.item.GameItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,13 +13,18 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
 
-    private val getRandomGameFromApiInteractor: GetRandomGameFromApiInteractor,
-    private val getRandomGameFromDatabaseInteractor: GetRandomGameFromDatabaseInteractor
+    private val gameFromService: GameFromService,
+    private val gameFromDao: GameFromDao,
+    private val categoriesFromService: CategoriesFromService,
+    private val categoriesFromDao: CategoriesFromDao
 
     ) : ViewModel() {
 
     private val _game = MutableLiveData<GameItem>()
     val game: LiveData<GameItem> get() = _game
+
+    private val _categories = MutableLiveData<List<GameItem>>()
+    val categories: LiveData<List<GameItem>> get() = _categories
 
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> get() = _message
@@ -31,10 +35,11 @@ class HomeViewModel @Inject constructor(
     private val _textViewVisibility = MutableLiveData<Boolean>()
     val textViewVisibility: LiveData<Boolean> get() = _textViewVisibility
 
-    private val _scrollViewVisibility = MutableLiveData<Boolean>()
-    val scrollViewVisibility: LiveData<Boolean> get() = _scrollViewVisibility
+    private val _nestedScrollViewVisibility = MutableLiveData<Boolean>()
+    val nestedScrollViewVisibility: LiveData<Boolean> get() = _nestedScrollViewVisibility
 
-    fun getRandomGameFromApi() {
+
+    fun getGameFromService() {
 
         showProgressBar()
 
@@ -42,13 +47,13 @@ class HomeViewModel @Inject constructor(
 
             try {
 
-                val game = getRandomGameFromApiInteractor()
+                val game = gameFromService()
                 _game.value = game
-                showScrollView()
+                showNestedScrollView()
 
             } catch (e: Exception) { // No internet connection.
 
-                getRandomGameFromDatabase()
+                getGameFromDao()
 
             }
 
@@ -56,19 +61,19 @@ class HomeViewModel @Inject constructor(
 
     }
 
-    private fun getRandomGameFromDatabase() {
+    private fun getGameFromDao() {
 
         viewModelScope.launch {
 
             try {
 
-                val game = getRandomGameFromDatabaseInteractor()
+                val game = gameFromDao()
                 _game.value = game
-                showScrollView()
+                showNestedScrollView()
 
-            } catch (e: Exception) { // The database returns an empty list.
+            } catch (e: Exception) { // The database is empty
 
-                _message.value = e.message
+                _message.value = " Check your internet connection"
                 showTextView()
 
             }
@@ -77,11 +82,47 @@ class HomeViewModel @Inject constructor(
 
     }
 
+
+    fun getCategoriesFromService() {
+
+        viewModelScope.launch {
+
+            try {
+
+                val categories = categoriesFromService()
+                _categories.value = categories
+
+            } catch (e: Exception) { // No internet connection.
+
+                getCategoriesFromDao()
+
+            }
+
+        }
+
+    }
+
+    private fun getCategoriesFromDao() {
+
+        viewModelScope.launch {
+
+            try {
+
+                val categories = categoriesFromDao()
+                _categories.value = categories
+
+            } catch (_: Exception) {} // The database is empty.
+
+        }
+
+    }
+
+
     private fun showProgressBar() {
 
         _progressBarVisibility.value = true
         _textViewVisibility.value = false
-        _scrollViewVisibility.value = false
+        _nestedScrollViewVisibility.value = false
 
     }
 
@@ -89,16 +130,17 @@ class HomeViewModel @Inject constructor(
 
         _textViewVisibility.value = true
         _progressBarVisibility.value = false
-        _scrollViewVisibility.value = false
+        _nestedScrollViewVisibility.value = false
 
     }
 
-    private fun showScrollView() {
+    private fun showNestedScrollView() {
 
-        _scrollViewVisibility.value = true
+        _nestedScrollViewVisibility.value = true
         _progressBarVisibility.value = false
         _textViewVisibility.value = false
 
     }
+
 
 }

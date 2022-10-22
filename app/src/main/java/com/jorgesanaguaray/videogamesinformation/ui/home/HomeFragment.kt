@@ -18,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var categoryAdapter: CategoryAdapter
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -25,6 +26,7 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         homeViewModel = ViewModelProvider(this).get()
+        categoryAdapter = CategoryAdapter()
 
     }
 
@@ -55,6 +57,20 @@ class HomeFragment : Fragment() {
 
         }
 
+        homeViewModel.categories.observe(viewLifecycleOwner) {
+
+            categoryAdapter.setGames(it)
+            binding.mRecyclerView.adapter = categoryAdapter
+            categoryAdapter.setOnButtonClick(object : CategoryAdapter.OnButtonClick {
+                override fun onClick(gameUrl: String) {
+                    val uri = Uri.parse(gameUrl)
+                    val intent = Intent(Intent.ACTION_VIEW, uri)
+                    startActivity(intent)
+                }
+            })
+
+        }
+
         homeViewModel.message.observe(viewLifecycleOwner) {
             binding.mTextViewMessage.text = it
         }
@@ -67,11 +83,12 @@ class HomeFragment : Fragment() {
             binding.mTextViewMessage.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        homeViewModel.scrollViewVisibility.observe(viewLifecycleOwner) {
-            binding.mScrollView.visibility = if (it) View.VISIBLE else View.GONE
+        homeViewModel.nestedScrollViewVisibility.observe(viewLifecycleOwner) {
+            binding.mNestedScrollView.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        homeViewModel.getRandomGameFromApi()
+        homeViewModel.getGameFromService()
+        homeViewModel.getCategoriesFromService()
 
     }
 

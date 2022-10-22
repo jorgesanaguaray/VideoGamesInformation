@@ -1,8 +1,8 @@
-package com.jorgesanaguaray.videogamesinformation.data.local
+package com.jorgesanaguaray.videogamesinformation.data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.jorgesanaguaray.videogamesinformation.domain.GameItem
+import com.jorgesanaguaray.videogamesinformation.domain.item.GameItem
 
 /**
  * Created by Jorge Sanaguaray
@@ -26,4 +26,4 @@ data class GameEntity(
 
 )
 
-fun GameItem.toDatabase() = GameEntity(id = id, title = title, thumbnail = thumbnail, short_description = short_description, game_url = game_url, genre = genre, platform = platform, publisher = publisher, developer = developer, release_date = release_date, freetogame_profile_url = freetogame_profile_url)
+fun GameItem.toGameEntity() = GameEntity(id = id, title = title, thumbnail = thumbnail, short_description = short_description, game_url = game_url, genre = genre, platform = platform, publisher = publisher, developer = developer, release_date = release_date, freetogame_profile_url = freetogame_profile_url)

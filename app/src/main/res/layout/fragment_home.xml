@@ -7,75 +7,91 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <ScrollView
-        android:id="@+id/mScrollView"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/mNestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="5dp">
 
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_margin="5dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp">
 
-                <TextView
-                    android:id="@+id/mTitle"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                    tools:text="Title"/>
+                    android:orientation="vertical">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/mTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        tools:text="Title"/>
 
-                    <ImageView
-                        android:id="@+id/mImage"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_image"
-                        app:layout_constraintDimensionRatio="H,16:9"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"/>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <ImageView
+                            android:id="@+id/mImage"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/ic_image"
+                            app:layout_constraintDimensionRatio="H,16:9"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"/>
 
-                <TextView
-                    android:id="@+id/mShortDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    tools:text="Short description"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <Button
-                    android:id="@+id/mButtonGoToTheGamePage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:text="@string/go_to_the_game_page"/>
+                    <TextView
+                        android:id="@+id/mShortDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        tools:text="Short description"/>
 
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/mButtonGoToTheGamePage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:text="@string/go_to_the_game_page"/>
 
-        </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
 
-    </ScrollView>
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:scrollbars="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_category"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <TextView
         android:id="@+id/mTextViewMessage"

@@ -4,6 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.CategoryEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.GameEntity
 
 /**
  * Created by Jorge Sanaguaray
@@ -12,13 +14,25 @@ import androidx.room.Query
 @Dao
 interface GameDao {
 
+
+    @Query("SELECT * FROM game_table")
+    suspend fun getGame(): GameEntity
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertGames(games: List<GameEntity>)
+    suspend fun insertGame(game: GameEntity)
 
     @Query("DELETE FROM game_table")
-    suspend fun deleteGames()
+    suspend fun deleteGame()
 
-    @Query("SELECT * FROM game_table ORDER BY title DESC")
-    suspend fun getGames(): List<GameEntity>
+
+    @Query("SELECT * FROM category_table")
+    suspend fun getCategories(): List<CategoryEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCategories(categories: List<CategoryEntity>)
+
+    @Query("DELETE FROM category_table")
+    suspend fun deleteCategories()
+
 
 }
