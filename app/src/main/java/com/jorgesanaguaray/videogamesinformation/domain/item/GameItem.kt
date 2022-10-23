@@ -1,8 +1,9 @@
 package com.jorgesanaguaray.videogamesinformation.domain.item
 
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.CategoryEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.CategoriesEntity
 import com.jorgesanaguaray.videogamesinformation.data.local.entities.GameEntity
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.PlatformEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.GamesEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.PlatformsEntity
 import com.jorgesanaguaray.videogamesinformation.data.remote.model.GameModel
 
 /**
@@ -27,5 +28,6 @@ data class GameItem(
 
 fun GameModel.toGameItem() = GameItem(id = id, title = title, thumbnail = thumbnail, short_description = short_description, game_url = game_url, genre = genre, platform = platform, publisher = publisher, developer = developer, release_date = release_date, freetogame_profile_url = freetogame_profile_url)
 fun GameEntity.toGameItem() = GameItem(id = id, title = title, thumbnail = thumbnail, short_description = short_description, game_url = game_url, genre = genre, platform = platform, publisher = publisher, developer = developer, release_date = release_date, freetogame_profile_url = freetogame_profile_url)
-fun CategoryEntity.toGameItem() = GameItem(id = id, title = title, thumbnail = thumbnail, short_description = short_description, game_url = game_url, genre = genre, platform = platform, publisher = publisher, developer = developer, release_date = release_date, freetogame_profile_url = freetogame_profile_url)
-fun PlatformEntity.toGameItem() = GameItem(id = id, title = title, thumbnail = thumbnail, short_description = short_description, game_url = game_url, genre = genre, platform = platform, publisher = publisher, developer = developer, release_date = release_date, freetogame_profile_url = freetogame_profile_url)
+fun CategoriesEntity.toGameItem() = GameItem(id = id, title = title, thumbnail = thumbnail, short_description = short_description, game_url = game_url, genre = genre, platform = platform, publisher = publisher, developer = developer, release_date = release_date, freetogame_profile_url = freetogame_profile_url)
+fun PlatformsEntity.toGameItem() = GameItem(id = id, title = title, thumbnail = thumbnail, short_description = short_description, game_url = game_url, genre = genre, platform = platform, publisher = publisher, developer = developer, release_date = release_date, freetogame_profile_url = freetogame_profile_url)
+fun GamesEntity.toGameItem() = GameItem(id = id, title = title, thumbnail = thumbnail, short_description = short_description, game_url = game_url, genre = genre, platform = platform, publisher = publisher, developer = developer, release_date = release_date, freetogame_profile_url = freetogame_profile_url)

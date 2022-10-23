@@ -22,7 +22,9 @@ class HomeViewModel @Inject constructor(
     private val categoriesFromService: CategoriesFromService,
     private val categoriesFromDao: CategoriesFromDao,
     private val platformsFromService: PlatformsFromService,
-    private val platformsFromDao: PlatformsFromDao
+    private val platformsFromDao: PlatformsFromDao,
+    private val gamesFromService: GamesFromService,
+    private val gamesFromDao: GamesFromDao
 
     ) : ViewModel() {
 
@@ -34,6 +36,9 @@ class HomeViewModel @Inject constructor(
 
     private val _platforms = MutableLiveData<List<GameItem>>()
     val platforms: LiveData<List<GameItem>> get() = _platforms
+
+    private val _games = MutableLiveData<List<GameItem>>()
+    val games: LiveData<List<GameItem>> get() = _games
 
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> get() = _message
@@ -154,6 +159,41 @@ class HomeViewModel @Inject constructor(
 
                 val platforms = platformsFromDao()
                 _platforms.value = platforms
+
+            } catch (_: Exception) {} // The database is empty.
+
+        }
+
+    }
+
+
+    fun getGamesFromService() {
+
+        viewModelScope.launch {
+
+            try {
+
+                val games = gamesFromService()
+                _games.value = games
+
+            } catch (e: Exception) { // No internet connection.
+
+                getGamesFromDao()
+
+            }
+
+        }
+
+    }
+
+    private fun getGamesFromDao() {
+
+        viewModelScope.launch {
+
+            try {
+
+                val games = gamesFromDao()
+                _games.value = games
 
             } catch (_: Exception) {} // The database is empty.
 

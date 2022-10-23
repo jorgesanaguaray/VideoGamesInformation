@@ -24,6 +24,7 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var homeAdapter1: HomeAdapter
     private lateinit var homeAdapter2: HomeAdapter
+    private lateinit var gameAdapter: GameAdapter
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -33,6 +34,7 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProvider(this).get()
         homeAdapter1 = HomeAdapter()
         homeAdapter2 = HomeAdapter()
+        gameAdapter = GameAdapter()
 
     }
 
@@ -91,6 +93,20 @@ class HomeFragment : Fragment() {
 
         }
 
+        homeViewModel.games.observe(viewLifecycleOwner) {
+
+            gameAdapter.setGames(it)
+            binding.mRecyclerViewGames.adapter = gameAdapter
+            gameAdapter.setOnButtonClick(object : GameAdapter.OnButtonClick {
+                override fun onClick(gameUrl: String) {
+                    val uri = Uri.parse(gameUrl)
+                    val intent = Intent(Intent.ACTION_VIEW, uri)
+                    startActivity(intent)
+                }
+            })
+
+        }
+
         homeViewModel.message.observe(viewLifecycleOwner) {
             binding.mTextViewMessage.text = it
         }
@@ -110,6 +126,7 @@ class HomeFragment : Fragment() {
         homeViewModel.getGameFromService()
         homeViewModel.getCategoriesFromService()
         homeViewModel.getPlatformsFromService()
+        homeViewModel.getGamesFromService()
 
     }
 

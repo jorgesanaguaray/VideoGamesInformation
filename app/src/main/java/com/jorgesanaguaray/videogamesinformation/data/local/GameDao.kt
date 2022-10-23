@@ -4,9 +4,10 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.CategoryEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.CategoriesEntity
 import com.jorgesanaguaray.videogamesinformation.data.local.entities.GameEntity
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.PlatformEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.GamesEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.PlatformsEntity
 
 /**
  * Created by Jorge Sanaguaray
@@ -26,24 +27,34 @@ interface GameDao {
     suspend fun deleteGame()
 
 
-    @Query("SELECT * FROM category_table")
-    suspend fun getCategories(): List<CategoryEntity>
+    @Query("SELECT * FROM categories_table")
+    suspend fun getCategories(): List<CategoriesEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCategories(categories: List<CategoryEntity>)
+    suspend fun insertCategories(categories: List<CategoriesEntity>)
 
-    @Query("DELETE FROM category_table")
+    @Query("DELETE FROM categories_table")
     suspend fun deleteCategories()
 
 
-    @Query("SELECT * FROM platform_table")
-    suspend fun getPlatforms(): List<PlatformEntity>
+    @Query("SELECT * FROM platforms_table")
+    suspend fun getPlatforms(): List<PlatformsEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPlatforms(platforms: List<PlatformEntity>)
+    suspend fun insertPlatforms(platforms: List<PlatformsEntity>)
 
-    @Query("DELETE FROM platform_table")
+    @Query("DELETE FROM platforms_table")
     suspend fun deletePlatforms()
+
+
+    @Query("SELECT * FROM games_table")
+    suspend fun getGames(): List<GamesEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertGames(games: List<GamesEntity>)
+
+    @Query("DELETE FROM games_table")
+    suspend fun deleteGames()
 
 
 }

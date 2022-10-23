@@ -1,9 +1,10 @@
 package com.jorgesanaguaray.videogamesinformation.repo
 
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.CategoryEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.CategoriesEntity
 import com.jorgesanaguaray.videogamesinformation.data.local.GameDao
 import com.jorgesanaguaray.videogamesinformation.data.local.entities.GameEntity
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.PlatformEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.GamesEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.PlatformsEntity
 import com.jorgesanaguaray.videogamesinformation.data.remote.GameService
 import com.jorgesanaguaray.videogamesinformation.domain.item.GameItem
 import com.jorgesanaguaray.videogamesinformation.domain.item.toGameItem
@@ -64,7 +65,7 @@ class GameRepository @Inject constructor(
 
     }
 
-    suspend fun insertCategories(categories: List<CategoryEntity>) {
+    suspend fun insertCategories(categories: List<CategoriesEntity>) {
         gameDao.insertCategories(categories)
     }
 
@@ -91,12 +92,30 @@ class GameRepository @Inject constructor(
 
     }
 
-    suspend fun insertPlatforms(platforms: List<PlatformEntity>) {
+    suspend fun insertPlatforms(platforms: List<PlatformsEntity>) {
         gameDao.insertPlatforms(platforms)
     }
 
     suspend fun deletePlatforms() {
         gameDao.deletePlatforms()
+    }
+
+
+    suspend fun getGamesFromDao(): List<GameItem> {
+
+        val games = gameDao.getGames()
+        return games.map {
+            it.toGameItem()
+        }
+
+    }
+
+    suspend fun insertGames(games: List<GamesEntity>) {
+        gameDao.insertGames(games)
+    }
+
+    suspend fun deleteGames() {
+        gameDao.deleteGames()
     }
 
 

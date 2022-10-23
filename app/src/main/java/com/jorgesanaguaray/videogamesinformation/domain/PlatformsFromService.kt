@@ -1,6 +1,6 @@
 package com.jorgesanaguaray.videogamesinformation.domain
 
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.toPlatformEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.toPlatformsEntity
 import com.jorgesanaguaray.videogamesinformation.domain.item.GameItem
 import com.jorgesanaguaray.videogamesinformation.repo.GameRepository
 import javax.inject.Inject
@@ -17,13 +17,14 @@ class PlatformsFromService @Inject constructor(private val gameRepository: GameR
     suspend operator fun invoke(): List<GameItem> {
 
         val platforms = gameRepository.getPlatformsFromService(platform)
+        val platformsNumber = platforms.shuffled().take(5)
 
         gameRepository.deletePlatforms()
-        gameRepository.insertPlatforms(platforms.map {
-            it.toPlatformEntity()
+        gameRepository.insertPlatforms(platformsNumber.map {
+            it.toPlatformsEntity()
         })
 
-        return platforms.shuffled()
+        return platformsNumber
 
     }
 

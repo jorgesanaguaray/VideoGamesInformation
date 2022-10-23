@@ -1,6 +1,6 @@
 package com.jorgesanaguaray.videogamesinformation.domain
 
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.toCategoryEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.toCategoriesEntity
 import com.jorgesanaguaray.videogamesinformation.domain.item.GameItem
 import com.jorgesanaguaray.videogamesinformation.repo.GameRepository
 import javax.inject.Inject
@@ -17,13 +17,14 @@ class CategoriesFromService @Inject constructor(private val gameRepository: Game
     suspend operator fun invoke(): List<GameItem> {
 
         val categories = gameRepository.getCategoriesFromService(category)
+        val categoriesNumber = categories.shuffled().take(5)
 
         gameRepository.deleteCategories()
-        gameRepository.insertCategories(categories.map {
-            it.toCategoryEntity()
+        gameRepository.insertCategories(categoriesNumber.map {
+            it.toCategoriesEntity()
         })
 
-        return categories.shuffled()
+        return categoriesNumber
 
     }
 
