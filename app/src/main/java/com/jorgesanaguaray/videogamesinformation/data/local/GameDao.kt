@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.jorgesanaguaray.videogamesinformation.data.local.entities.CategoryEntity
 import com.jorgesanaguaray.videogamesinformation.data.local.entities.GameEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.PlatformEntity
 
 /**
  * Created by Jorge Sanaguaray
@@ -33,6 +34,16 @@ interface GameDao {
 
     @Query("DELETE FROM category_table")
     suspend fun deleteCategories()
+
+
+    @Query("SELECT * FROM platform_table")
+    suspend fun getPlatforms(): List<PlatformEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPlatforms(platforms: List<PlatformEntity>)
+
+    @Query("DELETE FROM platform_table")
+    suspend fun deletePlatforms()
 
 
 }

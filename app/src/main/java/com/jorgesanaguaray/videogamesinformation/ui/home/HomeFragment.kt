@@ -14,11 +14,16 @@ import com.jorgesanaguaray.videogamesinformation.R
 import com.jorgesanaguaray.videogamesinformation.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Created by Jorge Sanaguaray
+ */
+
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var homeAdapter1: HomeAdapter
+    private lateinit var homeAdapter2: HomeAdapter
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -26,7 +31,8 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         homeViewModel = ViewModelProvider(this).get()
-        categoryAdapter = CategoryAdapter()
+        homeAdapter1 = HomeAdapter()
+        homeAdapter2 = HomeAdapter()
 
     }
 
@@ -59,9 +65,23 @@ class HomeFragment : Fragment() {
 
         homeViewModel.categories.observe(viewLifecycleOwner) {
 
-            categoryAdapter.setGames(it)
-            binding.mRecyclerView.adapter = categoryAdapter
-            categoryAdapter.setOnButtonClick(object : CategoryAdapter.OnButtonClick {
+            homeAdapter1.setGames(it)
+            binding.mRecyclerViewCategory.adapter = homeAdapter1
+            homeAdapter1.setOnButtonClick(object : HomeAdapter.OnButtonClick {
+                override fun onClick(gameUrl: String) {
+                    val uri = Uri.parse(gameUrl)
+                    val intent = Intent(Intent.ACTION_VIEW, uri)
+                    startActivity(intent)
+                }
+            })
+
+        }
+
+        homeViewModel.platforms.observe(viewLifecycleOwner) {
+
+            homeAdapter2.setGames(it)
+            binding.mRecyclerViewPlatform.adapter = homeAdapter2
+            homeAdapter2.setOnButtonClick(object : HomeAdapter.OnButtonClick {
                 override fun onClick(gameUrl: String) {
                     val uri = Uri.parse(gameUrl)
                     val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -89,6 +109,7 @@ class HomeFragment : Fragment() {
 
         homeViewModel.getGameFromService()
         homeViewModel.getCategoriesFromService()
+        homeViewModel.getPlatformsFromService()
 
     }
 

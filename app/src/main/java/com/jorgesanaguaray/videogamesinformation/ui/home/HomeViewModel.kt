@@ -10,13 +10,19 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * Created by Jorge Sanaguaray
+ */
+
 @HiltViewModel
 class HomeViewModel @Inject constructor(
 
     private val gameFromService: GameFromService,
     private val gameFromDao: GameFromDao,
     private val categoriesFromService: CategoriesFromService,
-    private val categoriesFromDao: CategoriesFromDao
+    private val categoriesFromDao: CategoriesFromDao,
+    private val platformsFromService: PlatformsFromService,
+    private val platformsFromDao: PlatformsFromDao
 
     ) : ViewModel() {
 
@@ -25,6 +31,9 @@ class HomeViewModel @Inject constructor(
 
     private val _categories = MutableLiveData<List<GameItem>>()
     val categories: LiveData<List<GameItem>> get() = _categories
+
+    private val _platforms = MutableLiveData<List<GameItem>>()
+    val platforms: LiveData<List<GameItem>> get() = _platforms
 
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> get() = _message
@@ -110,6 +119,41 @@ class HomeViewModel @Inject constructor(
 
                 val categories = categoriesFromDao()
                 _categories.value = categories
+
+            } catch (_: Exception) {} // The database is empty.
+
+        }
+
+    }
+
+
+    fun getPlatformsFromService() {
+
+        viewModelScope.launch {
+
+            try {
+
+                val platforms = platformsFromService()
+                _platforms.value = platforms
+
+            } catch (e: Exception) { // No internet connection.
+
+                getPlatformsFromDao()
+
+            }
+
+        }
+
+    }
+
+    private fun getPlatformsFromDao() {
+
+        viewModelScope.launch {
+
+            try {
+
+                val platforms = platformsFromDao()
+                _platforms.value = platforms
 
             } catch (_: Exception) {} // The database is empty.
 

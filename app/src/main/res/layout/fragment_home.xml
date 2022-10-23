@@ -81,13 +81,22 @@
             </com.google.android.material.card.MaterialCardView>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mRecyclerView"
+                android:id="@+id/mRecyclerViewCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:scrollbars="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_category"/>
+                tools:listitem="@layout/item_home"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mRecyclerViewPlatform"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:scrollbars="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_home"/>
 
         </LinearLayout>
 

@@ -5,20 +5,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.jorgesanaguaray.videogamesinformation.R
-import com.jorgesanaguaray.videogamesinformation.databinding.ItemCategoryBinding
+import com.jorgesanaguaray.videogamesinformation.databinding.ItemHomeBinding
 import com.jorgesanaguaray.videogamesinformation.domain.item.GameItem
 
 /**
  * Created by Jorge Sanaguaray
  */
 
-class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.MyCategoryViewHolder>() {
+class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyCategoryViewHolder>() {
 
     private var games: List<GameItem> = ArrayList()
     private lateinit var onButtonClick: OnButtonClick
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyCategoryViewHolder {
-        return MyCategoryViewHolder(ItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return MyCategoryViewHolder(ItemHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: MyCategoryViewHolder, position: Int) {
@@ -48,7 +48,7 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.MyCategoryViewHolde
         return games.size
     }
 
-    class MyCategoryViewHolder(val binding: ItemCategoryBinding): RecyclerView.ViewHolder(binding.root)
+    class MyCategoryViewHolder(val binding: ItemHomeBinding): RecyclerView.ViewHolder(binding.root)
 
     fun setGames(games: List<GameItem>) {
         this.games = games
@@ -62,5 +62,6 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.MyCategoryViewHolde
     fun setOnButtonClick(onButtonClick: OnButtonClick) {
         this.onButtonClick = onButtonClick
     }
+
 
 }

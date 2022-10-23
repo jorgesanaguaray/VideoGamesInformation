@@ -29,4 +29,13 @@ class GameService @Inject constructor(private val gameApi: GameApi) {
 
     }
 
+    suspend fun getPlatforms(platform: String): List<GameModel> {
+
+        return withContext(Dispatchers.IO) {
+            val platforms = gameApi.getPlatforms(platform)
+            platforms.body() ?: emptyList()
+        }
+
+    }
+
 }

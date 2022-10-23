@@ -3,6 +3,7 @@ package com.jorgesanaguaray.videogamesinformation.repo
 import com.jorgesanaguaray.videogamesinformation.data.local.entities.CategoryEntity
 import com.jorgesanaguaray.videogamesinformation.data.local.GameDao
 import com.jorgesanaguaray.videogamesinformation.data.local.entities.GameEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.PlatformEntity
 import com.jorgesanaguaray.videogamesinformation.data.remote.GameService
 import com.jorgesanaguaray.videogamesinformation.domain.item.GameItem
 import com.jorgesanaguaray.videogamesinformation.domain.item.toGameItem
@@ -69,6 +70,33 @@ class GameRepository @Inject constructor(
 
     suspend fun deleteCategories() {
         gameDao.deleteCategories()
+    }
+
+
+    suspend fun getPlatformsFromService(platform: String): List<GameItem> {
+
+        val platforms = gameService.getPlatforms(platform)
+        return platforms.map {
+            it.toGameItem()
+        }
+
+    }
+
+    suspend fun getPlatformsFromDao(): List<GameItem> {
+
+        val platforms = gameDao.getPlatforms()
+        return platforms.map {
+            it.toGameItem()
+        }
+
+    }
+
+    suspend fun insertPlatforms(platforms: List<PlatformEntity>) {
+        gameDao.insertPlatforms(platforms)
+    }
+
+    suspend fun deletePlatforms() {
+        gameDao.deletePlatforms()
     }
 
 
