@@ -61,7 +61,7 @@ class HomeFragment : Fragment() {
 
             }
 
-            goToTheGamePage(it.game_url)
+            buttonGoToTheGamePage(it.game_url)
 
         }
 
@@ -71,9 +71,7 @@ class HomeFragment : Fragment() {
             binding.mRecyclerViewCategory.adapter = homeAdapter1
             homeAdapter1.setOnButtonClick(object : HomeAdapter.OnButtonClick {
                 override fun onClick(gameUrl: String) {
-                    val uri = Uri.parse(gameUrl)
-                    val intent = Intent(Intent.ACTION_VIEW, uri)
-                    startActivity(intent)
+                    adapterGoToTheGamePage(gameUrl)
                 }
             })
 
@@ -85,9 +83,7 @@ class HomeFragment : Fragment() {
             binding.mRecyclerViewPlatform.adapter = homeAdapter2
             homeAdapter2.setOnButtonClick(object : HomeAdapter.OnButtonClick {
                 override fun onClick(gameUrl: String) {
-                    val uri = Uri.parse(gameUrl)
-                    val intent = Intent(Intent.ACTION_VIEW, uri)
-                    startActivity(intent)
+                    adapterGoToTheGamePage(gameUrl)
                 }
             })
 
@@ -99,9 +95,7 @@ class HomeFragment : Fragment() {
             binding.mRecyclerViewGames.adapter = gameAdapter
             gameAdapter.setOnButtonClick(object : GameAdapter.OnButtonClick {
                 override fun onClick(gameUrl: String) {
-                    val uri = Uri.parse(gameUrl)
-                    val intent = Intent(Intent.ACTION_VIEW, uri)
-                    startActivity(intent)
+                    adapterGoToTheGamePage(gameUrl)
                 }
             })
 
@@ -123,10 +117,11 @@ class HomeFragment : Fragment() {
             binding.mNestedScrollView.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        homeViewModel.getGameFromService()
-        homeViewModel.getCategoriesFromService()
-        homeViewModel.getPlatformsFromService()
-        homeViewModel.getGamesFromService()
+        binding.mSwipeRefreshLayout.setOnRefreshListener {
+            getGames()
+        }
+
+        getGames()
 
     }
 
@@ -135,7 +130,7 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    private fun goToTheGamePage(gameUrl: String) {
+    private fun buttonGoToTheGamePage(gameUrl: String) {
 
         binding.mButtonGoToTheGamePage.setOnClickListener {
 
@@ -144,6 +139,24 @@ class HomeFragment : Fragment() {
             startActivity(intent)
 
         }
+
+    }
+
+    private fun adapterGoToTheGamePage(gameUrl: String) {
+
+        val uri = Uri.parse(gameUrl)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
+
+    }
+
+    private fun getGames() {
+
+        homeViewModel.getGameFromService()
+        homeViewModel.getCategoriesFromService()
+        homeViewModel.getPlatformsFromService()
+        homeViewModel.getGamesFromService()
+        binding.mSwipeRefreshLayout.isRefreshing = false
 
     }
 

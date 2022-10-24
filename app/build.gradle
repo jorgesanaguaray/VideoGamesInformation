@@ -79,6 +79,9 @@ dependencies {
     // Coil
     implementation("io.coil-kt:coil:1.4.0")
 
+    // SwipeRefreshLayout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
     // Room
     implementation "androidx.room:room-ktx:2.4.3"
     kapt "androidx.room:room-compiler:2.4.3"
