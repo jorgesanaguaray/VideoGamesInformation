@@ -16,20 +16,19 @@
             android:id="@+id/mNestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:padding="5dp">
+            android:scrollbars="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="10dp">
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="5dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -44,7 +43,8 @@
                             android:padding="10dp"
                             android:maxLines="1"
                             android:ellipsize="end"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textColor="?android:attr/colorPrimary"
                             tools:text="Title"/>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -70,6 +70,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
+                            android:maxLines="2"
+                            android:ellipsize="end"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                             tools:text="Short description"/>
 
@@ -80,7 +82,8 @@
                             android:layout_marginHorizontal="10dp"
                             android:layout_marginBottom="10dp"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                            android:text="@string/go_to_the_game_page"/>
+                            android:text="@string/go_to_the_game_page"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
                     </LinearLayout>
 

@@ -33,7 +33,7 @@ class GameAdapter : RecyclerView.Adapter<GameAdapter.MyGameViewHolder>() {
                 error(R.drawable.ic_image)
                 crossfade(true)
                 crossfade(400)
-                transformations(RoundedCornersTransformation(10f))
+                transformations(RoundedCornersTransformation(5f))
             }
             mTitle.text = game.title
             mShortDescription.text = game.short_description

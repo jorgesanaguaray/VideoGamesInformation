@@ -5,11 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:layout_marginHorizontal="10dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="10dp">
+    android:layout_margin="5dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,8 +15,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mConstraintLayout"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:layout_centerVertical="true"
             android:layout_margin="10dp">
 
@@ -28,7 +26,7 @@
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
                 android:contentDescription="@string/app_name"
-                android:src="@color/purple_500"
+                android:src="@drawable/ic_image"
                 app:layout_constraintDimensionRatio="H,1:1"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -53,13 +51,15 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="?android:attr/colorPrimary"
                 tools:text="Title"/>
 
             <TextView
                 android:id="@+id/mShortDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -70,7 +70,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:text="@string/go_to_the_game_page"/>
+                android:text="@string/go_to_the_game_page"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
         </LinearLayout>
 
