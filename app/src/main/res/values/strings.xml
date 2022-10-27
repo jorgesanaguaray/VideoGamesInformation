@@ -13,4 +13,6 @@
 
     <string name="go_to_the_game_page">Go to the game page</string>
     <string name="search_games_by_name">Search games by name</string>
+    <string name="check_your_internet_connection">Check your internet connection</string>
+    <string name="no_games_were_found_with_the_search_term_please_try_another">No games were found with the search term, please try another</string>
 </resources>

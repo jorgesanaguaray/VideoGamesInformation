@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import com.jorgesanaguaray.videogamesinformation.databinding.FragmentSearchBinding
-import com.jorgesanaguaray.videogamesinformation.domain.item.GameItem
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -23,7 +22,6 @@ class SearchFragment : Fragment() {
 
     private lateinit var searchViewModel: SearchViewModel
     private lateinit var searchAdapter: SearchAdapter
-    private lateinit var games: MutableList<GameItem>
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
@@ -32,7 +30,6 @@ class SearchFragment : Fragment() {
 
         searchViewModel = ViewModelProvider(this).get()
         searchAdapter = SearchAdapter()
-        games = ArrayList()
 
     }
 
@@ -46,7 +43,7 @@ class SearchFragment : Fragment() {
 
         searchViewModel.games.observe(viewLifecycleOwner) {
 
-            searchAdapter.setGames(it.shuffled())
+            searchAdapter.setGames(it)
             binding.mRecyclerView.adapter = searchAdapter
             searchAdapter.setOnButtonClick(object : SearchAdapter.OnButtonClick {
                 override fun onClick(gameUrl: String) {
@@ -58,27 +55,33 @@ class SearchFragment : Fragment() {
 
         }
 
-        searchViewModel.message.observe(viewLifecycleOwner) {
-            binding.mTextViewMessage.text = it
-        }
-
-        searchViewModel.progressBarVisibility.observe(viewLifecycleOwner) {
-            binding.mProgressBar.visibility = if (it) View.VISIBLE else View.GONE
-        }
-
-        searchViewModel.textViewVisibility.observe(viewLifecycleOwner) {
-            binding.mTextViewMessage.visibility = if (it) View.VISIBLE else View.GONE
+        searchViewModel.searchViewVisibility.observe(viewLifecycleOwner) {
+            binding.mSearchView.visibility = if (it) View.VISIBLE else View.GONE
         }
 
         searchViewModel.recyclerViewVisibility.observe(viewLifecycleOwner) {
             binding.mRecyclerView.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        searchViewModel.searchViewVisibility.observe(viewLifecycleOwner) {
-            binding.mSearchView.visibility = if (it) View.VISIBLE else View.GONE
+        searchViewModel.textViewNoGamesVisibility.observe(viewLifecycleOwner) {
+            binding.mTextViewNoGames.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        searchViewModel.getGameFromService()
+        searchViewModel.textViewNoInternetVisibility.observe(viewLifecycleOwner) {
+            binding.mTextViewNoInternet.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
+        searchViewModel.progressBarVisibility.observe(viewLifecycleOwner) {
+            binding.mProgressBar.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
+        binding.mSwipeRefreshLayout.setOnRefreshListener {
+            searchViewModel.getGameFromService("")
+            binding.mSearchView.setQuery("", false)
+            binding.mSwipeRefreshLayout.isRefreshing = false
+        }
+
+        searchViewModel.getGameFromService("")
         setOnSearchViewClick()
 
     }
@@ -90,49 +93,18 @@ class SearchFragment : Fragment() {
 
     private fun setOnSearchViewClick() {
 
-        searchViewModel.games.observe(viewLifecycleOwner) {
+        binding.mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
-            binding.mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchViewModel.getGameFromService(query!!)
+                return true
+            }
 
-                override fun onQueryTextSubmit(query: String?): Boolean {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
 
-                    games.clear()
-
-                    if (query != null) {
-
-                        for (game in it) {
-                            if (game.title.lowercase().contains(query.lowercase())) games.add(game)
-                        }
-
-                        searchAdapter.setGames(games.shuffled())
-
-                    }
-
-                    return true
-
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-
-                    games.clear()
-
-                    if (newText != null) {
-
-                        for (game in it) {
-                            if (game.title.lowercase().contains(newText.lowercase())) games.add(game)
-                        }
-
-                        searchAdapter.setGames(games.shuffled())
-
-                    }
-
-                    return true
-
-                }
-
-            })
-
-        }
+        })
 
     }
 
