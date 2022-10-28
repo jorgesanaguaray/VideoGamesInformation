@@ -8,7 +8,7 @@ import javax.inject.Inject
  * Created by Jorge Sanaguaray
  */
 
-class CategoriesGames @Inject constructor(private val gameRepository: GameRepository) {
+class CategoriesGamesFromService @Inject constructor(private val gameRepository: GameRepository) {
 
     suspend operator fun invoke(category: String): List<GameItem> {
 

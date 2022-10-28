@@ -90,7 +90,7 @@ class CategoryFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                categoryViewModel.getCategoriesGames(binding.mAutoComplete.text.toString())
+                categoryViewModel.getCategoriesGamesFromService(binding.mAutoComplete.text.toString())
             }
 
         })

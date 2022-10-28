@@ -8,7 +8,7 @@ import javax.inject.Inject
  * Created by Jorge Sanaguaray
  */
 
-class SearchedGames @Inject constructor(private val gameRepository: GameRepository) {
+class SearchedGamesFromService @Inject constructor(private val gameRepository: GameRepository) {
 
     private lateinit var searchedGames: MutableList<GameItem>
 

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jorgesanaguaray.videogamesinformation.domain.SearchedGames
+import com.jorgesanaguaray.videogamesinformation.domain.SearchedGamesFromService
 import com.jorgesanaguaray.videogamesinformation.domain.item.GameItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val searchedGames: SearchedGames) : ViewModel() {
+class SearchViewModel @Inject constructor(private val searchedGamesFromService: SearchedGamesFromService) : ViewModel() {
 
     private val _games = MutableLiveData<List<GameItem>>()
     val games: LiveData<List<GameItem>> get() = _games
@@ -36,10 +36,10 @@ class SearchViewModel @Inject constructor(private val searchedGames: SearchedGam
     val progressBarVisibility: LiveData<Boolean> get() = _progressBarVisibility
 
     init {
-        getSearchedGames("")
+        getSearchedGamesFromService("")
     }
 
-    fun getSearchedGames(query: String) {
+    fun getSearchedGamesFromService(query: String) {
 
         showProgressBar()
 
@@ -47,7 +47,7 @@ class SearchViewModel @Inject constructor(private val searchedGames: SearchedGam
 
             try {
 
-                val games = searchedGames(query)
+                val games = searchedGamesFromService(query)
 
                 if (games.isNotEmpty()) {
                     _games.value = games
