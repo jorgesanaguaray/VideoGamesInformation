@@ -35,7 +35,11 @@ class SearchViewModel @Inject constructor(private val searchedGames: SearchedGam
     private val _progressBarVisibility = MutableLiveData<Boolean>()
     val progressBarVisibility: LiveData<Boolean> get() = _progressBarVisibility
 
-    fun getGameFromService(query: String) {
+    init {
+        getSearchedGames("")
+    }
+
+    fun getSearchedGames(query: String) {
 
         showProgressBar()
 

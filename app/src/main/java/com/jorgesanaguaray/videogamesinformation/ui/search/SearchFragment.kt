@@ -76,12 +76,11 @@ class SearchFragment : Fragment() {
         }
 
         binding.mSwipeRefreshLayout.setOnRefreshListener {
-            searchViewModel.getGameFromService("")
+            searchViewModel.getSearchedGames("")
             binding.mSearchView.setQuery("", false)
             binding.mSwipeRefreshLayout.isRefreshing = false
         }
 
-        searchViewModel.getGameFromService("")
         setOnSearchViewClick()
 
     }
@@ -96,7 +95,7 @@ class SearchFragment : Fragment() {
         binding.mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String?): Boolean {
-                searchViewModel.getGameFromService(query!!)
+                searchViewModel.getSearchedGames(query!!)
                 return true
             }
 

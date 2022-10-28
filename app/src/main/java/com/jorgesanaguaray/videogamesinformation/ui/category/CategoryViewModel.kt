@@ -32,7 +32,11 @@ class CategoryViewModel @Inject constructor(private val categoriesGames: Categor
     private val _progressBarVisibility = MutableLiveData<Boolean>()
     val progressBarVisibility: LiveData<Boolean> get() = _progressBarVisibility
 
-    fun getCategoriesFromService(category: String) {
+    init {
+        getCategoriesGames("mmorpg")
+    }
+
+    fun getCategoriesGames(category: String) {
 
         showProgressBar()
 

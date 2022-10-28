@@ -74,8 +74,6 @@ class CategoryFragment : Fragment() {
             binding.mProgressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        categoryViewModel.getCategoriesFromService("mmorpg")
-
     }
 
     override fun onResume() {
@@ -92,7 +90,7 @@ class CategoryFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                categoryViewModel.getCategoriesFromService(binding.mAutoComplete.text.toString())
+                categoryViewModel.getCategoriesGames(binding.mAutoComplete.text.toString())
             }
 
         })
