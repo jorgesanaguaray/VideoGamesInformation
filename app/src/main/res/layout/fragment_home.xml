@@ -122,7 +122,7 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView
-        android:id="@+id/mTextViewMessage"
+        android:id="@+id/mTextViewNoInternet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -130,7 +130,8 @@
         android:padding="10dp"
         android:visibility="gone"
         android:alpha="0.5"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:text="@string/check_your_internet_connection"/>
 
     <ProgressBar
         android:id="@+id/mProgressBar"

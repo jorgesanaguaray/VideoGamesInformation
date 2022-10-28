@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Created by Jorge Sanaguaray
  */
 
-class PlatformsFromService @Inject constructor(private val gameRepository: GameRepository) {
+class RecommendedPlatformsFromService @Inject constructor(private val gameRepository: GameRepository) {
 
     private val platforms = listOf("pc", "browser")
     private val platform = platforms.random()

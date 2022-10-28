@@ -101,27 +101,27 @@ class HomeFragment : Fragment() {
 
         }
 
-        homeViewModel.message.observe(viewLifecycleOwner) {
-            binding.mTextViewMessage.text = it
+        homeViewModel.nestedScrollViewVisibility.observe(viewLifecycleOwner) {
+            binding.mNestedScrollView.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
+        homeViewModel.textViewNoInternetVisibility.observe(viewLifecycleOwner) {
+            binding.mTextViewNoInternet.visibility = if (it) View.VISIBLE else View.GONE
         }
 
         homeViewModel.progressBarVisibility.observe(viewLifecycleOwner) {
             binding.mProgressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        homeViewModel.textViewVisibility.observe(viewLifecycleOwner) {
-            binding.mTextViewMessage.visibility = if (it) View.VISIBLE else View.GONE
-        }
-
-        homeViewModel.nestedScrollViewVisibility.observe(viewLifecycleOwner) {
-            binding.mNestedScrollView.visibility = if (it) View.VISIBLE else View.GONE
-        }
-
         binding.mSwipeRefreshLayout.setOnRefreshListener {
-            getGames()
-        }
 
-        getGames()
+            homeViewModel.getRecommendedGameFromService()
+            homeViewModel.getRecommendedCategoriesFromService()
+            homeViewModel.getRecommendedPlatformsFromService()
+            homeViewModel.getRecommendedGamesFromService()
+            binding.mSwipeRefreshLayout.isRefreshing = false
+
+        }
 
     }
 
@@ -147,16 +147,6 @@ class HomeFragment : Fragment() {
         val uri = Uri.parse(gameUrl)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
-
-    }
-
-    private fun getGames() {
-
-        homeViewModel.getGameFromService()
-        homeViewModel.getCategoriesFromService()
-        homeViewModel.getPlatformsFromService()
-        homeViewModel.getGamesFromService()
-        binding.mSwipeRefreshLayout.isRefreshing = false
 
     }
 

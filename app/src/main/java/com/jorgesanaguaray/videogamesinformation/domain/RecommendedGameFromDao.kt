@@ -7,12 +7,11 @@ import javax.inject.Inject
 /**
  * Created by Jorge Sanaguaray
  */
+class RecommendedGameFromDao @Inject constructor(private val gameRepository: GameRepository) {
 
-class CategoriesFromDao @Inject constructor(private val gameRepository: GameRepository) {
+    suspend operator fun invoke(): GameItem {
 
-    suspend operator fun invoke(): List<GameItem> {
-
-        return gameRepository.getCategoriesFromDao()
+        return gameRepository.getGameFromDao()
 
     }
 

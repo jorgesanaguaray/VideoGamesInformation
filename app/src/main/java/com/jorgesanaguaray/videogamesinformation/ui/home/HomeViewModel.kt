@@ -17,14 +17,14 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
 
-    private val gameFromService: GameFromService,
-    private val gameFromDao: GameFromDao,
-    private val categoriesFromService: CategoriesFromService,
-    private val categoriesFromDao: CategoriesFromDao,
-    private val platformsFromService: PlatformsFromService,
-    private val platformsFromDao: PlatformsFromDao,
-    private val gamesFromService: GamesFromService,
-    private val gamesFromDao: GamesFromDao
+    private val recommendedGameFromService: RecommendedGameFromService,
+    private val recommendedGameFromDao: RecommendedGameFromDao,
+    private val recommendedCategoriesFromService: RecommendedCategoriesFromService,
+    private val recommendedCategoriesFromDao: RecommendedCategoriesFromDao,
+    private val recommendedPlatformsFromService: RecommendedPlatformsFromService,
+    private val recommendedPlatformsFromDao: RecommendedPlatformsFromDao,
+    private val recommendedGamesFromService: RecommendedGamesFromService,
+    private val recommendedGamesFromDao: RecommendedGamesFromDao
 
     ) : ViewModel() {
 
@@ -40,20 +40,23 @@ class HomeViewModel @Inject constructor(
     private val _games = MutableLiveData<List<GameItem>>()
     val games: LiveData<List<GameItem>> get() = _games
 
-    private val _message = MutableLiveData<String>()
-    val message: LiveData<String> get() = _message
+    private val _nestedScrollViewVisibility = MutableLiveData<Boolean>()
+    val nestedScrollViewVisibility: LiveData<Boolean> get() = _nestedScrollViewVisibility
+
+    private val _textViewNoInternetVisibility = MutableLiveData<Boolean>()
+    val textViewNoInternetVisibility: LiveData<Boolean> get() = _textViewNoInternetVisibility
 
     private val _progressBarVisibility = MutableLiveData<Boolean>()
     val progressBarVisibility: LiveData<Boolean> get() = _progressBarVisibility
 
-    private val _textViewVisibility = MutableLiveData<Boolean>()
-    val textViewVisibility: LiveData<Boolean> get() = _textViewVisibility
+    init {
+        getRecommendedGameFromService()
+        getRecommendedCategoriesFromService()
+        getRecommendedPlatformsFromService()
+        getRecommendedGamesFromService()
+    }
 
-    private val _nestedScrollViewVisibility = MutableLiveData<Boolean>()
-    val nestedScrollViewVisibility: LiveData<Boolean> get() = _nestedScrollViewVisibility
-
-
-    fun getGameFromService() {
+    fun getRecommendedGameFromService() {
 
         showProgressBar()
 
@@ -61,13 +64,13 @@ class HomeViewModel @Inject constructor(
 
             try {
 
-                val game = gameFromService()
+                val game = recommendedGameFromService()
                 _game.value = game
                 showNestedScrollView()
 
             } catch (e: Exception) { // No internet connection.
 
-                getGameFromDao()
+                getRecommendedGameFromDao()
 
             }
 
@@ -75,20 +78,19 @@ class HomeViewModel @Inject constructor(
 
     }
 
-    private fun getGameFromDao() {
+    private fun getRecommendedGameFromDao() {
 
         viewModelScope.launch {
 
             try {
 
-                val game = gameFromDao()
+                val game = recommendedGameFromDao()
                 _game.value = game
                 showNestedScrollView()
 
             } catch (e: Exception) { // The database is empty
 
-                _message.value = " Check your internet connection"
-                showTextView()
+                showTextViewNoInternet()
 
             }
 
@@ -96,19 +98,18 @@ class HomeViewModel @Inject constructor(
 
     }
 
-
-    fun getCategoriesFromService() {
+    fun getRecommendedCategoriesFromService() {
 
         viewModelScope.launch {
 
             try {
 
-                val categories = categoriesFromService()
+                val categories = recommendedCategoriesFromService()
                 _categories.value = categories
 
             } catch (e: Exception) { // No internet connection.
 
-                getCategoriesFromDao()
+                getRecommendedCategoriesFromDao()
 
             }
 
@@ -116,13 +117,13 @@ class HomeViewModel @Inject constructor(
 
     }
 
-    private fun getCategoriesFromDao() {
+    private fun getRecommendedCategoriesFromDao() {
 
         viewModelScope.launch {
 
             try {
 
-                val categories = categoriesFromDao()
+                val categories = recommendedCategoriesFromDao()
                 _categories.value = categories
 
             } catch (_: Exception) {} // The database is empty.
@@ -131,19 +132,18 @@ class HomeViewModel @Inject constructor(
 
     }
 
-
-    fun getPlatformsFromService() {
+    fun getRecommendedPlatformsFromService() {
 
         viewModelScope.launch {
 
             try {
 
-                val platforms = platformsFromService()
+                val platforms = recommendedPlatformsFromService()
                 _platforms.value = platforms
 
             } catch (e: Exception) { // No internet connection.
 
-                getPlatformsFromDao()
+                getRecommendedPlatformsFromDao()
 
             }
 
@@ -151,13 +151,13 @@ class HomeViewModel @Inject constructor(
 
     }
 
-    private fun getPlatformsFromDao() {
+    private fun getRecommendedPlatformsFromDao() {
 
         viewModelScope.launch {
 
             try {
 
-                val platforms = platformsFromDao()
+                val platforms = recommendedPlatformsFromDao()
                 _platforms.value = platforms
 
             } catch (_: Exception) {} // The database is empty.
@@ -166,19 +166,18 @@ class HomeViewModel @Inject constructor(
 
     }
 
-
-    fun getGamesFromService() {
+    fun getRecommendedGamesFromService() {
 
         viewModelScope.launch {
 
             try {
 
-                val games = gamesFromService()
+                val games = recommendedGamesFromService()
                 _games.value = games
 
             } catch (e: Exception) { // No internet connection.
 
-                getGamesFromDao()
+                getRecommendedGamesFromDao()
 
             }
 
@@ -186,45 +185,43 @@ class HomeViewModel @Inject constructor(
 
     }
 
-    private fun getGamesFromDao() {
+    private fun getRecommendedGamesFromDao() {
 
         viewModelScope.launch {
 
             try {
 
-                val games = gamesFromDao()
+                val games = recommendedGamesFromDao()
                 _games.value = games
 
             } catch (_: Exception) {} // The database is empty.
 
         }
-
-    }
-
-
-    private fun showProgressBar() {
-
-        _progressBarVisibility.value = true
-        _textViewVisibility.value = false
-        _nestedScrollViewVisibility.value = false
-
-    }
-
-    private fun showTextView() {
-
-        _textViewVisibility.value = true
-        _progressBarVisibility.value = false
-        _nestedScrollViewVisibility.value = false
 
     }
 
     private fun showNestedScrollView() {
 
         _nestedScrollViewVisibility.value = true
+        _textViewNoInternetVisibility.value = false
         _progressBarVisibility.value = false
-        _textViewVisibility.value = false
 
     }
 
+    private fun showTextViewNoInternet() {
+
+        _nestedScrollViewVisibility.value = false
+        _textViewNoInternetVisibility.value = true
+        _progressBarVisibility.value = false
+
+    }
+
+    private fun showProgressBar() {
+
+        _nestedScrollViewVisibility.value = false
+        _textViewNoInternetVisibility.value = false
+        _progressBarVisibility.value = true
+
+    }
 
 }
