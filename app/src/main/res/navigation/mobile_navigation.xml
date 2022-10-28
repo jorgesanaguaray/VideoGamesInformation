@@ -18,9 +18,9 @@
         tools:layout="@layout/fragment_search"/>
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.jorgesanaguaray.videogamesinformation.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow"/>
+        android:id="@+id/nav_category"
+        android:name="com.jorgesanaguaray.videogamesinformation.ui.category.CategoryFragment"
+        android:label="@string/menu_category"
+        tools:layout="@layout/fragment_category"/>
 
 </navigation>
