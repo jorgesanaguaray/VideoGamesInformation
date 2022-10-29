@@ -36,15 +36,13 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyHomeViewHolder>() {
                 crossfade(400)
             }
             mShortDescription.text = game.short_description
+            mButtonGoToTheGamePage.setOnClickListener {
+                onButtonClick.onClick(game.game_url)
+            }
+            mCardViewGame.setOnClickListener {
+                onCardViewClick.onClick(game.id)
+            }
 
-        }
-
-        holder.binding.mButtonGoToTheGamePage.setOnClickListener {
-            onButtonClick.onClick(game.game_url)
-        }
-
-        holder.binding.mCardViewGame.setOnClickListener {
-            onCardViewClick.onClick(game.id)
         }
 
     }

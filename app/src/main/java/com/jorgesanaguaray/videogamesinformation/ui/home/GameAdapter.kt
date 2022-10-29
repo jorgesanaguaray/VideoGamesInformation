@@ -38,15 +38,13 @@ class GameAdapter : RecyclerView.Adapter<GameAdapter.MyGameViewHolder>() {
             }
             mTitle.text = game.title
             mShortDescription.text = game.short_description
+            mButtonGoToTheGamePage.setOnClickListener {
+                onButtonClick.onClick(game.game_url)
+            }
+            mCardViewGame.setOnClickListener {
+                onCardViewClick.onClick(game.id)
+            }
 
-        }
-
-        holder.binding.mButtonGoToTheGamePage.setOnClickListener {
-            onButtonClick.onClick(game.game_url)
-        }
-
-        holder.binding.mCardViewGame.setOnClickListener {
-            onCardViewClick.onClick(game.id)
         }
 
     }

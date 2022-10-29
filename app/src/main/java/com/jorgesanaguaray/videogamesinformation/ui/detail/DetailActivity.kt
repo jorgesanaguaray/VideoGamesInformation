@@ -36,7 +36,6 @@ class DetailActivity : AppCompatActivity() {
 
         detailViewModel.game.observe(this) {
 
-            // Set title in ActionBar
             val actionBar: ActionBar? = supportActionBar
             actionBar?.title = it.title
 

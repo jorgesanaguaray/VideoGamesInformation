@@ -1,6 +1,5 @@
 package com.jorgesanaguaray.videogamesinformation.ui.search
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -37,15 +36,13 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.MySearchViewHolder>() {
                 crossfade(400)
             }
             mShortDescription.text = game.short_description
+            mButtonGoToTheGamePage.setOnClickListener {
+                onButtonClick.onClick(game.game_url)
+            }
+            mCardViewGame.setOnClickListener {
+                onCardViewClick.onClick(game.id)
+            }
 
-        }
-
-        holder.binding.mButtonGoToTheGamePage.setOnClickListener {
-            onButtonClick.onClick(game.game_url)
-        }
-
-        holder.binding.mCardViewGame.setOnClickListener {
-            onCardViewClick.onClick(game.id)
         }
 
     }
@@ -56,10 +53,8 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.MySearchViewHolder>() {
 
     class MySearchViewHolder(val binding: ItemSearchBinding): RecyclerView.ViewHolder(binding.root)
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setGames(games: List<GameItem>) {
         this.games = games
-        notifyDataSetChanged()
     }
 
 

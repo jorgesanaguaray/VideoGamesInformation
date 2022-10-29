@@ -84,23 +84,6 @@ class SearchFragment : Fragment() {
             binding.mProgressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        binding.mSwipeRefreshLayout.setOnRefreshListener {
-            searchViewModel.getSearchedGamesFromService("")
-            binding.mSearchView.setQuery("", false)
-            binding.mSwipeRefreshLayout.isRefreshing = false
-        }
-
-        setOnSearchViewClick()
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun setOnSearchViewClick() {
-
         binding.mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -114,6 +97,17 @@ class SearchFragment : Fragment() {
 
         })
 
+        binding.mSwipeRefreshLayout.setOnRefreshListener {
+            searchViewModel.getSearchedGamesFromService("")
+            binding.mSearchView.setQuery("", false)
+            binding.mSwipeRefreshLayout.isRefreshing = false
+        }
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

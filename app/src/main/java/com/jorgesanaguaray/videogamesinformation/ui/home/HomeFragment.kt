@@ -60,11 +60,10 @@ class HomeFragment : Fragment() {
                     crossfade(400)
                 }
                 mShortDescription.text = it.short_description
+                mButtonGoToTheGamePage.setOnClickListener { _ -> setOnButtonClick(it.game_url) }
+                mCardViewGame.setOnClickListener { _ -> setOnCardViewClick(it.id) }
 
             }
-
-            setOnCardViewGameClick(it.id)
-            buttonGoToTheGamePage(it.game_url)
 
         }
 
@@ -74,14 +73,12 @@ class HomeFragment : Fragment() {
             binding.mRecyclerViewCategory.adapter = homeAdapter1
             homeAdapter1.setOnButtonClick(object : HomeAdapter.OnButtonClick {
                 override fun onClick(gameUrl: String) {
-                    adapterGoToTheGamePage(gameUrl)
+                    setOnButtonClick(gameUrl)
                 }
             })
             homeAdapter1.setOnCardViewClick(object : HomeAdapter.OnCardViewClick {
                 override fun onClick(id: Int) {
-                    val intent = Intent(activity, DetailActivity::class.java)
-                    intent.putExtra(KEY_GAME_ID, id)
-                    startActivity(intent)
+                    setOnCardViewClick(id)
                 }
             })
 
@@ -93,14 +90,12 @@ class HomeFragment : Fragment() {
             binding.mRecyclerViewPlatform.adapter = homeAdapter2
             homeAdapter2.setOnButtonClick(object : HomeAdapter.OnButtonClick {
                 override fun onClick(gameUrl: String) {
-                    adapterGoToTheGamePage(gameUrl)
+                    setOnButtonClick(gameUrl)
                 }
             })
             homeAdapter2.setOnCardViewClick(object : HomeAdapter.OnCardViewClick {
                 override fun onClick(id: Int) {
-                    val intent = Intent(activity, DetailActivity::class.java)
-                    intent.putExtra(KEY_GAME_ID, id)
-                    startActivity(intent)
+                    setOnCardViewClick(id)
                 }
             })
 
@@ -112,14 +107,12 @@ class HomeFragment : Fragment() {
             binding.mRecyclerViewGames.adapter = gameAdapter
             gameAdapter.setOnButtonClick(object : GameAdapter.OnButtonClick {
                 override fun onClick(gameUrl: String) {
-                    adapterGoToTheGamePage(gameUrl)
+                    setOnButtonClick(gameUrl)
                 }
             })
             gameAdapter.setOnCardViewClick(object : GameAdapter.OnCardViewClick {
                 override fun onClick(id: Int) {
-                    val intent = Intent(activity, DetailActivity::class.java)
-                    intent.putExtra(KEY_GAME_ID, id)
-                    startActivity(intent)
+                    setOnCardViewClick(id)
                 }
             })
 
@@ -154,34 +147,16 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    private fun setOnCardViewGameClick(id: Int) {
-
-        binding.mCardViewGame.setOnClickListener {
-            val intent = Intent(activity, DetailActivity::class.java)
-            intent.putExtra(KEY_GAME_ID, id)
-            startActivity(intent)
-        }
-
-    }
-
-    private fun buttonGoToTheGamePage(gameUrl: String) {
-
-        binding.mButtonGoToTheGamePage.setOnClickListener {
-
-            val uri = Uri.parse(gameUrl)
-            val intent = Intent(Intent.ACTION_VIEW, uri)
-            startActivity(intent)
-
-        }
-
-    }
-
-    private fun adapterGoToTheGamePage(gameUrl: String) {
-
+    private fun setOnButtonClick(gameUrl: String) {
         val uri = Uri.parse(gameUrl)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
+    }
 
+    private fun setOnCardViewClick(id: Int) {
+        val intent = Intent(activity, DetailActivity::class.java)
+        intent.putExtra(KEY_GAME_ID, id)
+        startActivity(intent)
     }
 
 }
