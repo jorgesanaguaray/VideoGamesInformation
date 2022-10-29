@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import com.jorgesanaguaray.videogamesinformation.R
 import com.jorgesanaguaray.videogamesinformation.databinding.FragmentCategoryBinding
+import com.jorgesanaguaray.videogamesinformation.ui.detail.DetailActivity
+import com.jorgesanaguaray.videogamesinformation.util.Constants.Companion.KEY_GAME_ID
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -52,6 +54,13 @@ class CategoryFragment : Fragment() {
                 override fun onClick(gameUrl: String) {
                     val uri = Uri.parse(gameUrl)
                     val intent = Intent(Intent.ACTION_VIEW, uri)
+                    startActivity(intent)
+                }
+            })
+            categoryAdapter.setOnCardViewClick(object : CategoryAdapter.OnCardViewClick {
+                override fun onClick(id: Int) {
+                    val intent = Intent(activity, DetailActivity::class.java)
+                    intent.putExtra(KEY_GAME_ID, id)
                     startActivity(intent)
                 }
             })

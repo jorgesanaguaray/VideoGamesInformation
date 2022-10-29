@@ -16,6 +16,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyHomeViewHolder>() {
 
     private var games: List<GameItem> = ArrayList()
     private lateinit var onButtonClick: OnButtonClick
+    private lateinit var onCardViewClick: OnCardViewClick
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHomeViewHolder {
         return MyHomeViewHolder(ItemHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -42,6 +43,10 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyHomeViewHolder>() {
             onButtonClick.onClick(game.game_url)
         }
 
+        holder.binding.mCardViewGame.setOnClickListener {
+            onCardViewClick.onClick(game.id)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -61,6 +66,15 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyHomeViewHolder>() {
 
     fun setOnButtonClick(onButtonClick: OnButtonClick) {
         this.onButtonClick = onButtonClick
+    }
+
+
+    interface OnCardViewClick {
+        fun onClick(id: Int)
+    }
+
+    fun setOnCardViewClick(onCardViewClick: OnCardViewClick) {
+        this.onCardViewClick = onCardViewClick
     }
 
 

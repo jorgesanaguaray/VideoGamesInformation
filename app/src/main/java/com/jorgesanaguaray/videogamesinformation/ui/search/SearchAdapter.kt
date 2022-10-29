@@ -17,6 +17,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.MySearchViewHolder>() {
 
     private var games: List<GameItem> = ArrayList()
     private lateinit var onButtonClick: OnButtonClick
+    private lateinit var onCardViewClick: OnCardViewClick
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MySearchViewHolder {
         return MySearchViewHolder(ItemSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -43,6 +44,10 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.MySearchViewHolder>() {
             onButtonClick.onClick(game.game_url)
         }
 
+        holder.binding.mCardViewGame.setOnClickListener {
+            onCardViewClick.onClick(game.id)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -64,6 +69,15 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.MySearchViewHolder>() {
 
     fun setOnButtonClick(onButtonClick: OnButtonClick) {
         this.onButtonClick = onButtonClick
+    }
+
+
+    interface OnCardViewClick {
+        fun onClick(id: Int)
+    }
+
+    fun setOnCardViewClick(onCardViewClick: OnCardViewClick) {
+        this.onCardViewClick = onCardViewClick
     }
 
 

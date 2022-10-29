@@ -17,6 +17,7 @@ class GameAdapter : RecyclerView.Adapter<GameAdapter.MyGameViewHolder>() {
 
     private var games: List<GameItem> = ArrayList()
     private lateinit var onButtonClick: OnButtonClick
+    private lateinit var onCardViewClick: OnCardViewClick
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyGameViewHolder {
         return MyGameViewHolder(ItemGameBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -44,6 +45,10 @@ class GameAdapter : RecyclerView.Adapter<GameAdapter.MyGameViewHolder>() {
             onButtonClick.onClick(game.game_url)
         }
 
+        holder.binding.mCardViewGame.setOnClickListener {
+            onCardViewClick.onClick(game.id)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -63,6 +68,15 @@ class GameAdapter : RecyclerView.Adapter<GameAdapter.MyGameViewHolder>() {
 
     fun setOnButtonClick(onButtonClick: OnButtonClick) {
         this.onButtonClick = onButtonClick
+    }
+
+
+    interface OnCardViewClick {
+        fun onClick(id: Int)
+    }
+
+    fun setOnCardViewClick(onCardViewClick: OnCardViewClick) {
+        this.onCardViewClick = onCardViewClick
     }
 
 

@@ -16,6 +16,7 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.MyCategoryViewHolde
 
     private var games: List<GameItem> = ArrayList()
     private lateinit var onButtonClick: OnButtonClick
+    private lateinit var onCardViewClick: OnCardViewClick
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyCategoryViewHolder {
         return MyCategoryViewHolder(ItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -42,6 +43,10 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.MyCategoryViewHolde
             onButtonClick.onClick(game.game_url)
         }
 
+        holder.binding.mCardViewGame.setOnClickListener {
+            onCardViewClick.onClick(game.id)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -61,6 +66,15 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.MyCategoryViewHolde
 
     fun setOnButtonClick(onButtonClick: OnButtonClick) {
         this.onButtonClick = onButtonClick
+    }
+
+
+    interface OnCardViewClick {
+        fun onClick(id: Int)
+    }
+
+    fun setOnCardViewClick(onCardViewClick: OnCardViewClick) {
+        this.onCardViewClick = onCardViewClick
     }
 
 

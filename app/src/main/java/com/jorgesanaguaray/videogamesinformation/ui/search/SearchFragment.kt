@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import com.jorgesanaguaray.videogamesinformation.databinding.FragmentSearchBinding
+import com.jorgesanaguaray.videogamesinformation.ui.detail.DetailActivity
+import com.jorgesanaguaray.videogamesinformation.util.Constants.Companion.KEY_GAME_ID
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -49,6 +51,13 @@ class SearchFragment : Fragment() {
                 override fun onClick(gameUrl: String) {
                     val uri = Uri.parse(gameUrl)
                     val intent = Intent(Intent.ACTION_VIEW, uri)
+                    startActivity(intent)
+                }
+            })
+            searchAdapter.setOnCardViewClick(object : SearchAdapter.OnCardViewClick {
+                override fun onClick(id: Int) {
+                    val intent = Intent(activity, DetailActivity::class.java)
+                    intent.putExtra(KEY_GAME_ID, id)
                     startActivity(intent)
                 }
             })

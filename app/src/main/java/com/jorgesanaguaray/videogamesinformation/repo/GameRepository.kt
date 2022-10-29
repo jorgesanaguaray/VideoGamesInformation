@@ -6,8 +6,7 @@ import com.jorgesanaguaray.videogamesinformation.data.local.entities.GameEntity
 import com.jorgesanaguaray.videogamesinformation.data.local.entities.GamesEntity
 import com.jorgesanaguaray.videogamesinformation.data.local.entities.PlatformsEntity
 import com.jorgesanaguaray.videogamesinformation.data.remote.GameService
-import com.jorgesanaguaray.videogamesinformation.domain.item.GameItem
-import com.jorgesanaguaray.videogamesinformation.domain.item.toGameItem
+import com.jorgesanaguaray.videogamesinformation.domain.item.*
 import javax.inject.Inject
 
 /**
@@ -116,6 +115,14 @@ class GameRepository @Inject constructor(
 
     suspend fun deleteGames() {
         gameDao.deleteGames()
+    }
+
+
+    suspend fun getGameByIdFromService(id: Int): SpecificGameItem {
+
+        val game = gameService.getGameById(id)
+        return game.toSpecificGameItem()
+
     }
 
 

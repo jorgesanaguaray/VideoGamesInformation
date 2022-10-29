@@ -12,6 +12,8 @@ import androidx.lifecycle.get
 import coil.load
 import com.jorgesanaguaray.videogamesinformation.R
 import com.jorgesanaguaray.videogamesinformation.databinding.FragmentHomeBinding
+import com.jorgesanaguaray.videogamesinformation.ui.detail.DetailActivity
+import com.jorgesanaguaray.videogamesinformation.util.Constants.Companion.KEY_GAME_ID
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -61,6 +63,7 @@ class HomeFragment : Fragment() {
 
             }
 
+            setOnCardViewGameClick(it.id)
             buttonGoToTheGamePage(it.game_url)
 
         }
@@ -72,6 +75,13 @@ class HomeFragment : Fragment() {
             homeAdapter1.setOnButtonClick(object : HomeAdapter.OnButtonClick {
                 override fun onClick(gameUrl: String) {
                     adapterGoToTheGamePage(gameUrl)
+                }
+            })
+            homeAdapter1.setOnCardViewClick(object : HomeAdapter.OnCardViewClick {
+                override fun onClick(id: Int) {
+                    val intent = Intent(activity, DetailActivity::class.java)
+                    intent.putExtra(KEY_GAME_ID, id)
+                    startActivity(intent)
                 }
             })
 
@@ -86,6 +96,13 @@ class HomeFragment : Fragment() {
                     adapterGoToTheGamePage(gameUrl)
                 }
             })
+            homeAdapter2.setOnCardViewClick(object : HomeAdapter.OnCardViewClick {
+                override fun onClick(id: Int) {
+                    val intent = Intent(activity, DetailActivity::class.java)
+                    intent.putExtra(KEY_GAME_ID, id)
+                    startActivity(intent)
+                }
+            })
 
         }
 
@@ -96,6 +113,13 @@ class HomeFragment : Fragment() {
             gameAdapter.setOnButtonClick(object : GameAdapter.OnButtonClick {
                 override fun onClick(gameUrl: String) {
                     adapterGoToTheGamePage(gameUrl)
+                }
+            })
+            gameAdapter.setOnCardViewClick(object : GameAdapter.OnCardViewClick {
+                override fun onClick(id: Int) {
+                    val intent = Intent(activity, DetailActivity::class.java)
+                    intent.putExtra(KEY_GAME_ID, id)
+                    startActivity(intent)
                 }
             })
 
@@ -128,6 +152,16 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setOnCardViewGameClick(id: Int) {
+
+        binding.mCardViewGame.setOnClickListener {
+            val intent = Intent(activity, DetailActivity::class.java)
+            intent.putExtra(KEY_GAME_ID, id)
+            startActivity(intent)
+        }
+
     }
 
     private fun buttonGoToTheGamePage(gameUrl: String) {
