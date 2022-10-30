@@ -31,6 +31,8 @@
     <string name="memory">Memory:</string>
     <string name="graphics">Graphics:</string>
     <string name="storage">Storage:</string>
+    <string name="screenshots">Screenshots</string>
+    <string name="no_screenshots">No screenshots</string>
 
     <string-array name="categories">
         <item>mmorpg</item>

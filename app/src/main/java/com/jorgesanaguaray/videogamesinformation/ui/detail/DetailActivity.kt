@@ -21,6 +21,7 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
     private lateinit var detailViewModel: DetailViewModel
+    private lateinit var screenshotAdapter: ScreenshotAdapter
     private var id = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +31,7 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         detailViewModel = ViewModelProvider(this).get()
+        screenshotAdapter = ScreenshotAdapter()
 
         val intent = intent
         id = intent.getIntExtra(KEY_GAME_ID, 0)
@@ -38,6 +40,8 @@ class DetailActivity : AppCompatActivity() {
 
             val actionBar: ActionBar? = supportActionBar
             actionBar?.title = it.title
+
+            screenshotAdapter.setScreenshots(it.screenshots)
 
             binding.apply {
 
@@ -65,13 +69,15 @@ class DetailActivity : AppCompatActivity() {
                 mMemory.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.memory) + "</b>" + " " + it.minimum_system_requirements?.memory, HtmlCompat.FROM_HTML_MODE_LEGACY)
                 mGraphics.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.graphics) + "</b>" + " " + it.minimum_system_requirements?.graphics, HtmlCompat.FROM_HTML_MODE_LEGACY)
                 mStorage.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.storage) + "</b>" + " " + it.minimum_system_requirements?.storage, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                if (it.screenshots.isEmpty()) mScreenshots.text = resources.getString(R.string.no_screenshots)
+                mRecyclerView.adapter = screenshotAdapter
 
             }
 
         }
 
-        detailViewModel.scrollViewVisibility.observe(this) {
-            binding.mScrollView.visibility = if (it) View.VISIBLE else View.GONE
+        detailViewModel.nestedScrollViewVisibility.observe(this) {
+            binding.mNestedScrollView.visibility = if (it) View.VISIBLE else View.GONE
         }
 
         detailViewModel.textViewNoInternetVisibility.observe(this) {

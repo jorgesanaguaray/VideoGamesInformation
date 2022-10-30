@@ -20,8 +20,8 @@ class DetailViewModel @Inject constructor(private val gameByIdFromService: GameB
     private val _game = MutableLiveData<SpecificGameItem>()
     val game: LiveData<SpecificGameItem> get() = _game
 
-    private val _scrollViewVisibility = MutableLiveData<Boolean>()
-    val scrollViewVisibility: LiveData<Boolean> get() = _scrollViewVisibility
+    private val _nestedScrollViewVisibility = MutableLiveData<Boolean>()
+    val nestedScrollViewVisibility: LiveData<Boolean> get() = _nestedScrollViewVisibility
 
     private val _textViewNoInternetVisibility = MutableLiveData<Boolean>()
     val textViewNoInternetVisibility: LiveData<Boolean> get() = _textViewNoInternetVisibility
@@ -39,7 +39,7 @@ class DetailViewModel @Inject constructor(private val gameByIdFromService: GameB
 
                 val game = gameByIdFromService(id)
                 _game.value = game
-                showScrollView()
+                showNestedScrollView()
 
             } catch (e: Exception) { // No internet connection.
 
@@ -51,9 +51,9 @@ class DetailViewModel @Inject constructor(private val gameByIdFromService: GameB
 
     }
 
-    private fun showScrollView() {
+    private fun showNestedScrollView() {
 
-        _scrollViewVisibility.value = true
+        _nestedScrollViewVisibility.value = true
         _textViewNoInternetVisibility.value = false
         _progressBarVisibility.value = false
 
@@ -61,7 +61,7 @@ class DetailViewModel @Inject constructor(private val gameByIdFromService: GameB
 
     private fun showTextViewNoInternet() {
 
-        _scrollViewVisibility.value = false
+        _nestedScrollViewVisibility.value = false
         _textViewNoInternetVisibility.value = true
         _progressBarVisibility.value = false
 
@@ -69,7 +69,7 @@ class DetailViewModel @Inject constructor(private val gameByIdFromService: GameB
 
     private fun showProgressBar() {
 
-        _scrollViewVisibility.value = false
+        _nestedScrollViewVisibility.value = false
         _textViewNoInternetVisibility.value = false
         _progressBarVisibility.value = true
 

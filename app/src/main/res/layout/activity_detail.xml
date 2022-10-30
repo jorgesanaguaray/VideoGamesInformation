@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.detail.DetailActivity">
 
-    <ScrollView
-        android:id="@+id/mScrollView"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/mNestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -174,9 +174,39 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 tools:text="Storage"/>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:id="@+id/mScreenshots"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="?android:attr/colorPrimary"
+                android:text="@string/screenshots"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/darker_gray"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_screenshot"
+                tools:itemCount="3"/>
+
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <TextView
         android:id="@+id/mTextViewNoInternet"
