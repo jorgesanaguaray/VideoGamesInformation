@@ -16,18 +16,12 @@ data class GameItem(
     val title: String,
     val thumbnail: String,
     val short_description: String,
-    val game_url: String,
-    val genre: String,
-    val platform: String,
-    val publisher: String,
-    val developer: String,
-    val release_date: String,
-    val freetogame_profile_url: String
+    val game_url: String
 
 )
 
-fun GameModel.toGameItem() = GameItem(id = id, title = title, thumbnail = thumbnail, short_description = short_description, game_url = game_url, genre = genre, platform = platform, publisher = publisher, developer = developer, release_date = release_date, freetogame_profile_url = freetogame_profile_url)
-fun GameEntity.toGameItem() = GameItem(id = id, title = title, thumbnail = thumbnail, short_description = short_description, game_url = game_url, genre = genre, platform = platform, publisher = publisher, developer = developer, release_date = release_date, freetogame_profile_url = freetogame_profile_url)
-fun CategoriesEntity.toGameItem() = GameItem(id = id, title = title, thumbnail = thumbnail, short_description = short_description, game_url = game_url, genre = genre, platform = platform, publisher = publisher, developer = developer, release_date = release_date, freetogame_profile_url = freetogame_profile_url)
-fun PlatformsEntity.toGameItem() = GameItem(id = id, title = title, thumbnail = thumbnail, short_description = short_description, game_url = game_url, genre = genre, platform = platform, publisher = publisher, developer = developer, release_date = release_date, freetogame_profile_url = freetogame_profile_url)
-fun GamesEntity.toGameItem() = GameItem(id = id, title = title, thumbnail = thumbnail, short_description = short_description, game_url = game_url, genre = genre, platform = platform, publisher = publisher, developer = developer, release_date = release_date, freetogame_profile_url = freetogame_profile_url)
+fun GameModel.toGameItem() = GameItem(id, title, thumbnail, short_description, game_url)
+fun GameEntity.toGameItem() = GameItem(id, title, thumbnail, short_description, game_url)
+fun CategoriesEntity.toGameItem() = GameItem(id, title, thumbnail, short_description, game_url)
+fun PlatformsEntity.toGameItem() = GameItem(id, title, thumbnail, short_description, game_url)
+fun GamesEntity.toGameItem() = GameItem(id, title, thumbnail, short_description, game_url)
