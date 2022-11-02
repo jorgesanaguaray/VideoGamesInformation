@@ -15,7 +15,7 @@ class Constants {
         const val PLATFORM_ENDPOINT = "games?platform="
         const val GAME_ID_ENDPOINT = "game?id="
 
-        const val DATABASE_NAME = "GameDatabase"
+        const val DATABASE_NAME = "GameDatabase.db"
 
         const val KEY_GAME_ID = "com.jorgesanaguaray.videogamesinformation.id"
 

@@ -14,6 +14,7 @@ data class SpecificGameItem(
     val title: String,
     val thumbnail: String,
     val game_url: String,
+    val short_description: String,
     val description: String,
     val status: String,
     val genre: String,
@@ -26,4 +27,4 @@ data class SpecificGameItem(
 
 )
 
-fun SpecificGameModel.toSpecificGameItem() = SpecificGameItem(id, title, thumbnail, game_url, description, status, genre, platform, publisher, developer, release_date, minimum_system_requirements, screenshots)
+fun SpecificGameModel.toSpecificGameItem() = SpecificGameItem(id, title, thumbnail, game_url, short_description, description, status, genre, platform, publisher, developer, release_date, minimum_system_requirements, screenshots)

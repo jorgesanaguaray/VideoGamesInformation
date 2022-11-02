@@ -4,10 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.CategoriesEntity
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.GameEntity
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.GamesEntity
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.PlatformsEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.*
 
 /**
  * Created by Jorge Sanaguaray
@@ -55,6 +52,19 @@ interface GameDao {
 
     @Query("DELETE FROM games_table")
     suspend fun deleteGames()
+
+
+    @Insert
+    suspend fun insertFavorite(favoritesEntity: FavoritesEntity)
+
+    @Query("DELETE FROM favorites_table WHERE id = :id")
+    suspend fun deleteFavoriteById(id: Int)
+
+    @Query("SELECT * FROM favorites_table WHERE id = :id")
+    suspend fun getFavoriteById(id: Int): FavoritesEntity
+
+    @Query("SELECT * FROM favorites_table")
+    suspend fun getAllFavorites(): List<FavoritesEntity>
 
 
 }

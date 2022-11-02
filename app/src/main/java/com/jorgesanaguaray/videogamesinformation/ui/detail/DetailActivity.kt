@@ -11,8 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import coil.load
 import coil.transform.RoundedCornersTransformation
+import com.google.android.material.snackbar.Snackbar
 import com.jorgesanaguaray.videogamesinformation.R
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.FavoritesEntity
 import com.jorgesanaguaray.videogamesinformation.databinding.ActivityDetailBinding
+import com.jorgesanaguaray.videogamesinformation.domain.item.SpecificGameItem
 import com.jorgesanaguaray.videogamesinformation.util.Constants.Companion.KEY_GAME_ID
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -57,6 +60,7 @@ class DetailActivity : AppCompatActivity() {
                     val intent2 = Intent(Intent.ACTION_VIEW, uri)
                     startActivity(intent2)
                 }
+                mButtonFavorite.setOnClickListener { _ -> setOnButtonFavoriteClick(it) }
                 mDescription.text = it.description
                 mStatus.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.status) + "</b>" + " " + it.status, HtmlCompat.FROM_HTML_MODE_LEGACY)
                 mGenre.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.genre) + "</b>" + " " + it.genre, HtmlCompat.FROM_HTML_MODE_LEGACY)
@@ -90,6 +94,38 @@ class DetailActivity : AppCompatActivity() {
 
         detailViewModel.getGameByIdFromService(id)
 
+        setButtonFavoriteStatues()
+
+    }
+
+    private fun setButtonFavoriteStatues() {
+
+        if (isFavorite()) binding.mButtonFavorite.text = resources.getString(R.string.remove_from_favorites)
+        else binding.mButtonFavorite.text = resources.getString(R.string.save_to_favorites)
+
+    }
+
+    private fun setOnButtonFavoriteClick(game: SpecificGameItem) {
+
+        if (isFavorite()) {
+
+            detailViewModel.deleteFavoriteById(id)
+            binding.mButtonFavorite.text = resources.getString(R.string.save_to_favorites)
+            Snackbar.make(findViewById(android.R.id.content), R.string.game_removed_from_favorites, Snackbar.LENGTH_LONG).show()
+
+        } else {
+
+            val favorite = FavoritesEntity(id = game.id, title = game.title, thumbnail = game.thumbnail, short_description = game.short_description, game_url = game.game_url)
+            detailViewModel.insertFavorite(favorite)
+            binding.mButtonFavorite.text = resources.getString(R.string.remove_from_favorites)
+            Snackbar.make(findViewById(android.R.id.content), R.string.game_saved_in_favorites, Snackbar.LENGTH_LONG).show()
+
+        }
+
+    }
+
+    private fun isFavorite(): Boolean {
+        return detailViewModel.isFavorite(id)
     }
 
 }

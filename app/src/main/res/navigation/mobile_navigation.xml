@@ -23,4 +23,10 @@
         android:label="@string/menu_category"
         tools:layout="@layout/fragment_category"/>
 
+    <fragment
+        android:id="@+id/nav_favorite"
+        android:name="com.jorgesanaguaray.videogamesinformation.ui.favorite.FavoriteFragment"
+        android:label="@string/menu_favorite"
+        tools:layout="@layout/fragment_favorite"/>
+
 </navigation>

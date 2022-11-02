@@ -36,14 +36,33 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Button
-                android:id="@+id/mButtonGoToTheGamePage"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:text="@string/go_to_the_game_page"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <Button
+                    android:id="@+id/mButtonGoToTheGamePage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="5dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:text="@string/go_to_the_game_page"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+                <Button
+                    android:id="@+id/mButtonFavorite"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:text="@string/save_to_favorites"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/mDescription"

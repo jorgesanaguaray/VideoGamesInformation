@@ -6,6 +6,7 @@ data class SpecificGameModel(
     val title: String,
     val thumbnail: String,
     val game_url: String,
+    val short_description: String,
     val description: String,
     val status: String,
     val genre: String,

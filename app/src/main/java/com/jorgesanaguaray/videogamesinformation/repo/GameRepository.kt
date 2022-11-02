@@ -1,10 +1,7 @@
 package com.jorgesanaguaray.videogamesinformation.repo
 
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.CategoriesEntity
 import com.jorgesanaguaray.videogamesinformation.data.local.GameDao
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.GameEntity
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.GamesEntity
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.PlatformsEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.*
 import com.jorgesanaguaray.videogamesinformation.data.remote.GameService
 import com.jorgesanaguaray.videogamesinformation.domain.item.*
 import javax.inject.Inject
@@ -122,6 +119,30 @@ class GameRepository @Inject constructor(
 
         val game = gameService.getGameById(id)
         return game.toSpecificGameItem()
+
+    }
+
+
+    suspend fun insertFavorite(favoritesEntity: FavoritesEntity) {
+        gameDao.insertFavorite(favoritesEntity)
+    }
+
+    suspend fun deleteFavoriteById(id: Int) {
+        gameDao.deleteFavoriteById(id)
+    }
+
+    suspend fun getFavoriteById(id: Int): FavoritesEntity {
+
+        return gameDao.getFavoriteById(id)
+
+    }
+
+    suspend fun getAllFavorites(): List<FavoritesItem> {
+
+        val favorites = gameDao.getAllFavorites()
+        return favorites.map {
+            it.toFavoritesItem()
+        }
 
     }
 

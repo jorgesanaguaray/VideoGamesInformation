@@ -10,6 +10,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_search">Search</string>
     <string name="menu_category">Category</string>
+    <string name="menu_favorite">Favorite</string>
     <string name="menu_detail">Detail</string>
 
     <string name="go_to_the_game_page">Go to the game page</string>
@@ -33,6 +34,11 @@
     <string name="storage">Storage:</string>
     <string name="screenshots">Screenshots</string>
     <string name="no_screenshots">No screenshots</string>
+    <string name="save_to_favorites">Save to favorites</string>
+    <string name="game_removed_from_favorites">Game removed from favorites</string>
+    <string name="remove_from_favorites">Remove from favorites</string>
+    <string name="game_saved_in_favorites">Game saved in favorites</string>
+    <string name="there_are_no_favorite_games_to_show">There are no favorite games to show</string>
 
     <string-array name="categories">
         <item>mmorpg</item>
@@ -81,5 +87,7 @@
         <item>horror</item>
         <item>mmorts</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

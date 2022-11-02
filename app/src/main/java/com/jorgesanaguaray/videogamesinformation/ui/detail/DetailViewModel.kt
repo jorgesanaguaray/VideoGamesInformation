@@ -4,10 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jorgesanaguaray.videogamesinformation.domain.GameByIdFromService
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.FavoritesEntity
+import com.jorgesanaguaray.videogamesinformation.domain.*
 import com.jorgesanaguaray.videogamesinformation.domain.item.SpecificGameItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 /**
@@ -15,7 +17,14 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(private val gameByIdFromService: GameByIdFromService) : ViewModel() {
+class DetailViewModel @Inject constructor(
+
+    private val gameByIdFromService: GameByIdFromService,
+    private val insertFavoriteUseCase: InsertFavorite,
+    private val deleteFavoriteByIdUseCase: DeleteFavoriteById,
+    private val getFavoriteByIdUseCase: GetFavoriteById
+
+    ) : ViewModel() {
 
     private val _game = MutableLiveData<SpecificGameItem>()
     val game: LiveData<SpecificGameItem> get() = _game
@@ -48,6 +57,36 @@ class DetailViewModel @Inject constructor(private val gameByIdFromService: GameB
             }
 
         }
+
+    }
+
+    fun insertFavorite(favoritesEntity: FavoritesEntity) {
+
+        viewModelScope.launch {
+            insertFavoriteUseCase(favoritesEntity)
+        }
+
+    }
+
+    fun deleteFavoriteById(id: Int) {
+
+        viewModelScope.launch {
+            deleteFavoriteByIdUseCase(id)
+        }
+
+    }
+
+    fun isFavorite(id: Int): Boolean {
+
+        var favoritesEntity: FavoritesEntity?
+
+        runBlocking {
+            favoritesEntity = getFavoriteByIdUseCase(id)
+        }
+
+        if (favoritesEntity == null) return false
+
+        return true
 
     }
 
