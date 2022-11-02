@@ -83,6 +83,11 @@ class CategoryFragment : Fragment() {
             binding.mProgressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
 
+        binding.mSwipeRefreshLayout.setOnRefreshListener {
+            categoryViewModel.getCategoriesGamesFromService(binding.mAutoComplete.text.toString())
+            binding.mSwipeRefreshLayout.isRefreshing = false
+        }
+
     }
 
     override fun onResume() {

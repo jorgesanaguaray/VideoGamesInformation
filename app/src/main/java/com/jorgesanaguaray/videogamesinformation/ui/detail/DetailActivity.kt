@@ -92,6 +92,11 @@ class DetailActivity : AppCompatActivity() {
             binding.mProgressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
 
+        binding.mSwipeRefreshLayout.setOnRefreshListener {
+            detailViewModel.getGameByIdFromService(id)
+            binding.mSwipeRefreshLayout.isRefreshing = false
+        }
+
         detailViewModel.getGameByIdFromService(id)
 
         setButtonFavoriteStatues()
