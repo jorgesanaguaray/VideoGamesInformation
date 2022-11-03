@@ -66,5 +66,8 @@ interface GameDao {
     @Query("SELECT * FROM favorites_table")
     suspend fun getAllFavorites(): List<FavoritesEntity>
 
+    @Query("DELETE FROM favorites_table")
+    suspend fun deleteAllFavorites()
+
 
 }

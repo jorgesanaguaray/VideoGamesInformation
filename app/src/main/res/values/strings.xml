@@ -34,6 +34,10 @@
     <string name="remove_from_favorites">Remove from favorites</string>
     <string name="game_saved_in_favorites">Game saved in favorites</string>
     <string name="there_are_no_favorite_games_to_show">There are no favorite games to show</string>
+    <string name="delete_all_favorite_games">Delete all favorite games</string>
+    <string name="are_you_sure_you_want_to_delete_all_your_favorite_games">Are you sure you want to delete all your favorite games?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <string-array name="categories">
         <item>mmorpg</item>

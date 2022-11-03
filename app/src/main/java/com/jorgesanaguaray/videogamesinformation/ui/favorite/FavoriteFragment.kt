@@ -1,5 +1,6 @@
 package com.jorgesanaguaray.videogamesinformation.ui.favorite
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -7,8 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import com.jorgesanaguaray.videogamesinformation.R
 import com.jorgesanaguaray.videogamesinformation.databinding.FragmentFavoriteBinding
 import com.jorgesanaguaray.videogamesinformation.ui.detail.DetailActivity
 import com.jorgesanaguaray.videogamesinformation.util.Constants.Companion.KEY_GAME_ID
@@ -67,12 +70,20 @@ class FavoriteFragment : Fragment() {
             binding.mRecyclerView.visibility = if (it) View.VISIBLE else View.GONE
         }
 
+        favoriteViewModel.floatingActionButtonVisibility.observe(viewLifecycleOwner) {
+            binding.mFloatingActionButton.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
         favoriteViewModel.textViewNoFavoritesVisibility.observe(viewLifecycleOwner) {
             binding.mTextViewNoFavorites.visibility = if (it) View.VISIBLE else View.GONE
         }
 
         favoriteViewModel.progressBarVisibility.observe(viewLifecycleOwner) {
             binding.mProgressBar.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
+        binding.mFloatingActionButton.setOnClickListener {
+            showDeleteDialog()
         }
 
         binding.mSwipeRefreshLayout.setOnRefreshListener {
@@ -85,6 +96,19 @@ class FavoriteFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun showDeleteDialog() {
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setIcon(R.drawable.ic_delete)
+        builder.setTitle(R.string.delete_all_favorite_games)
+        builder.setMessage(R.string.are_you_sure_you_want_to_delete_all_your_favorite_games)
+        builder.setPositiveButton(R.string.yes) { _: DialogInterface, _: Int -> favoriteViewModel.deleteAllFavorites() }
+        builder.setNegativeButton(R.string.no) { _, _ ->}
+        builder.setCancelable(false)
+        builder.create().show()
+
     }
 
 }

@@ -146,5 +146,9 @@ class GameRepository @Inject constructor(
 
     }
 
+    suspend fun deleteAllFavorites() {
+        gameDao.deleteAllFavorites()
+    }
+
 
 }

@@ -23,6 +23,18 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/mFloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_delete"
+        app:tintMode="@color/white"
+        app:backgroundTint="@color/purple_500"/>
+
     <TextView
         android:id="@+id/mTextViewNoFavorites"
         android:layout_width="match_parent"

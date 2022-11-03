@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jorgesanaguaray.videogamesinformation.domain.DeleteAllFavorites
 import com.jorgesanaguaray.videogamesinformation.domain.GetAllFavorites
 import com.jorgesanaguaray.videogamesinformation.domain.item.FavoritesItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,13 +16,21 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class FavoriteViewModel @Inject constructor(private val getAllFavoritesUseCase: GetAllFavorites) : ViewModel() {
+class FavoriteViewModel @Inject constructor(
+
+    private val getAllFavoritesUseCase: GetAllFavorites,
+    private val deleteAllFavoritesUseCase: DeleteAllFavorites
+
+    ) : ViewModel() {
 
     private val _games = MutableLiveData<List<FavoritesItem>>()
     val games: LiveData<List<FavoritesItem>> get() = _games
 
     private val _recyclerViewVisibility = MutableLiveData<Boolean>()
     val recyclerViewVisibility: LiveData<Boolean> get() = _recyclerViewVisibility
+
+    private val _floatingActionButtonVisibility = MutableLiveData<Boolean>()
+    val floatingActionButtonVisibility: LiveData<Boolean> get() = _floatingActionButtonVisibility
 
     private val _textViewNoFavoritesVisibility = MutableLiveData<Boolean>()
     val textViewNoFavoritesVisibility: LiveData<Boolean> get() = _textViewNoFavoritesVisibility
@@ -44,7 +53,7 @@ class FavoriteViewModel @Inject constructor(private val getAllFavoritesUseCase: 
             if (games.isNotEmpty()) {
 
                 _games.value = games
-                showRecyclerView()
+                showRecyclerViewAndFloatingActionButton()
 
             } else {
 
@@ -56,9 +65,21 @@ class FavoriteViewModel @Inject constructor(private val getAllFavoritesUseCase: 
 
     }
 
-    private fun showRecyclerView() {
+    fun deleteAllFavorites() {
+
+        viewModelScope.launch {
+
+            deleteAllFavoritesUseCase()
+            showTextViewNoFavorites()
+
+        }
+
+    }
+
+    private fun showRecyclerViewAndFloatingActionButton() {
 
         _recyclerViewVisibility.value = true
+        _floatingActionButtonVisibility.value = true
         _textViewNoFavoritesVisibility.value = false
         _progressBarVisibility.value = false
 
@@ -67,6 +88,7 @@ class FavoriteViewModel @Inject constructor(private val getAllFavoritesUseCase: 
     private fun showTextViewNoFavorites() {
 
         _recyclerViewVisibility.value = false
+        _floatingActionButtonVisibility.value = false
         _textViewNoFavoritesVisibility.value = true
         _progressBarVisibility.value = false
 
@@ -75,6 +97,7 @@ class FavoriteViewModel @Inject constructor(private val getAllFavoritesUseCase: 
     private fun showProgressBar() {
 
         _recyclerViewVisibility.value = false
+        _floatingActionButtonVisibility.value = false
         _textViewNoFavoritesVisibility.value = false
         _progressBarVisibility.value = true
 
