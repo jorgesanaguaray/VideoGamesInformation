@@ -55,7 +55,7 @@ interface GameDao {
 
 
     @Insert
-    suspend fun insertFavorite(favoritesEntity: FavoritesEntity)
+    suspend fun insertFavorite(favorite: FavoritesEntity)
 
     @Query("DELETE FROM favorites_table WHERE id = :id")
     suspend fun deleteFavoriteById(id: Int)
