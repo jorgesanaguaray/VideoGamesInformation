@@ -20,10 +20,10 @@ interface GameApi {
     suspend fun getGames(): Response<List<GameModel>>
 
     @GET(CATEGORY_ENDPOINT)
-    suspend fun getCategories(@Query(value = "category") category: String): Response<List<GameModel>>
+    suspend fun getGamesByCategory(@Query(value = "category") category: String): Response<List<GameModel>>
 
     @GET(PLATFORM_ENDPOINT)
-    suspend fun getPlatforms(@Query(value = "platform") platform: String): Response<List<GameModel>>
+    suspend fun getGamesByPlatform(@Query(value = "platform") platform: String): Response<List<GameModel>>
 
     @GET(GAME_ID_ENDPOINT)
     suspend fun getGameById(@Query(value = "id") id: Int): Response<SpecificGameModel>

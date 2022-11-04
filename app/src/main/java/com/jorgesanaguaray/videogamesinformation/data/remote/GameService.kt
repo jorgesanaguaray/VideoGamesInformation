@@ -21,20 +21,20 @@ class GameService @Inject constructor(private val gameApi: GameApi) {
 
     }
 
-    suspend fun getCategories(category: String): List<GameModel> {
+    suspend fun getGamesByCategory(category: String): List<GameModel> {
 
         return withContext(Dispatchers.IO) {
-            val categories = gameApi.getCategories(category)
-            categories.body() ?: emptyList()
+            val games = gameApi.getGamesByCategory(category)
+            games.body() ?: emptyList()
         }
 
     }
 
-    suspend fun getPlatforms(platform: String): List<GameModel> {
+    suspend fun getGamesByPlatform(platform: String): List<GameModel> {
 
         return withContext(Dispatchers.IO) {
-            val platforms = gameApi.getPlatforms(platform)
-            platforms.body() ?: emptyList()
+            val games = gameApi.getGamesByPlatform(platform)
+            games.body() ?: emptyList()
         }
 
     }

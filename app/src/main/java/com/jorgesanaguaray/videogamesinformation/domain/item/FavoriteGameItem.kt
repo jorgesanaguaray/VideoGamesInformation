@@ -1,12 +1,12 @@
 package com.jorgesanaguaray.videogamesinformation.domain.item
 
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.FavoritesEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.FavoriteGameEntity
 
 /**
  * Created by Jorge Sanaguaray
  */
 
-data class FavoritesItem(
+data class FavoriteGameItem(
 
     val id: Int,
     val title: String,
@@ -16,4 +16,4 @@ data class FavoritesItem(
 
 )
 
-fun FavoritesEntity.toFavoritesItem() = FavoritesItem(id, title, thumbnail, short_description, game_url)
+fun FavoriteGameEntity.toFavoriteGameItem() = FavoriteGameItem(id, title, thumbnail, short_description, game_url)

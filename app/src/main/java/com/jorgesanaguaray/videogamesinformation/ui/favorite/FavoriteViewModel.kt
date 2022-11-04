@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jorgesanaguaray.videogamesinformation.domain.DeleteAllFavorites
-import com.jorgesanaguaray.videogamesinformation.domain.GetAllFavorites
-import com.jorgesanaguaray.videogamesinformation.domain.item.FavoritesItem
+import com.jorgesanaguaray.videogamesinformation.domain.DeleteFavoriteGamesUseCase
+import com.jorgesanaguaray.videogamesinformation.domain.GetFavoriteGamesUseCase
+import com.jorgesanaguaray.videogamesinformation.domain.item.FavoriteGameItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,13 +18,13 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(
 
-    private val getAllFavoritesUseCase: GetAllFavorites,
-    private val deleteAllFavoritesUseCase: DeleteAllFavorites
+    private val getFavoriteGamesUseCase: GetFavoriteGamesUseCase,
+    private val deleteFavoriteGamesUseCase: DeleteFavoriteGamesUseCase
 
     ) : ViewModel() {
 
-    private val _games = MutableLiveData<List<FavoritesItem>>()
-    val games: LiveData<List<FavoritesItem>> get() = _games
+    private val _games = MutableLiveData<List<FavoriteGameItem>>()
+    val games: LiveData<List<FavoriteGameItem>> get() = _games
 
     private val _recyclerViewVisibility = MutableLiveData<Boolean>()
     val recyclerViewVisibility: LiveData<Boolean> get() = _recyclerViewVisibility
@@ -39,16 +39,16 @@ class FavoriteViewModel @Inject constructor(
     val progressBarVisibility: LiveData<Boolean> get() = _progressBarVisibility
 
     init {
-        getAllFavorites()
+        getFavoriteGames()
     }
 
-    fun getAllFavorites() {
+    fun getFavoriteGames() {
 
         showProgressBar()
 
         viewModelScope.launch {
 
-            val games = getAllFavoritesUseCase()
+            val games = getFavoriteGamesUseCase()
 
             if (games.isNotEmpty()) {
 
@@ -65,11 +65,11 @@ class FavoriteViewModel @Inject constructor(
 
     }
 
-    fun deleteAllFavorites() {
+    fun deleteFavoriteGames() {
 
         viewModelScope.launch {
 
-            deleteAllFavoritesUseCase()
+            deleteFavoriteGamesUseCase()
             showTextViewNoFavorites()
 
         }

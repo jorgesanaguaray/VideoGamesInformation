@@ -8,7 +8,7 @@ import javax.inject.Inject
  * Created by Jorge Sanaguaray
  */
 
-class GameByIdFromService @Inject constructor(private val gameRepository: GameRepository) {
+class GetGameByIdFromServiceUseCase @Inject constructor(private val gameRepository: GameRepository) {
 
     suspend operator fun invoke(id: Int): SpecificGameItem {
 

@@ -8,8 +8,8 @@ import com.jorgesanaguaray.videogamesinformation.domain.item.GameItem
  * Created by Jorge Sanaguaray
  */
 
-@Entity(tableName = "platforms_table")
-data class PlatformsEntity(
+@Entity(tableName = "platform_game_table")
+data class PlatformGameEntity(
 
     @PrimaryKey
     val id: Int,
@@ -20,4 +20,4 @@ data class PlatformsEntity(
 
 )
 
-fun GameItem.toPlatformsEntity() = PlatformsEntity(id, title, thumbnail, short_description, game_url)
+fun GameItem.toPlatformGameEntity() = PlatformGameEntity(id, title, thumbnail, short_description, game_url)

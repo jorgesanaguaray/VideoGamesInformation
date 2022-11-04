@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.FavoritesEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.FavoriteGameEntity
 import com.jorgesanaguaray.videogamesinformation.domain.*
 import com.jorgesanaguaray.videogamesinformation.domain.item.SpecificGameItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,10 +19,10 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
 
-    private val gameByIdFromService: GameByIdFromService,
-    private val insertFavoriteUseCase: InsertFavorite,
-    private val deleteFavoriteByIdUseCase: DeleteFavoriteById,
-    private val getFavoriteByIdUseCase: GetFavoriteById
+    private val getGameByIdFromServiceUseCase: GetGameByIdFromServiceUseCase,
+    private val insertFavoriteGameUseCase: InsertFavoriteGameUseCase,
+    private val deleteFavoriteGameByIdUseCase: DeleteFavoriteGameByIdUseCase,
+    private val getFavoriteGameByIdUseCase: GetFavoriteGameByIdUseCase
 
     ) : ViewModel() {
 
@@ -46,7 +46,7 @@ class DetailViewModel @Inject constructor(
 
             try {
 
-                val game = gameByIdFromService(id)
+                val game = getGameByIdFromServiceUseCase(id)
                 _game.value = game
                 showNestedScrollView()
 
@@ -60,31 +60,31 @@ class DetailViewModel @Inject constructor(
 
     }
 
-    fun insertFavorite(favoritesEntity: FavoritesEntity) {
+    fun insertFavoriteGame(favorite: FavoriteGameEntity) {
 
         viewModelScope.launch {
-            insertFavoriteUseCase(favoritesEntity)
+            insertFavoriteGameUseCase(favorite)
         }
 
     }
 
-    fun deleteFavoriteById(id: Int) {
+    fun deleteFavoriteGameById(id: Int) {
 
         viewModelScope.launch {
-            deleteFavoriteByIdUseCase(id)
+            deleteFavoriteGameByIdUseCase(id)
         }
 
     }
 
-    fun isFavorite(id: Int): Boolean {
+    fun isFavoriteGame(id: Int): Boolean {
 
-        var favoritesEntity: FavoritesEntity?
+        var favoriteGameEntity: FavoriteGameEntity?
 
         runBlocking {
-            favoritesEntity = getFavoriteByIdUseCase(id)
+            favoriteGameEntity = getFavoriteGameByIdUseCase(id)
         }
 
-        if (favoritesEntity == null) return false
+        if (favoriteGameEntity == null) return false
 
         return true
 

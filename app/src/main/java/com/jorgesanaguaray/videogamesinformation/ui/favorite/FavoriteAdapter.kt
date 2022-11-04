@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.jorgesanaguaray.videogamesinformation.R
 import com.jorgesanaguaray.videogamesinformation.databinding.ItemFavoriteBinding
-import com.jorgesanaguaray.videogamesinformation.domain.item.FavoritesItem
+import com.jorgesanaguaray.videogamesinformation.domain.item.FavoriteGameItem
 
 /**
  * Created by Jorge Sanaguaray
@@ -14,7 +14,7 @@ import com.jorgesanaguaray.videogamesinformation.domain.item.FavoritesItem
 
 class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.MyFavoriteViewHolder>() {
 
-    private var favorites: List<FavoritesItem> = ArrayList()
+    private var favorites: List<FavoriteGameItem> = ArrayList()
     private lateinit var onButtonClick: OnButtonClick
     private lateinit var onCardViewClick: OnCardViewClick
 
@@ -53,7 +53,7 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.MyFavoriteViewHolde
 
     class MyFavoriteViewHolder(val binding: ItemFavoriteBinding): RecyclerView.ViewHolder(binding.root)
 
-    fun setGames(favorites: List<FavoritesItem>) {
+    fun setGames(favorites: List<FavoriteGameItem>) {
         this.favorites = favorites
     }
 

@@ -8,7 +8,7 @@ import com.jorgesanaguaray.videogamesinformation.data.local.entities.*
  * Created by Jorge Sanaguaray
  */
 
-@Database(entities = [GameEntity::class, CategoriesEntity::class, PlatformsEntity::class, GamesEntity::class, FavoritesEntity::class], version = 1)
+@Database(entities = [GameEntity::class, CategoryGameEntity::class, PlatformGameEntity::class, GamesEntity::class, FavoriteGameEntity::class], version = 1)
 abstract class GameDatabase : RoomDatabase() {
 
     abstract fun getGameDao(): GameDao

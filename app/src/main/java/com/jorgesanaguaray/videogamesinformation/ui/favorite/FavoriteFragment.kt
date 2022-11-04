@@ -87,7 +87,7 @@ class FavoriteFragment : Fragment() {
         }
 
         binding.mSwipeRefreshLayout.setOnRefreshListener {
-            favoriteViewModel.getAllFavorites()
+            favoriteViewModel.getFavoriteGames()
             binding.mSwipeRefreshLayout.isRefreshing = false
         }
 
@@ -104,7 +104,7 @@ class FavoriteFragment : Fragment() {
         builder.setIcon(R.drawable.ic_delete)
         builder.setTitle(R.string.delete_all_favorite_games)
         builder.setMessage(R.string.are_you_sure_you_want_to_delete_all_your_favorite_games)
-        builder.setPositiveButton(R.string.yes) { _: DialogInterface, _: Int -> favoriteViewModel.deleteAllFavorites() }
+        builder.setPositiveButton(R.string.yes) { _: DialogInterface, _: Int -> favoriteViewModel.deleteFavoriteGames() }
         builder.setNegativeButton(R.string.no) { _, _ ->}
         builder.setCancelable(false)
         builder.create().show()

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jorgesanaguaray.videogamesinformation.domain.CategoriesGamesFromService
+import com.jorgesanaguaray.videogamesinformation.domain.GetGamesByCategoryFromServiceUseCase
 import com.jorgesanaguaray.videogamesinformation.domain.item.GameItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class CategoryViewModel @Inject constructor(private val categoriesGamesFromService: CategoriesGamesFromService) : ViewModel() {
+class CategoryViewModel @Inject constructor(private val getGamesByCategoryFromServiceUseCase: GetGamesByCategoryFromServiceUseCase) : ViewModel() {
 
     private val _games = MutableLiveData<List<GameItem>>()
     val games: LiveData<List<GameItem>> get() = _games
@@ -33,10 +33,10 @@ class CategoryViewModel @Inject constructor(private val categoriesGamesFromServi
     val progressBarVisibility: LiveData<Boolean> get() = _progressBarVisibility
 
     init {
-        getCategoriesGamesFromService("mmorpg")
+        getGamesByCategoryFromService("mmorpg")
     }
 
-    fun getCategoriesGamesFromService(category: String) {
+    fun getGamesByCategoryFromService(category: String) {
 
         showProgressBar()
 
@@ -44,7 +44,7 @@ class CategoryViewModel @Inject constructor(private val categoriesGamesFromServi
 
             try {
 
-                val games = categoriesGamesFromService(category)
+                val games = getGamesByCategoryFromServiceUseCase(category)
                 _games.value = games
                 showTextInputLayoutAndRecyclerView()
 

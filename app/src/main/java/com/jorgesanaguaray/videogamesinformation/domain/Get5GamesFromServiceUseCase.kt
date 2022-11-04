@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Created by Jorge Sanaguaray
  */
 
-class RecommendedGamesFromService @Inject constructor(private val gameRepository: GameRepository) {
+class Get5GamesFromServiceUseCase @Inject constructor(private val gameRepository: GameRepository) {
 
     suspend operator fun invoke(): List<GameItem> {
 

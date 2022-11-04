@@ -7,11 +7,11 @@ import javax.inject.Inject
  * Created by Jorge Sanaguaray
  */
 
-class DeleteAllFavorites @Inject constructor(private val gameRepository: GameRepository) {
+class DeleteFavoriteGamesUseCase @Inject constructor(private val gameRepository: GameRepository) {
 
     suspend operator fun invoke() {
 
-        gameRepository.deleteAllFavorites()
+        gameRepository.deleteFavoriteGames()
 
     }
 

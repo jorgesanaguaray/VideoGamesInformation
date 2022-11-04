@@ -84,7 +84,7 @@ class CategoryFragment : Fragment() {
         }
 
         binding.mSwipeRefreshLayout.setOnRefreshListener {
-            categoryViewModel.getCategoriesGamesFromService(binding.mAutoComplete.text.toString())
+            categoryViewModel.getGamesByCategoryFromService(binding.mAutoComplete.text.toString())
             binding.mSwipeRefreshLayout.isRefreshing = false
         }
 
@@ -104,7 +104,7 @@ class CategoryFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                categoryViewModel.getCategoriesGamesFromService(binding.mAutoComplete.text.toString())
+                categoryViewModel.getGamesByCategoryFromService(binding.mAutoComplete.text.toString())
             }
 
         })

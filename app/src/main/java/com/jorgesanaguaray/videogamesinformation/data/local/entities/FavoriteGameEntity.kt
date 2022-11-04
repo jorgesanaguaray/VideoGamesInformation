@@ -2,14 +2,13 @@ package com.jorgesanaguaray.videogamesinformation.data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.jorgesanaguaray.videogamesinformation.domain.item.GameItem
 
 /**
  * Created by Jorge Sanaguaray
  */
 
-@Entity(tableName = "categories_table")
-data class CategoriesEntity(
+@Entity(tableName = "favorite_game_table")
+data class FavoriteGameEntity(
 
     @PrimaryKey
     val id: Int,
@@ -19,5 +18,3 @@ data class CategoriesEntity(
     val game_url: String
 
 )
-
-fun GameItem.toCategoriesEntity() = CategoriesEntity(id, title, thumbnail, short_description, game_url)

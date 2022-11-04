@@ -18,22 +18,6 @@ class GameRepository @Inject constructor(
     ) {
 
 
-    suspend fun getGamesFromService(): List<GameItem> {
-
-        val games = gameService.getGames()
-        return games.map {
-            it.toGameItem()
-        }
-
-    }
-
-    suspend fun getGameFromDao(): GameItem {
-
-        val game = gameDao.getGame()
-        return game.toGameItem()
-
-    }
-
     suspend fun insertGame(game: GameEntity) {
         gameDao.insertGame(game)
     }
@@ -42,69 +26,68 @@ class GameRepository @Inject constructor(
         gameDao.deleteGame()
     }
 
+    suspend fun getGameFromDao(): GameItem {
+        return gameDao.getGame().toGameItem()
+    }
 
-    suspend fun getCategoriesFromService(category: String): List<GameItem> {
+    suspend fun getGamesFromService(): List<GameItem> {
 
-        val categories = gameService.getCategories(category)
-        return categories.map {
+        return gameService.getGames().map {
             it.toGameItem()
         }
 
     }
 
-    suspend fun getCategoriesFromDao(): List<GameItem> {
 
-        val categories = gameDao.getCategories()
-        return categories.map {
+    suspend fun insertCategoryGames(games: List<CategoryGameEntity>) {
+        gameDao.insertCategoryGames(games)
+    }
+
+    suspend fun deleteCategoryGames() {
+        gameDao.deleteCategoryGames()
+    }
+
+    suspend fun getCategoryGamesFromDao(): List<GameItem> {
+
+        return gameDao.getCategoryGames().map {
             it.toGameItem()
         }
 
     }
 
-    suspend fun insertCategories(categories: List<CategoriesEntity>) {
-        gameDao.insertCategories(categories)
-    }
+    suspend fun getGamesByCategoryFromService(category: String): List<GameItem> {
 
-    suspend fun deleteCategories() {
-        gameDao.deleteCategories()
-    }
-
-
-    suspend fun getPlatformsFromService(platform: String): List<GameItem> {
-
-        val platforms = gameService.getPlatforms(platform)
-        return platforms.map {
+        return gameService.getGamesByCategory(category).map {
             it.toGameItem()
         }
 
     }
 
-    suspend fun getPlatformsFromDao(): List<GameItem> {
 
-        val platforms = gameDao.getPlatforms()
-        return platforms.map {
+    suspend fun insertPlatformGames(platforms: List<PlatformGameEntity>) {
+        gameDao.insertPlatformGames(platforms)
+    }
+
+    suspend fun deletePlatformGames() {
+        gameDao.deletePlatformGames()
+    }
+
+    suspend fun getPlatformGamesFromDao(): List<GameItem> {
+
+        return gameDao.getPlatformGames().map {
             it.toGameItem()
         }
 
     }
 
-    suspend fun insertPlatforms(platforms: List<PlatformsEntity>) {
-        gameDao.insertPlatforms(platforms)
-    }
+    suspend fun getGamesByPlatformFromService(platform: String): List<GameItem> {
 
-    suspend fun deletePlatforms() {
-        gameDao.deletePlatforms()
-    }
-
-
-    suspend fun getGamesFromDao(): List<GameItem> {
-
-        val games = gameDao.getGames()
-        return games.map {
+        return gameService.getGamesByPlatform(platform).map {
             it.toGameItem()
         }
 
     }
+
 
     suspend fun insertGames(games: List<GamesEntity>) {
         gameDao.insertGames(games)
@@ -114,40 +97,42 @@ class GameRepository @Inject constructor(
         gameDao.deleteGames()
     }
 
+    suspend fun getGamesFromDao(): List<GameItem> {
 
-    suspend fun getGameByIdFromService(id: Int): SpecificGameItem {
-
-        val game = gameService.getGameById(id)
-        return game.toSpecificGameItem()
-
-    }
-
-
-    suspend fun insertFavorite(favoritesEntity: FavoritesEntity) {
-        gameDao.insertFavorite(favoritesEntity)
-    }
-
-    suspend fun deleteFavoriteById(id: Int) {
-        gameDao.deleteFavoriteById(id)
-    }
-
-    suspend fun getFavoriteById(id: Int): FavoritesEntity {
-
-        return gameDao.getFavoriteById(id)
-
-    }
-
-    suspend fun getAllFavorites(): List<FavoritesItem> {
-
-        val favorites = gameDao.getAllFavorites()
-        return favorites.map {
-            it.toFavoritesItem()
+        return gameDao.getGames().map {
+            it.toGameItem()
         }
 
     }
 
-    suspend fun deleteAllFavorites() {
-        gameDao.deleteAllFavorites()
+
+    suspend fun getGameByIdFromService(id: Int): SpecificGameItem {
+        return gameService.getGameById(id).toSpecificGameItem()
+    }
+
+
+    suspend fun insertFavoriteGame(favoriteGame: FavoriteGameEntity) {
+        gameDao.insertFavoriteGame(favoriteGame)
+    }
+
+    suspend fun deleteFavoriteGameById(id: Int) {
+        gameDao.deleteFavoriteGameById(id)
+    }
+
+    suspend fun deleteFavoriteGames() {
+        gameDao.deleteFavoriteGames()
+    }
+
+    suspend fun getFavoriteGameById(id: Int): FavoriteGameEntity {
+        return gameDao.getFavoriteGameById(id)
+    }
+
+    suspend fun getFavoriteGames(): List<FavoriteGameItem> {
+
+        return gameDao.getFavoriteGames().map {
+            it.toFavoriteGameItem()
+        }
+
     }
 
 

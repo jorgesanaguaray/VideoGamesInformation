@@ -14,38 +14,35 @@ import com.jorgesanaguaray.videogamesinformation.data.local.entities.*
 interface GameDao {
 
 
-    @Query("SELECT * FROM game_table")
-    suspend fun getGame(): GameEntity
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertGame(game: GameEntity)
 
     @Query("DELETE FROM game_table")
     suspend fun deleteGame()
 
+    @Query("SELECT * FROM game_table")
+    suspend fun getGame(): GameEntity
 
-    @Query("SELECT * FROM categories_table")
-    suspend fun getCategories(): List<CategoriesEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCategories(categories: List<CategoriesEntity>)
+    suspend fun insertCategoryGames(categoryGames: List<CategoryGameEntity>)
 
-    @Query("DELETE FROM categories_table")
-    suspend fun deleteCategories()
+    @Query("DELETE FROM category_game_table")
+    suspend fun deleteCategoryGames()
 
+    @Query("SELECT * FROM category_game_table")
+    suspend fun getCategoryGames(): List<CategoryGameEntity>
 
-    @Query("SELECT * FROM platforms_table")
-    suspend fun getPlatforms(): List<PlatformsEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPlatforms(platforms: List<PlatformsEntity>)
+    suspend fun insertPlatformGames(platformGames: List<PlatformGameEntity>)
 
-    @Query("DELETE FROM platforms_table")
-    suspend fun deletePlatforms()
+    @Query("DELETE FROM platform_game_table")
+    suspend fun deletePlatformGames()
 
+    @Query("SELECT * FROM platform_game_table")
+    suspend fun getPlatformGames(): List<PlatformGameEntity>
 
-    @Query("SELECT * FROM games_table")
-    suspend fun getGames(): List<GamesEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertGames(games: List<GamesEntity>)
@@ -53,21 +50,24 @@ interface GameDao {
     @Query("DELETE FROM games_table")
     suspend fun deleteGames()
 
+    @Query("SELECT * FROM games_table")
+    suspend fun getGames(): List<GamesEntity>
+
 
     @Insert
-    suspend fun insertFavorite(favorite: FavoritesEntity)
+    suspend fun insertFavoriteGame(favoriteGame: FavoriteGameEntity)
 
-    @Query("DELETE FROM favorites_table WHERE id = :id")
-    suspend fun deleteFavoriteById(id: Int)
+    @Query("DELETE FROM favorite_game_table WHERE id = :id")
+    suspend fun deleteFavoriteGameById(id: Int)
 
-    @Query("SELECT * FROM favorites_table WHERE id = :id")
-    suspend fun getFavoriteById(id: Int): FavoritesEntity
+    @Query("DELETE FROM favorite_game_table")
+    suspend fun deleteFavoriteGames()
 
-    @Query("SELECT * FROM favorites_table")
-    suspend fun getAllFavorites(): List<FavoritesEntity>
+    @Query("SELECT * FROM favorite_game_table WHERE id = :id")
+    suspend fun getFavoriteGameById(id: Int): FavoriteGameEntity
 
-    @Query("DELETE FROM favorites_table")
-    suspend fun deleteAllFavorites()
+    @Query("SELECT * FROM favorite_game_table")
+    suspend fun getFavoriteGames(): List<FavoriteGameEntity>
 
 
 }

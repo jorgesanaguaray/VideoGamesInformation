@@ -132,10 +132,10 @@ class HomeFragment : Fragment() {
 
         binding.mSwipeRefreshLayout.setOnRefreshListener {
 
-            homeViewModel.getRecommendedGameFromService()
-            homeViewModel.getRecommendedCategoriesFromService()
-            homeViewModel.getRecommendedPlatformsFromService()
-            homeViewModel.getRecommendedGamesFromService()
+            homeViewModel.getGameFromService()
+            homeViewModel.get5GamesByCategoryFromService()
+            homeViewModel.get5GamesByPlatformFromService()
+            homeViewModel.get5GamesFromService()
             binding.mSwipeRefreshLayout.isRefreshing = false
 
         }

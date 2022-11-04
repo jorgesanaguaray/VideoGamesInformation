@@ -13,7 +13,7 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.google.android.material.snackbar.Snackbar
 import com.jorgesanaguaray.videogamesinformation.R
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.FavoritesEntity
+import com.jorgesanaguaray.videogamesinformation.data.local.entities.FavoriteGameEntity
 import com.jorgesanaguaray.videogamesinformation.databinding.ActivityDetailBinding
 import com.jorgesanaguaray.videogamesinformation.domain.item.SpecificGameItem
 import com.jorgesanaguaray.videogamesinformation.util.Constants.Companion.KEY_GAME_ID
@@ -114,14 +114,14 @@ class DetailActivity : AppCompatActivity() {
 
         if (isFavorite()) {
 
-            detailViewModel.deleteFavoriteById(id)
+            detailViewModel.deleteFavoriteGameById(id)
             binding.mButtonFavorite.text = resources.getString(R.string.save_to_favorites)
             Snackbar.make(findViewById(android.R.id.content), R.string.game_removed_from_favorites, Snackbar.LENGTH_LONG).show()
 
         } else {
 
-            val favorite = FavoritesEntity(id = game.id, title = game.title, thumbnail = game.thumbnail, short_description = game.short_description, game_url = game.game_url)
-            detailViewModel.insertFavorite(favorite)
+            val favorite = FavoriteGameEntity(id = game.id, title = game.title, thumbnail = game.thumbnail, short_description = game.short_description, game_url = game.game_url)
+            detailViewModel.insertFavoriteGame(favorite)
             binding.mButtonFavorite.text = resources.getString(R.string.remove_from_favorites)
             Snackbar.make(findViewById(android.R.id.content), R.string.game_saved_in_favorites, Snackbar.LENGTH_LONG).show()
 
@@ -130,7 +130,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun isFavorite(): Boolean {
-        return detailViewModel.isFavorite(id)
+        return detailViewModel.isFavoriteGame(id)
     }
 
 }

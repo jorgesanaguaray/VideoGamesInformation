@@ -8,11 +8,11 @@ import javax.inject.Inject
  * Created by Jorge Sanaguaray
  */
 
-class CategoriesGamesFromService @Inject constructor(private val gameRepository: GameRepository) {
+class GetGamesByCategoryFromServiceUseCase @Inject constructor(private val gameRepository: GameRepository) {
 
     suspend operator fun invoke(category: String): List<GameItem> {
 
-        val categories = gameRepository.getCategoriesFromService(category)
+        val categories = gameRepository.getGamesByCategoryFromService(category)
         return categories.shuffled()
 
     }
