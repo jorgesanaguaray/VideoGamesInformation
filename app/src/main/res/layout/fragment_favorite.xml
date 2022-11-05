@@ -45,7 +45,7 @@
         android:visibility="gone"
         android:alpha="0.5"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:text="@string/there_are_no_favorite_games_to_show"/>
+        android:text="@string/no_favorite_games"/>
 
     <ProgressBar
         android:id="@+id/mProgressBar"

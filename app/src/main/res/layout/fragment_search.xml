@@ -58,7 +58,7 @@
         android:visibility="gone"
         android:alpha="0.5"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:text="@string/check_your_internet_connection"/>
+        android:text="@string/no_internet_connection"/>
 
     <ProgressBar
         android:id="@+id/mProgressBar"
