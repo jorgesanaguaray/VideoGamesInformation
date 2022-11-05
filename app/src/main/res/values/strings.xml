@@ -13,7 +13,7 @@
     <string name="no_internet_connection">No internet connection</string>
     <string name="no_games_were_found_with_the_search_term_please_try_another">No games were found with the search term, please try another</string>
     <string name="games_by_category">Games by category</string>
-    <string name="mmorpg">mmorpg</string>
+    <string name="category">2d</string>
     <string name="game_information">Game Information</string>
     <string name="minimum_system_requirements">Minimum System Requirements</string>
     <string name="status">Status:</string>
@@ -40,51 +40,51 @@
     <string name="no">No</string>
 
     <string-array name="categories">
-        <item>mmorpg</item>
-        <item>shooter</item>
-        <item>strategy</item>
+        <item>2d</item>
+        <item>3d</item>
+        <item>pve</item>
+        <item>pvp</item>
+        <item>tank</item>
+        <item>card</item>
+        <item>pixel</item>
+        <item>sci-fi</item>
+        <item>mmo</item>
+        <item>flight</item>
+        <item>voxel</item>
         <item>moba</item>
+        <item>space</item>
+        <item>social</item>
+        <item>anime</item>
+        <item>action</item>
+        <item>horror</item>
         <item>racing</item>
         <item>sports</item>
-        <item>social</item>
-        <item>sandbox</item>
-        <item>open-world</item>
-        <item>survival</item>
-        <item>pvp</item>
-        <item>pve</item>
-        <item>pixel</item>
-        <item>voxel</item>
-        <item>zombie</item>
-        <item>turn-based</item>
-        <item>first-person</item>
-        <item>third-Person</item>
-        <item>top-down</item>
-        <item>tank</item>
-        <item>space</item>
         <item>sailing</item>
-        <item>side-scroller</item>
-        <item>superhero</item>
-        <item>permadeath</item>
-        <item>card</item>
-        <item>battle-royale</item>
-        <item>mmo</item>
+        <item>zombie</item>
+        <item>fantasy</item>
+        <item>military</item>
+        <item>shooter</item>
+        <item>survival</item>
+        <item>fighting</item>
+        <item>mmorts</item>
         <item>mmofps</item>
         <item>mmotps</item>
-        <item>3d</item>
-        <item>2d</item>
-        <item>anime</item>
-        <item>fantasy</item>
-        <item>sci-fi</item>
-        <item>fighting</item>
-        <item>action-rpg</item>
-        <item>action</item>
-        <item>military</item>
-        <item>martial-arts</item>
-        <item>flight</item>
+        <item>mmorpg</item>
+        <item>strategy</item>
+        <item>sandbox</item>
         <item>low-spec</item>
+        <item>top-down</item>
+        <item>superhero</item>
+        <item>action-rpg</item>
+        <item>turn-based</item>
+        <item>open-world</item>
+        <item>first-person</item>
+        <item>martial-arts</item>
+        <item>permadeath</item>
+        <item>side-scroller</item>
+        <item>third-Person</item>
+        <item>battle-royale</item>
         <item>tower-defense</item>
-        <item>horror</item>
-        <item>mmorts</item>
     </string-array>
 
 </resources>

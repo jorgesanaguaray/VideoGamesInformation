@@ -33,7 +33,7 @@ class CategoryViewModel @Inject constructor(private val getGamesByCategoryFromSe
     val progressBarVisibility: LiveData<Boolean> get() = _progressBarVisibility
 
     init {
-        getGamesByCategoryFromService("mmorpg")
+        getGamesByCategoryFromService("2d")
     }
 
     fun getGamesByCategoryFromService(category: String) {
