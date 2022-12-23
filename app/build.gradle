@@ -51,33 +51,14 @@ android {
 
 dependencies {
 
-    // Core
-    implementation 'androidx.core:core-ktx:1.9.0'
-
-    // AppCompat
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-
-    // Material
-    implementation 'com.google.android.material:material:1.7.0'
-
-    // ConstraintLayout
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-
-    // LiveData
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
-
-    // ViewModel
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
-
-    // Navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
-
     // Retrofit2
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     // Coil
     implementation("io.coil-kt:coil:1.4.0")
+
+    // ImageSlideshow
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
 
     // SwipeRefreshLayout
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
@@ -90,11 +71,19 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.43.2"
     kapt "com.google.dagger:hilt-android-compiler:2.43.2"
 
-    // JUnit Test
-    testImplementation 'junit:junit:4.13.2'
+    // Libraries by default
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
 
-    // Android Test
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    // Test by default
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
 }

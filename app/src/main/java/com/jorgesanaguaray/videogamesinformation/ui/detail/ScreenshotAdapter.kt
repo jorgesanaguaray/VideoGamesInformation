@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.jorgesanaguaray.videogamesinformation.R
-import com.jorgesanaguaray.videogamesinformation.data.remote.model.Screenshot
+import com.jorgesanaguaray.videogamesinformation.data.remote.models.Screenshot
 import com.jorgesanaguaray.videogamesinformation.databinding.ItemScreenshotBinding
 
 /**

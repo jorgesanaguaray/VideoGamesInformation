@@ -1,7 +1,7 @@
 package com.jorgesanaguaray.videogamesinformation.data.remote
 
-import com.jorgesanaguaray.videogamesinformation.data.remote.model.GameModel
-import com.jorgesanaguaray.videogamesinformation.data.remote.model.SpecificGameModel
+import com.jorgesanaguaray.videogamesinformation.data.remote.models.GameModel
+import com.jorgesanaguaray.videogamesinformation.data.remote.models.SpecificGameModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -25,15 +25,6 @@ class GameService @Inject constructor(private val gameApi: GameApi) {
 
         return withContext(Dispatchers.IO) {
             val games = gameApi.getGamesByCategory(category)
-            games.body() ?: emptyList()
-        }
-
-    }
-
-    suspend fun getGamesByPlatform(platform: String): List<GameModel> {
-
-        return withContext(Dispatchers.IO) {
-            val games = gameApi.getGamesByPlatform(platform)
             games.body() ?: emptyList()
         }
 

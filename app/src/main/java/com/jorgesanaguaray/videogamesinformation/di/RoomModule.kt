@@ -2,7 +2,7 @@ package com.jorgesanaguaray.videogamesinformation.di
 
 import android.content.Context
 import androidx.room.Room
-import com.jorgesanaguaray.videogamesinformation.data.local.GameDatabase
+import com.jorgesanaguaray.videogamesinformation.data.local.FavoriteDatabase
 import com.jorgesanaguaray.videogamesinformation.util.Constants.Companion.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
@@ -22,10 +22,10 @@ object RoomModule {
     @Singleton
     @Provides
     fun provideRoom(@ApplicationContext context: Context) =
-        Room.databaseBuilder(context, GameDatabase::class.java, DATABASE_NAME).build()
+        Room.databaseBuilder(context, FavoriteDatabase::class.java, DATABASE_NAME).build()
 
     @Singleton
     @Provides
-    fun provideGameDao(gameDatabase: GameDatabase) = gameDatabase.getGameDao()
+    fun provideFavoriteDao(favoriteDatabase: FavoriteDatabase) = favoriteDatabase.getFavoriteDao()
 
 }

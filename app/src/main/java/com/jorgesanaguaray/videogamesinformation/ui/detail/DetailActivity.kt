@@ -13,9 +13,9 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.google.android.material.snackbar.Snackbar
 import com.jorgesanaguaray.videogamesinformation.R
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.FavoriteGameEntity
 import com.jorgesanaguaray.videogamesinformation.databinding.ActivityDetailBinding
-import com.jorgesanaguaray.videogamesinformation.domain.item.SpecificGameItem
+import com.jorgesanaguaray.videogamesinformation.domain.items.GameItem
+import com.jorgesanaguaray.videogamesinformation.domain.items.SpecificGameItem
 import com.jorgesanaguaray.videogamesinformation.util.Constants.Companion.KEY_GAME_ID
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -80,24 +80,28 @@ class DetailActivity : AppCompatActivity() {
 
         }
 
-        detailViewModel.nestedScrollViewVisibility.observe(this) {
-            binding.mNestedScrollView.visibility = if (it) View.VISIBLE else View.GONE
+        detailViewModel.error.observe(this) {
+            binding.mTextError.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.error) + "</b>" + " " + it + "." + "<br><br>" + "<b>" + resources.getString(R.string.possible_solution) + "</b>" + " " + resources.getString(R.string.check_your_internet_connection), HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
 
-        detailViewModel.textViewNoInternetVisibility.observe(this) {
-            binding.mTextViewNoInternet.visibility = if (it) View.VISIBLE else View.GONE
+        detailViewModel.nestedScrollVisibility.observe(this) {
+            binding.mNestedScroll.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
+        detailViewModel.cardErrorVisibility.observe(this) {
+            binding.mCardError.visibility = if (it) View.VISIBLE else View.GONE
         }
 
         detailViewModel.progressBarVisibility.observe(this) {
             binding.mProgressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        binding.mSwipeRefreshLayout.setOnRefreshListener {
-            detailViewModel.getGameByIdFromService(id)
-            binding.mSwipeRefreshLayout.isRefreshing = false
+        binding.mSwipeRefresh.setOnRefreshListener {
+            detailViewModel.getGameById(id)
+            binding.mSwipeRefresh.isRefreshing = false
         }
 
-        detailViewModel.getGameByIdFromService(id)
+        detailViewModel.getGameById(id)
 
         setButtonFavoriteStatues()
 
@@ -114,14 +118,14 @@ class DetailActivity : AppCompatActivity() {
 
         if (isFavorite()) {
 
-            detailViewModel.deleteFavoriteGameById(id)
+            detailViewModel.deleteFavoriteById(id)
             binding.mButtonFavorite.text = resources.getString(R.string.save_to_favorites)
             Snackbar.make(findViewById(android.R.id.content), R.string.game_removed_from_favorites, Snackbar.LENGTH_LONG).show()
 
         } else {
 
-            val favorite = FavoriteGameEntity(id = game.id, title = game.title, thumbnail = game.thumbnail, short_description = game.short_description, game_url = game.game_url)
-            detailViewModel.insertFavoriteGame(favorite)
+            val gameItem = GameItem(id = game.id, title = game.title, thumbnail = game.thumbnail, short_description = game.short_description, game_url = game.game_url)
+            detailViewModel.insertFavorite(gameItem)
             binding.mButtonFavorite.text = resources.getString(R.string.remove_from_favorites)
             Snackbar.make(findViewById(android.R.id.content), R.string.game_saved_in_favorites, Snackbar.LENGTH_LONG).show()
 
@@ -130,7 +134,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun isFavorite(): Boolean {
-        return detailViewModel.isFavoriteGame(id)
+        return detailViewModel.isFavorite(id)
     }
 
 }

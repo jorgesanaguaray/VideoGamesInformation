@@ -6,17 +6,23 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.jorgesanaguaray.videogamesinformation.R
 import com.jorgesanaguaray.videogamesinformation.databinding.ItemFavoriteBinding
-import com.jorgesanaguaray.videogamesinformation.domain.item.FavoriteGameItem
+import com.jorgesanaguaray.videogamesinformation.domain.items.GameItem
 
 /**
  * Created by Jorge Sanaguaray
  */
 
-class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.MyFavoriteViewHolder>() {
+class FavoriteAdapter(
 
-    private var favorites: List<FavoriteGameItem> = ArrayList()
-    private lateinit var onButtonClick: OnButtonClick
-    private lateinit var onCardViewClick: OnCardViewClick
+    private val favoriteViewModel: FavoriteViewModel,
+    private val itemPosition: (Int) -> Unit,
+    private val onFavoriteClick: (GameItem) -> Unit,
+    private val onButtonUrlClick: (String) -> Unit,
+    private val onCardGameClick: (Int) -> Unit
+
+) : RecyclerView.Adapter<FavoriteAdapter.MyFavoriteViewHolder>() {
+
+    private var games: List<GameItem> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyFavoriteViewHolder {
         return MyFavoriteViewHolder(ItemFavoriteBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -24,56 +30,44 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.MyFavoriteViewHolde
 
     override fun onBindViewHolder(holder: MyFavoriteViewHolder, position: Int) {
 
-        val favorite = favorites[position]
+        val game = games[position]
 
         holder.binding.apply {
-
-            mTitle.text = favorite.title
-            mImage.load(favorite.thumbnail) {
+            mTitle.text = game.title
+            mDescription.text = game.short_description
+            mImage.load(game.thumbnail) {
                 placeholder(R.drawable.ic_image)
                 error(R.drawable.ic_image)
                 crossfade(true)
                 crossfade(400)
             }
-            mShortDescription.text = favorite.short_description
-            mButtonGoToTheGamePage.setOnClickListener {
-                onButtonClick.onClick(favorite.game_url)
-            }
-            mCardViewGame.setOnClickListener {
-                onCardViewClick.onClick(favorite.id)
-            }
-
+            mFavorite.setOnClickListener { itemPosition(position) ; onFavoriteClick(game) }
+            mButtonUrl.setOnClickListener { onButtonUrlClick(game.game_url) }
+            mCardGame.setOnClickListener { onCardGameClick(game.id) }
         }
+
+        setStateOfGame(game.id, holder.binding)
 
     }
 
     override fun getItemCount(): Int {
-        return favorites.size
+        return games.size
     }
 
     class MyFavoriteViewHolder(val binding: ItemFavoriteBinding): RecyclerView.ViewHolder(binding.root)
 
-    fun setGames(favorites: List<FavoriteGameItem>) {
-        this.favorites = favorites
+    fun setGames(games: List<GameItem>) {
+        this.games = games
     }
 
+    private fun setStateOfGame(id: Int, binding: ItemFavoriteBinding) {
 
-    interface OnButtonClick {
-        fun onClick(gameUrl: String)
+        if (favoriteViewModel.isFavorite(id)) {
+            binding.mFavorite.setImageResource(R.drawable.ic_favored)
+        } else {
+            binding.mFavorite.setImageResource(R.drawable.ic_favorite)
+        }
+
     }
-
-    fun setOnButtonClick(onButtonClick: OnButtonClick) {
-        this.onButtonClick = onButtonClick
-    }
-
-
-    interface OnCardViewClick {
-        fun onClick(id: Int)
-    }
-
-    fun setOnCardViewClick(onCardViewClick: OnCardViewClick) {
-        this.onCardViewClick = onCardViewClick
-    }
-
 
 }

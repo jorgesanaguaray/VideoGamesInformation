@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Video Games Information</string>
+    <string name="app_name">Games Information</string>
     <string name="by_jorge_sanaguaray">By Jorge Sanaguaray</string>
 
     <string name="menu_home">Home</string>
@@ -38,6 +38,9 @@
     <string name="are_you_sure_you_want_to_delete_all_your_favorite_games">Are you sure you want to delete all your favorite games?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="error">Error:</string>
+    <string name="possible_solution">Possible solution:</string>
+    <string name="check_your_internet_connection">check your internet connection.</string>
 
     <string-array name="categories">
         <item>2d</item>

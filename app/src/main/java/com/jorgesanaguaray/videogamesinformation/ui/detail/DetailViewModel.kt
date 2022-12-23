@@ -4,12 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jorgesanaguaray.videogamesinformation.data.local.entities.FavoriteGameEntity
-import com.jorgesanaguaray.videogamesinformation.domain.*
-import com.jorgesanaguaray.videogamesinformation.domain.item.SpecificGameItem
+import com.jorgesanaguaray.videogamesinformation.domain.items.GameItem
+import com.jorgesanaguaray.videogamesinformation.domain.items.SpecificGameItem
+import com.jorgesanaguaray.videogamesinformation.domain.usecases.DeleteFavoriteByIdUseCase
+import com.jorgesanaguaray.videogamesinformation.domain.usecases.InsertFavoriteUseCase
+import com.jorgesanaguaray.videogamesinformation.domain.usecases.IsFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 /**
@@ -19,40 +20,43 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
 
-    private val getGameByIdFromServiceUseCase: GetGameByIdFromServiceUseCase,
-    private val insertFavoriteGameUseCase: InsertFavoriteGameUseCase,
-    private val deleteFavoriteGameByIdUseCase: DeleteFavoriteGameByIdUseCase,
-    private val getFavoriteGameByIdUseCase: GetFavoriteGameByIdUseCase
+    private val detailRepository: DetailRepository,
+    private val insertFavoriteUseCase: InsertFavoriteUseCase,
+    private val deleteFavoriteByIdUseCase: DeleteFavoriteByIdUseCase,
+    private val isFavoriteUseCase: IsFavoriteUseCase
 
     ) : ViewModel() {
 
     private val _game = MutableLiveData<SpecificGameItem>()
     val game: LiveData<SpecificGameItem> get() = _game
 
-    private val _nestedScrollViewVisibility = MutableLiveData<Boolean>()
-    val nestedScrollViewVisibility: LiveData<Boolean> get() = _nestedScrollViewVisibility
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> get() = _error
 
-    private val _textViewNoInternetVisibility = MutableLiveData<Boolean>()
-    val textViewNoInternetVisibility: LiveData<Boolean> get() = _textViewNoInternetVisibility
+    private val _nestedScrollVisibility = MutableLiveData<Boolean>()
+    val nestedScrollVisibility: LiveData<Boolean> get() = _nestedScrollVisibility
+
+    private val _cardErrorVisibility = MutableLiveData<Boolean>()
+    val cardErrorVisibility: LiveData<Boolean> get() = _cardErrorVisibility
 
     private val _progressBarVisibility = MutableLiveData<Boolean>()
     val progressBarVisibility: LiveData<Boolean> get() = _progressBarVisibility
 
-    fun getGameByIdFromService(id: Int) {
-
-        showProgressBar()
+    fun getGameById(id: Int) {
 
         viewModelScope.launch {
 
+            showProgressBar()
+
             try {
 
-                val game = getGameByIdFromServiceUseCase(id)
-                _game.value = game
+                _game.value = detailRepository.getGameById(id)
                 showNestedScrollView()
 
             } catch (e: Exception) { // No internet connection.
 
-                showTextViewNoInternet()
+                _error.value = e.toString()
+                showCardError()
 
             }
 
@@ -60,56 +64,56 @@ class DetailViewModel @Inject constructor(
 
     }
 
-    fun insertFavoriteGame(favorite: FavoriteGameEntity) {
+
+    fun insertFavorite(gameItem: GameItem) {
 
         viewModelScope.launch {
-            insertFavoriteGameUseCase(favorite)
+            insertFavoriteUseCase(gameItem)
         }
 
     }
 
-    fun deleteFavoriteGameById(id: Int) {
+    fun deleteFavoriteById(id: Int) {
 
         viewModelScope.launch {
-            deleteFavoriteGameByIdUseCase(id)
+            deleteFavoriteByIdUseCase(id)
         }
 
     }
 
-    fun isFavoriteGame(id: Int): Boolean {
+    fun isFavorite(id: Int): Boolean {
 
-        var favoriteGameEntity: FavoriteGameEntity?
+        var result = false
 
-        runBlocking {
-            favoriteGameEntity = getFavoriteGameByIdUseCase(id)
+        viewModelScope.launch {
+            result = isFavoriteUseCase(id)
         }
 
-        if (favoriteGameEntity == null) return false
-
-        return true
+        return result
 
     }
+
 
     private fun showNestedScrollView() {
 
-        _nestedScrollViewVisibility.value = true
-        _textViewNoInternetVisibility.value = false
+        _nestedScrollVisibility.value = true
+        _cardErrorVisibility.value = false
         _progressBarVisibility.value = false
 
     }
 
-    private fun showTextViewNoInternet() {
+    private fun showCardError() {
 
-        _nestedScrollViewVisibility.value = false
-        _textViewNoInternetVisibility.value = true
+        _nestedScrollVisibility.value = false
+        _cardErrorVisibility.value = true
         _progressBarVisibility.value = false
 
     }
 
     private fun showProgressBar() {
 
-        _nestedScrollViewVisibility.value = false
-        _textViewNoInternetVisibility.value = false
+        _nestedScrollVisibility.value = false
+        _cardErrorVisibility.value = false
         _progressBarVisibility.value = true
 
     }

@@ -11,8 +11,10 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import com.google.android.material.snackbar.Snackbar
 import com.jorgesanaguaray.videogamesinformation.R
 import com.jorgesanaguaray.videogamesinformation.databinding.FragmentFavoriteBinding
+import com.jorgesanaguaray.videogamesinformation.domain.items.GameItem
 import com.jorgesanaguaray.videogamesinformation.ui.detail.DetailActivity
 import com.jorgesanaguaray.videogamesinformation.util.Constants.Companion.KEY_GAME_ID
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +35,13 @@ class FavoriteFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         favoriteViewModel = ViewModelProvider(this).get()
-        favoriteAdapter = FavoriteAdapter()
+        favoriteAdapter = FavoriteAdapter(
+            favoriteViewModel = favoriteViewModel,
+            itemPosition = { favoriteAdapter.notifyItemChanged(it) },
+            onFavoriteClick = { insertOrDeleteFavorite(it) },
+            onButtonUrlClick = { goToTheGamePage(it) },
+            onCardGameClick = { goToTheGameDetails(it) }
+        )
 
     }
 
@@ -46,24 +54,8 @@ class FavoriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         favoriteViewModel.games.observe(viewLifecycleOwner) {
-
             favoriteAdapter.setGames(it)
             binding.mRecyclerView.adapter = favoriteAdapter
-            favoriteAdapter.setOnButtonClick(object : FavoriteAdapter.OnButtonClick {
-                override fun onClick(gameUrl: String) {
-                    val uri = Uri.parse(gameUrl)
-                    val intent = Intent(Intent.ACTION_VIEW, uri)
-                    startActivity(intent)
-                }
-            })
-            favoriteAdapter.setOnCardViewClick(object : FavoriteAdapter.OnCardViewClick {
-                override fun onClick(id: Int) {
-                    val intent = Intent(activity, DetailActivity::class.java)
-                    intent.putExtra(KEY_GAME_ID, id)
-                    startActivity(intent)
-                }
-            })
-
         }
 
         favoriteViewModel.recyclerViewVisibility.observe(viewLifecycleOwner) {
@@ -109,6 +101,30 @@ class FavoriteFragment : Fragment() {
         builder.setCancelable(false)
         builder.create().show()
 
+    }
+
+    private fun insertOrDeleteFavorite(gameItem: GameItem) {
+
+        if (favoriteViewModel.isFavorite(gameItem.id)) {
+            favoriteViewModel.deleteFavoriteById(gameItem.id)
+            Snackbar.make(requireView(), R.string.game_removed_from_favorites, Snackbar.LENGTH_SHORT).show()
+        } else {
+            favoriteViewModel.insertFavorite(gameItem)
+            Snackbar.make(requireView(), R.string.game_saved_in_favorites, Snackbar.LENGTH_SHORT).show()
+        }
+
+    }
+
+    private fun goToTheGamePage(gameUrl: String) {
+        val uri = Uri.parse(gameUrl)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
+    }
+
+    private fun goToTheGameDetails(id: Int) {
+        val intent = Intent(activity, DetailActivity::class.java)
+        intent.putExtra(KEY_GAME_ID, id)
+        startActivity(intent)
     }
 
 }

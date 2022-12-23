@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jorgesanaguaray.videogamesinformation.domain.GetSearchedGamesUseCase
-import com.jorgesanaguaray.videogamesinformation.domain.item.GameItem
+import com.jorgesanaguaray.videogamesinformation.domain.usecases.DeleteFavoriteByIdUseCase
+import com.jorgesanaguaray.videogamesinformation.domain.usecases.InsertFavoriteUseCase
+import com.jorgesanaguaray.videogamesinformation.domain.usecases.IsFavoriteUseCase
+import com.jorgesanaguaray.videogamesinformation.domain.items.GameItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,10 +17,20 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val getSearchedGamesUseCase: GetSearchedGamesUseCase) : ViewModel() {
+class SearchViewModel @Inject constructor(
+
+    private val searchRepository: SearchRepository,
+    private val insertFavoriteUseCase: InsertFavoriteUseCase,
+    private val deleteFavoriteByIdUseCase: DeleteFavoriteByIdUseCase,
+    private val isFavoriteUseCase: IsFavoriteUseCase
+
+    ) : ViewModel() {
 
     private val _games = MutableLiveData<List<GameItem>>()
     val games: LiveData<List<GameItem>> get() = _games
+
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> get() = _error
 
     private val _searchViewVisibility = MutableLiveData<Boolean>()
     val searchViewVisibility: LiveData<Boolean> get() = _searchViewVisibility
@@ -29,8 +41,8 @@ class SearchViewModel @Inject constructor(private val getSearchedGamesUseCase: G
     private val _textViewNoGamesVisibility = MutableLiveData<Boolean>()
     val textViewNoGamesVisibility: LiveData<Boolean> get() = _textViewNoGamesVisibility
 
-    private val _textViewNoInternetVisibility = MutableLiveData<Boolean>()
-    val textViewNoInternetVisibility: LiveData<Boolean> get() = _textViewNoInternetVisibility
+    private val _cardErrorVisibility = MutableLiveData<Boolean>()
+    val cardErrorVisibility: LiveData<Boolean> get() = _cardErrorVisibility
 
     private val _progressBarVisibility = MutableLiveData<Boolean>()
     val progressBarVisibility: LiveData<Boolean> get() = _progressBarVisibility
@@ -41,26 +53,61 @@ class SearchViewModel @Inject constructor(private val getSearchedGamesUseCase: G
 
     fun getSearchedGames(query: String) {
 
-        showProgressBar()
-
         viewModelScope.launch {
+
+            showProgressBar()
 
             try {
 
-                val games = getSearchedGamesUseCase(query)
+                val games = searchRepository.getSearchedGames(query)
 
                 if (games.isNotEmpty()) {
+
                     _games.value = games
                     showSearchViewAndRecyclerView()
+
                 } else { // No games were found with the search term.
+
                     showTextViewNoGamesAndSearchView()
+
                 }
 
             } catch (e: Exception) { // No internet connection.
-                showTextViewNoInternet()
+
+                _error.value = e.toString()
+                showCardError()
+
             }
 
         }
+
+    }
+
+    fun insertFavorite(gameItem: GameItem) {
+
+        viewModelScope.launch {
+            insertFavoriteUseCase(gameItem)
+        }
+
+    }
+
+    fun deleteFavoriteById(id: Int) {
+
+        viewModelScope.launch {
+            deleteFavoriteByIdUseCase(id)
+        }
+
+    }
+
+    fun isFavorite(id: Int): Boolean {
+
+        var result = false
+
+        viewModelScope.launch {
+            result = isFavoriteUseCase(id)
+        }
+
+        return result
 
     }
 
@@ -69,7 +116,7 @@ class SearchViewModel @Inject constructor(private val getSearchedGamesUseCase: G
         _searchViewVisibility.value = true
         _recyclerViewVisibility.value = true
         _textViewNoGamesVisibility.value = false
-        _textViewNoInternetVisibility.value = false
+        _cardErrorVisibility.value = false
         _progressBarVisibility.value = false
 
     }
@@ -79,17 +126,17 @@ class SearchViewModel @Inject constructor(private val getSearchedGamesUseCase: G
         _searchViewVisibility.value = true
         _recyclerViewVisibility.value = false
         _textViewNoGamesVisibility.value = true
-        _textViewNoInternetVisibility.value = false
+        _cardErrorVisibility.value = false
         _progressBarVisibility.value = false
 
     }
 
-    private fun showTextViewNoInternet() {
+    private fun showCardError() {
 
         _searchViewVisibility.value = false
         _recyclerViewVisibility.value = false
         _textViewNoGamesVisibility.value = false
-        _textViewNoInternetVisibility.value = true
+        _cardErrorVisibility.value = true
         _progressBarVisibility.value = false
 
     }
@@ -99,7 +146,7 @@ class SearchViewModel @Inject constructor(private val getSearchedGamesUseCase: G
         _searchViewVisibility.value = false
         _recyclerViewVisibility.value = false
         _textViewNoGamesVisibility.value = false
-        _textViewNoInternetVisibility.value = false
+        _cardErrorVisibility.value = false
         _progressBarVisibility.value = true
 
     }

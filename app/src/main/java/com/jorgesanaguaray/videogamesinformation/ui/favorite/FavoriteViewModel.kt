@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jorgesanaguaray.videogamesinformation.domain.DeleteFavoriteGamesUseCase
-import com.jorgesanaguaray.videogamesinformation.domain.GetFavoriteGamesUseCase
-import com.jorgesanaguaray.videogamesinformation.domain.item.FavoriteGameItem
+import com.jorgesanaguaray.videogamesinformation.domain.usecases.DeleteFavoriteByIdUseCase
+import com.jorgesanaguaray.videogamesinformation.domain.usecases.InsertFavoriteUseCase
+import com.jorgesanaguaray.videogamesinformation.domain.usecases.IsFavoriteUseCase
+import com.jorgesanaguaray.videogamesinformation.domain.items.GameItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,13 +19,15 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(
 
-    private val getFavoriteGamesUseCase: GetFavoriteGamesUseCase,
-    private val deleteFavoriteGamesUseCase: DeleteFavoriteGamesUseCase
+    private val favoriteRepository: FavoriteRepository,
+    private val insertFavoriteUseCase: InsertFavoriteUseCase,
+    private val deleteFavoriteByIdUseCase: DeleteFavoriteByIdUseCase,
+    private val isFavoriteUseCase: IsFavoriteUseCase
 
     ) : ViewModel() {
 
-    private val _games = MutableLiveData<List<FavoriteGameItem>>()
-    val games: LiveData<List<FavoriteGameItem>> get() = _games
+    private val _games = MutableLiveData<List<GameItem>>()
+    val games: LiveData<List<GameItem>> get() = _games
 
     private val _recyclerViewVisibility = MutableLiveData<Boolean>()
     val recyclerViewVisibility: LiveData<Boolean> get() = _recyclerViewVisibility
@@ -48,7 +51,7 @@ class FavoriteViewModel @Inject constructor(
 
         viewModelScope.launch {
 
-            val games = getFavoriteGamesUseCase()
+            val games = favoriteRepository.getFavorites()
 
             if (games.isNotEmpty()) {
 
@@ -69,12 +72,42 @@ class FavoriteViewModel @Inject constructor(
 
         viewModelScope.launch {
 
-            deleteFavoriteGamesUseCase()
+            favoriteRepository.deleteFavorites()
             showTextViewNoFavorites()
 
         }
 
     }
+
+
+    fun insertFavorite(gameItem: GameItem) {
+
+        viewModelScope.launch {
+            insertFavoriteUseCase(gameItem)
+        }
+
+    }
+
+    fun deleteFavoriteById(id: Int) {
+
+        viewModelScope.launch {
+            deleteFavoriteByIdUseCase(id)
+        }
+
+    }
+
+    fun isFavorite(id: Int): Boolean {
+
+        var result = false
+
+        viewModelScope.launch {
+            result = isFavoriteUseCase(id)
+        }
+
+        return result
+
+    }
+
 
     private fun showRecyclerViewAndFloatingActionButton() {
 

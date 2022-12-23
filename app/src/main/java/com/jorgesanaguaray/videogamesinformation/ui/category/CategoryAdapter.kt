@@ -6,17 +6,23 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.jorgesanaguaray.videogamesinformation.R
 import com.jorgesanaguaray.videogamesinformation.databinding.ItemCategoryBinding
-import com.jorgesanaguaray.videogamesinformation.domain.item.GameItem
+import com.jorgesanaguaray.videogamesinformation.domain.items.GameItem
 
 /**
  * Created by Jorge Sanaguaray
  */
 
-class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.MyCategoryViewHolder>() {
+class CategoryAdapter(
+
+    private val categoryViewModel: CategoryViewModel,
+    private val itemPosition: (Int) -> Unit,
+    private val onFavoriteClick: (GameItem) -> Unit,
+    private val onButtonUrlClick: (String) -> Unit,
+    private val onCardGameClick: (Int) -> Unit
+
+) : RecyclerView.Adapter<CategoryAdapter.MyCategoryViewHolder>() {
 
     private var games: List<GameItem> = ArrayList()
-    private lateinit var onButtonClick: OnButtonClick
-    private lateinit var onCardViewClick: OnCardViewClick
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyCategoryViewHolder {
         return MyCategoryViewHolder(ItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -27,23 +33,20 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.MyCategoryViewHolde
         val game = games[position]
 
         holder.binding.apply {
-
             mTitle.text = game.title
+            mDescription.text = game.short_description
             mImage.load(game.thumbnail) {
                 placeholder(R.drawable.ic_image)
                 error(R.drawable.ic_image)
                 crossfade(true)
                 crossfade(400)
             }
-            mShortDescription.text = game.short_description
-            mButtonGoToTheGamePage.setOnClickListener {
-                onButtonClick.onClick(game.game_url)
-            }
-            mCardViewGame.setOnClickListener {
-                onCardViewClick.onClick(game.id)
-            }
-
+            mFavorite.setOnClickListener { itemPosition(position) ; onFavoriteClick(game) }
+            mButtonUrl.setOnClickListener { onButtonUrlClick(game.game_url) }
+            mCardGame.setOnClickListener { onCardGameClick(game.id) }
         }
+
+        setStateOfGame(game.id, holder.binding)
 
     }
 
@@ -57,23 +60,14 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.MyCategoryViewHolde
         this.games = games
     }
 
+    private fun setStateOfGame(id: Int, binding: ItemCategoryBinding) {
 
-    interface OnButtonClick {
-        fun onClick(gameUrl: String)
+        if (categoryViewModel.isFavorite(id)) {
+            binding.mFavorite.setImageResource(R.drawable.ic_favored)
+        } else {
+            binding.mFavorite.setImageResource(R.drawable.ic_favorite)
+        }
+
     }
-
-    fun setOnButtonClick(onButtonClick: OnButtonClick) {
-        this.onButtonClick = onButtonClick
-    }
-
-
-    interface OnCardViewClick {
-        fun onClick(id: Int)
-    }
-
-    fun setOnCardViewClick(onCardViewClick: OnCardViewClick) {
-        this.onCardViewClick = onCardViewClick
-    }
-
 
 }

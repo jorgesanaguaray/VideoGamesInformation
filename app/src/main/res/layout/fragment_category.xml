@@ -8,7 +8,7 @@
     tools:context=".ui.category.CategoryFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/mSwipeRefreshLayout"
+        android:id="@+id/mSwipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -48,17 +48,41 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <TextView
-        android:id="@+id/mTextViewNoInternet"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mCardError"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:gravity="center"
-        android:padding="10dp"
         android:visibility="gone"
-        android:alpha="0.5"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:text="@string/no_internet_connection"/>
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_error"/>
+
+            <TextView
+                android:id="@+id/mTextError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/icon"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <ProgressBar
         android:id="@+id/mProgressBar"
