@@ -2,10 +2,12 @@ package com.jorgesanaguaray.videogamesinformation.ui.detail
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.ActionBar
+import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
@@ -13,36 +15,42 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.google.android.material.snackbar.Snackbar
 import com.jorgesanaguaray.videogamesinformation.R
-import com.jorgesanaguaray.videogamesinformation.databinding.ActivityDetailBinding
+import com.jorgesanaguaray.videogamesinformation.databinding.FragmentDetailBinding
 import com.jorgesanaguaray.videogamesinformation.domain.items.GameItem
 import com.jorgesanaguaray.videogamesinformation.domain.items.SpecificGameItem
 import com.jorgesanaguaray.videogamesinformation.util.Constants.Companion.KEY_GAME_ID
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailActivity : AppCompatActivity() {
+class DetailFragment : Fragment() {
 
-    private lateinit var binding: ActivityDetailBinding
+    private var _binding: FragmentDetailBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var detailViewModel: DetailViewModel
     private lateinit var screenshotAdapter: ScreenshotAdapter
-    private var id = 0
+    private var gameId = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentDetailBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        binding = ActivityDetailBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onStart() {
+        super.onStart()
 
         detailViewModel = ViewModelProvider(this).get()
         screenshotAdapter = ScreenshotAdapter()
+        gameId = arguments?.getInt(KEY_GAME_ID)!!
 
-        val intent = intent
-        id = intent.getIntExtra(KEY_GAME_ID, 0)
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         detailViewModel.game.observe(this) {
 
-            val actionBar: ActionBar? = supportActionBar
-            actionBar?.title = it.title
+            (requireActivity() as AppCompatActivity).supportActionBar?.title = it.title
 
             screenshotAdapter.setScreenshots(it.screenshots)
 
@@ -60,7 +68,7 @@ class DetailActivity : AppCompatActivity() {
                     val intent2 = Intent(Intent.ACTION_VIEW, uri)
                     startActivity(intent2)
                 }
-                mButtonFavorite.setOnClickListener { _ -> setOnButtonFavoriteClick(it) }
+                mButtonFavorite.setOnClickListener { _ -> insertOrDeleteFavorite(it) }
                 mDescription.text = it.description
                 mStatus.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.status) + "</b>" + " " + it.status, HtmlCompat.FROM_HTML_MODE_LEGACY)
                 mGenre.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.genre) + "</b>" + " " + it.genre, HtmlCompat.FROM_HTML_MODE_LEGACY)
@@ -81,7 +89,8 @@ class DetailActivity : AppCompatActivity() {
         }
 
         detailViewModel.error.observe(this) {
-            binding.mTextError.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.error) + "</b>" + " " + it + "." + "<br><br>" + "<b>" + resources.getString(R.string.possible_solution) + "</b>" + " " + resources.getString(R.string.check_your_internet_connection), HtmlCompat.FROM_HTML_MODE_LEGACY)
+            binding.mTextError.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.error) + "</b>" + " " + it + "." + "<br><br>" + "<b>" + resources.getString(
+                R.string.possible_solution) + "</b>" + " " + resources.getString(R.string.check_your_internet_connection), HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
 
         detailViewModel.nestedScrollVisibility.observe(this) {
@@ -97,44 +106,49 @@ class DetailActivity : AppCompatActivity() {
         }
 
         binding.mSwipeRefresh.setOnRefreshListener {
-            detailViewModel.getGameById(id)
+            detailViewModel.getGameById(gameId)
             binding.mSwipeRefresh.isRefreshing = false
         }
 
-        detailViewModel.getGameById(id)
+        detailViewModel.getGameById(gameId)
 
-        setButtonFavoriteStatues()
-
-    }
-
-    private fun setButtonFavoriteStatues() {
-
-        if (isFavorite()) binding.mButtonFavorite.text = resources.getString(R.string.remove_from_favorites)
-        else binding.mButtonFavorite.text = resources.getString(R.string.save_to_favorites)
+        setStateOfButtonFavorite()
 
     }
 
-    private fun setOnButtonFavoriteClick(game: SpecificGameItem) {
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun insertOrDeleteFavorite(game: SpecificGameItem) {
 
         if (isFavorite()) {
 
-            detailViewModel.deleteFavoriteById(id)
+            detailViewModel.deleteFavoriteById(gameId)
             binding.mButtonFavorite.text = resources.getString(R.string.save_to_favorites)
-            Snackbar.make(findViewById(android.R.id.content), R.string.game_removed_from_favorites, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(requireView(), R.string.game_removed_from_favorites, Snackbar.LENGTH_LONG).show()
 
         } else {
 
             val gameItem = GameItem(id = game.id, title = game.title, thumbnail = game.thumbnail, short_description = game.short_description, game_url = game.game_url)
             detailViewModel.insertFavorite(gameItem)
             binding.mButtonFavorite.text = resources.getString(R.string.remove_from_favorites)
-            Snackbar.make(findViewById(android.R.id.content), R.string.game_saved_in_favorites, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(requireView(), R.string.game_saved_in_favorites, Snackbar.LENGTH_LONG).show()
 
         }
 
     }
 
+    private fun setStateOfButtonFavorite() {
+
+        if (isFavorite()) binding.mButtonFavorite.text = resources.getString(R.string.remove_from_favorites)
+        else binding.mButtonFavorite.text = resources.getString(R.string.save_to_favorites)
+
+    }
+
     private fun isFavorite(): Boolean {
-        return detailViewModel.isFavorite(id)
+        return detailViewModel.isFavorite(gameId)
     }
 
 }

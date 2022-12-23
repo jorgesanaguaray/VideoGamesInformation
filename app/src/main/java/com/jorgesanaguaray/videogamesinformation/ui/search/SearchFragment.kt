@@ -7,15 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.jorgesanaguaray.videogamesinformation.R
 import com.jorgesanaguaray.videogamesinformation.databinding.FragmentSearchBinding
 import com.jorgesanaguaray.videogamesinformation.domain.items.GameItem
-import com.jorgesanaguaray.videogamesinformation.ui.detail.DetailActivity
 import com.jorgesanaguaray.videogamesinformation.util.Constants.Companion.KEY_GAME_ID
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -127,9 +128,8 @@ class SearchFragment : Fragment() {
     }
 
     private fun goToTheGameDetails(id: Int) {
-        val intent = Intent(activity, DetailActivity::class.java)
-        intent.putExtra(KEY_GAME_ID, id)
-        startActivity(intent)
+        val bundle = bundleOf(KEY_GAME_ID to id)
+        findNavController().navigate(R.id.action_nav_search_to_nav_detail, bundle)
     }
 
 }

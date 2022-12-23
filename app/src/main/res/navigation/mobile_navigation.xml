@@ -9,24 +9,61 @@
         android:id="@+id/nav_home"
         android:name="com.jorgesanaguaray.videogamesinformation.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_nav_home_to_nav_detail"
+            app:destination="@id/nav_detail"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/nav_search"
         android:name="com.jorgesanaguaray.videogamesinformation.ui.search.SearchFragment"
         android:label="@string/menu_search"
-        tools:layout="@layout/fragment_search"/>
+        tools:layout="@layout/fragment_search">
+
+        <action
+            android:id="@+id/action_nav_search_to_nav_detail"
+            app:destination="@id/nav_detail"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/nav_category"
         android:name="com.jorgesanaguaray.videogamesinformation.ui.category.CategoryFragment"
         android:label="@string/menu_category"
-        tools:layout="@layout/fragment_category"/>
+        tools:layout="@layout/fragment_category">
+
+        <action
+            android:id="@+id/action_nav_category_to_nav_detail"
+            app:destination="@id/nav_detail"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/nav_favorite"
         android:name="com.jorgesanaguaray.videogamesinformation.ui.favorite.FavoriteFragment"
         android:label="@string/menu_favorite"
-        tools:layout="@layout/fragment_favorite"/>
+        tools:layout="@layout/fragment_favorite">
+
+        <action
+            android:id="@+id/action_nav_favorite_to_nav_detail"
+            app:destination="@id/nav_detail"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_detail"
+        android:name="com.jorgesanaguaray.videogamesinformation.ui.detail.DetailFragment"
+        android:label="@string/menu_detail"
+        tools:layout="@layout/fragment_detail">
+
+        <argument
+            android:name="id"
+            android:defaultValue="0"
+            app:argType="integer"/>
+
+    </fragment>
 
 </navigation>
