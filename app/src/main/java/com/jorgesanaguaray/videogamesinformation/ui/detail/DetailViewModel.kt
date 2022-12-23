@@ -25,7 +25,7 @@ class DetailViewModel @Inject constructor(
     private val deleteFavoriteByIdUseCase: DeleteFavoriteByIdUseCase,
     private val isFavoriteUseCase: IsFavoriteUseCase
 
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val _game = MutableLiveData<SpecificGameItem>()
     val game: LiveData<SpecificGameItem> get() = _game
@@ -53,7 +53,7 @@ class DetailViewModel @Inject constructor(
                 _game.value = detailRepository.getGameById(id)
                 showNestedScrollView()
 
-            } catch (e: Exception) { // No internet connection.
+            } catch (e: Exception) {
 
                 _error.value = e.toString()
                 showCardError()
@@ -63,7 +63,6 @@ class DetailViewModel @Inject constructor(
         }
 
     }
-
 
     fun insertFavorite(gameItem: GameItem) {
 
@@ -93,29 +92,22 @@ class DetailViewModel @Inject constructor(
 
     }
 
-
     private fun showNestedScrollView() {
-
         _nestedScrollVisibility.value = true
         _cardErrorVisibility.value = false
         _progressBarVisibility.value = false
-
     }
 
     private fun showCardError() {
-
         _nestedScrollVisibility.value = false
         _cardErrorVisibility.value = true
         _progressBarVisibility.value = false
-
     }
 
     private fun showProgressBar() {
-
         _nestedScrollVisibility.value = false
         _cardErrorVisibility.value = false
         _progressBarVisibility.value = true
-
     }
 
 }

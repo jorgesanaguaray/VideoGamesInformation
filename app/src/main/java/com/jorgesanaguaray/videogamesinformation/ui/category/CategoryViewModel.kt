@@ -59,7 +59,7 @@ class CategoryViewModel @Inject constructor(
                 _games.value = categoryRepository.getGamesByCategory(category)
                 showTextInputLayoutAndRecyclerView()
 
-            } catch (e: Exception) { // No internet connection.
+            } catch (e: Exception) {
 
                 _error.value = e.toString()
                 showCardError()

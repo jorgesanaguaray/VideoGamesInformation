@@ -24,7 +24,7 @@ class FavoriteViewModel @Inject constructor(
     private val deleteFavoriteByIdUseCase: DeleteFavoriteByIdUseCase,
     private val isFavoriteUseCase: IsFavoriteUseCase
 
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val _games = MutableLiveData<List<GameItem>>()
     val games: LiveData<List<GameItem>> get() = _games
@@ -32,53 +32,48 @@ class FavoriteViewModel @Inject constructor(
     private val _recyclerViewVisibility = MutableLiveData<Boolean>()
     val recyclerViewVisibility: LiveData<Boolean> get() = _recyclerViewVisibility
 
-    private val _floatingActionButtonVisibility = MutableLiveData<Boolean>()
-    val floatingActionButtonVisibility: LiveData<Boolean> get() = _floatingActionButtonVisibility
+    private val _floatingButtonVisibility = MutableLiveData<Boolean>()
+    val floatingButtonVisibility: LiveData<Boolean> get() = _floatingButtonVisibility
 
-    private val _textViewNoFavoritesVisibility = MutableLiveData<Boolean>()
-    val textViewNoFavoritesVisibility: LiveData<Boolean> get() = _textViewNoFavoritesVisibility
+    private val _noFavoritesVisibility = MutableLiveData<Boolean>()
+    val noFavoritesVisibility: LiveData<Boolean> get() = _noFavoritesVisibility
 
     private val _progressBarVisibility = MutableLiveData<Boolean>()
     val progressBarVisibility: LiveData<Boolean> get() = _progressBarVisibility
 
     init {
-        getFavoriteGames()
+        getFavorites()
     }
 
-    fun getFavoriteGames() {
-
-        showProgressBar()
+    fun getFavorites() {
 
         viewModelScope.launch {
+
+            showProgressBar()
 
             val games = favoriteRepository.getFavorites()
 
             if (games.isNotEmpty()) {
 
                 _games.value = games
-                showRecyclerViewAndFloatingActionButton()
+                showRecyclerViewAndFloatingButton()
 
             } else {
-
-                showTextViewNoFavorites()
-
+                showNoFavorites()
             }
 
         }
 
     }
 
-    fun deleteFavoriteGames() {
+    fun deleteFavorites() {
 
         viewModelScope.launch {
-
             favoriteRepository.deleteFavorites()
-            showTextViewNoFavorites()
-
+            showNoFavorites()
         }
 
     }
-
 
     fun insertFavorite(gameItem: GameItem) {
 
@@ -108,32 +103,25 @@ class FavoriteViewModel @Inject constructor(
 
     }
 
-
-    private fun showRecyclerViewAndFloatingActionButton() {
-
+    private fun showRecyclerViewAndFloatingButton() {
         _recyclerViewVisibility.value = true
-        _floatingActionButtonVisibility.value = true
-        _textViewNoFavoritesVisibility.value = false
+        _floatingButtonVisibility.value = true
+        _noFavoritesVisibility.value = false
         _progressBarVisibility.value = false
-
     }
 
-    private fun showTextViewNoFavorites() {
-
+    private fun showNoFavorites() {
         _recyclerViewVisibility.value = false
-        _floatingActionButtonVisibility.value = false
-        _textViewNoFavoritesVisibility.value = true
+        _floatingButtonVisibility.value = false
+        _noFavoritesVisibility.value = true
         _progressBarVisibility.value = false
-
     }
 
     private fun showProgressBar() {
-
         _recyclerViewVisibility.value = false
-        _floatingActionButtonVisibility.value = false
-        _textViewNoFavoritesVisibility.value = false
+        _floatingButtonVisibility.value = false
+        _noFavoritesVisibility.value = false
         _progressBarVisibility.value = true
-
     }
 
 }

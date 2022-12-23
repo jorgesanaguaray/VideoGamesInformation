@@ -13,9 +13,11 @@ class CategoryRepository @Inject constructor(private val gameService: GameServic
 
     suspend fun getGamesByCategory(category: String): List<GameItem> {
 
-        return gameService.getGamesByCategory(category).map {
+        val games = gameService.getGamesByCategory(category).map {
             it.toGameItem()
         }
+
+        return games.shuffled()
 
     }
 

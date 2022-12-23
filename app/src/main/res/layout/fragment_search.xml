@@ -37,7 +37,7 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView
-        android:id="@+id/mTextViewNoGames"
+        android:id="@+id/mNoGames"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -72,7 +72,7 @@
                 android:src="@drawable/ic_error"/>
 
             <TextView
-                android:id="@+id/mTextError"
+                android:id="@+id/mError"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/icon"

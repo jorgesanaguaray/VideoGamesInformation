@@ -27,13 +27,19 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FavoriteFragment : Fragment() {
 
-    private lateinit var favoriteViewModel: FavoriteViewModel
-    private lateinit var favoriteAdapter: FavoriteAdapter
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private lateinit var favoriteViewModel: FavoriteViewModel
+    private lateinit var favoriteAdapter: FavoriteAdapter
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
 
         favoriteViewModel = ViewModelProvider(this).get()
         favoriteAdapter = FavoriteAdapter(
@@ -46,13 +52,8 @@ class FavoriteFragment : Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
 
         favoriteViewModel.games.observe(viewLifecycleOwner) {
             favoriteAdapter.setGames(it)
@@ -63,25 +64,23 @@ class FavoriteFragment : Fragment() {
             binding.mRecyclerView.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        favoriteViewModel.floatingActionButtonVisibility.observe(viewLifecycleOwner) {
-            binding.mFloatingActionButton.visibility = if (it) View.VISIBLE else View.GONE
+        favoriteViewModel.floatingButtonVisibility.observe(viewLifecycleOwner) {
+            binding.mFloatingButton.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        favoriteViewModel.textViewNoFavoritesVisibility.observe(viewLifecycleOwner) {
-            binding.mTextViewNoFavorites.visibility = if (it) View.VISIBLE else View.GONE
+        favoriteViewModel.noFavoritesVisibility.observe(viewLifecycleOwner) {
+            binding.mNoFavorites.visibility = if (it) View.VISIBLE else View.GONE
         }
 
         favoriteViewModel.progressBarVisibility.observe(viewLifecycleOwner) {
             binding.mProgressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        binding.mFloatingActionButton.setOnClickListener {
-            showDeleteDialog()
-        }
+        binding.mFloatingButton.setOnClickListener { showDeleteDialog() }
 
-        binding.mSwipeRefreshLayout.setOnRefreshListener {
-            favoriteViewModel.getFavoriteGames()
-            binding.mSwipeRefreshLayout.isRefreshing = false
+        binding.mSwipeRefresh.setOnRefreshListener {
+            favoriteViewModel.getFavorites()
+            binding.mSwipeRefresh.isRefreshing = false
         }
 
     }
@@ -89,19 +88,6 @@ class FavoriteFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun showDeleteDialog() {
-
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setIcon(R.drawable.ic_delete)
-        builder.setTitle(R.string.delete_all_favorite_games)
-        builder.setMessage(R.string.are_you_sure_you_want_to_delete_all_your_favorite_games)
-        builder.setPositiveButton(R.string.yes) { _: DialogInterface, _: Int -> favoriteViewModel.deleteFavoriteGames() }
-        builder.setNegativeButton(R.string.no) { _, _ ->}
-        builder.setCancelable(false)
-        builder.create().show()
-
     }
 
     private fun insertOrDeleteFavorite(gameItem: GameItem) {
@@ -125,6 +111,19 @@ class FavoriteFragment : Fragment() {
     private fun goToTheGameDetails(id: Int) {
         val bundle = bundleOf(KEY_GAME_ID to id)
         findNavController().navigate(R.id.action_nav_favorite_to_nav_detail, bundle)
+    }
+
+    private fun showDeleteDialog() {
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setIcon(R.drawable.ic_delete)
+        builder.setTitle(R.string.delete_all_favorite_games)
+        builder.setMessage(R.string.are_you_sure_you_want_to_delete_all_your_favorite_games)
+        builder.setPositiveButton(R.string.yes) { _: DialogInterface, _: Int -> favoriteViewModel.deleteFavorites() }
+        builder.setNegativeButton(R.string.no) { _, _ ->}
+        builder.setCancelable(false)
+        builder.create().show()
+
     }
 
 }

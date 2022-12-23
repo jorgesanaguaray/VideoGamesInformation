@@ -12,7 +12,9 @@ import javax.inject.Inject
 class DetailRepository @Inject constructor(private val gameService: GameService) {
 
     suspend fun getGameById(id: Int): SpecificGameItem {
+
         return gameService.getGameById(id).toSpecificGameItem()
+
     }
 
 }

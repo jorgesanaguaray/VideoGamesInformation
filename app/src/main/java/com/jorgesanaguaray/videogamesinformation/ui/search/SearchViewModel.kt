@@ -24,7 +24,7 @@ class SearchViewModel @Inject constructor(
     private val deleteFavoriteByIdUseCase: DeleteFavoriteByIdUseCase,
     private val isFavoriteUseCase: IsFavoriteUseCase
 
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val _games = MutableLiveData<List<GameItem>>()
     val games: LiveData<List<GameItem>> get() = _games
@@ -38,8 +38,8 @@ class SearchViewModel @Inject constructor(
     private val _recyclerViewVisibility = MutableLiveData<Boolean>()
     val recyclerViewVisibility: LiveData<Boolean> get() = _recyclerViewVisibility
 
-    private val _textViewNoGamesVisibility = MutableLiveData<Boolean>()
-    val textViewNoGamesVisibility: LiveData<Boolean> get() = _textViewNoGamesVisibility
+    private val _noGamesVisibility = MutableLiveData<Boolean>()
+    val noGamesVisibility: LiveData<Boolean> get() = _noGamesVisibility
 
     private val _cardErrorVisibility = MutableLiveData<Boolean>()
     val cardErrorVisibility: LiveData<Boolean> get() = _cardErrorVisibility
@@ -68,11 +68,11 @@ class SearchViewModel @Inject constructor(
 
                 } else { // No games were found with the search term.
 
-                    showTextViewNoGamesAndSearchView()
+                    showNoGamesAndSearchView()
 
                 }
 
-            } catch (e: Exception) { // No internet connection.
+            } catch (e: Exception) {
 
                 _error.value = e.toString()
                 showCardError()
@@ -112,43 +112,35 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun showSearchViewAndRecyclerView() {
-
         _searchViewVisibility.value = true
         _recyclerViewVisibility.value = true
-        _textViewNoGamesVisibility.value = false
+        _noGamesVisibility.value = false
         _cardErrorVisibility.value = false
         _progressBarVisibility.value = false
-
     }
 
-    private fun showTextViewNoGamesAndSearchView() {
-
+    private fun showNoGamesAndSearchView() {
         _searchViewVisibility.value = true
         _recyclerViewVisibility.value = false
-        _textViewNoGamesVisibility.value = true
+        _noGamesVisibility.value = true
         _cardErrorVisibility.value = false
         _progressBarVisibility.value = false
-
     }
 
     private fun showCardError() {
-
         _searchViewVisibility.value = false
         _recyclerViewVisibility.value = false
-        _textViewNoGamesVisibility.value = false
+        _noGamesVisibility.value = false
         _cardErrorVisibility.value = true
         _progressBarVisibility.value = false
-
     }
 
     private fun showProgressBar() {
-
         _searchViewVisibility.value = false
         _recyclerViewVisibility.value = false
-        _textViewNoGamesVisibility.value = false
+        _noGamesVisibility.value = false
         _cardErrorVisibility.value = false
         _progressBarVisibility.value = true
-
     }
 
 }

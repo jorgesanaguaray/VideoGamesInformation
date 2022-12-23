@@ -27,13 +27,19 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
 
-    private lateinit var searchViewModel: SearchViewModel
-    private lateinit var searchAdapter: SearchAdapter
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private lateinit var searchViewModel: SearchViewModel
+    private lateinit var searchAdapter: SearchAdapter
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
 
         searchViewModel = ViewModelProvider(this).get()
         searchAdapter = SearchAdapter(
@@ -46,13 +52,8 @@ class SearchFragment : Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
 
         searchViewModel.games.observe(viewLifecycleOwner) {
             searchAdapter.setGames(it)
@@ -60,7 +61,7 @@ class SearchFragment : Fragment() {
         }
 
         searchViewModel.error.observe(viewLifecycleOwner) {
-            binding.mTextError.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.error) + "</b>" + " " + it + "." + "<br><br>" + "<b>" + resources.getString(R.string.possible_solution) + "</b>" + " " + resources.getString(R.string.check_your_internet_connection), HtmlCompat.FROM_HTML_MODE_LEGACY)
+            binding.mError.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.error) + "</b>" + " " + it + "." + "<br><br>" + "<b>" + resources.getString(R.string.possible_solution) + "</b>" + " " + resources.getString(R.string.check_your_internet_connection), HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
 
         searchViewModel.searchViewVisibility.observe(viewLifecycleOwner) {
@@ -71,8 +72,8 @@ class SearchFragment : Fragment() {
             binding.mRecyclerView.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        searchViewModel.textViewNoGamesVisibility.observe(viewLifecycleOwner) {
-            binding.mTextViewNoGames.visibility = if (it) View.VISIBLE else View.GONE
+        searchViewModel.noGamesVisibility.observe(viewLifecycleOwner) {
+            binding.mNoGames.visibility = if (it) View.VISIBLE else View.GONE
         }
 
         searchViewModel.cardErrorVisibility.observe(viewLifecycleOwner) {

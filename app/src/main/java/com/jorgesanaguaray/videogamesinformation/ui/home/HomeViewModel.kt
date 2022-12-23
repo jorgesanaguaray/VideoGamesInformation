@@ -26,11 +26,11 @@ class HomeViewModel @Inject constructor(
 
 ) : ViewModel() {
 
-    private val _images = MutableLiveData<List<GameItem>>()
-    val images: LiveData<List<GameItem>> get() = _images
+    private val _gamesA = MutableLiveData<List<GameItem>>()
+    val gamesA: LiveData<List<GameItem>> get() = _gamesA
 
-    private val _games = MutableLiveData<List<GameItem>>()
-    val games: LiveData<List<GameItem>> get() = _games
+    private val _gamesB = MutableLiveData<List<GameItem>>()
+    val gamesB: LiveData<List<GameItem>> get() = _gamesB
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
@@ -56,11 +56,11 @@ class HomeViewModel @Inject constructor(
 
             try {
 
-                _images.value = homeRepository.getGames()
-                _games.value = homeRepository.getGames()
+                _gamesA.value = homeRepository.getGames()
+                _gamesB.value = homeRepository.getGames()
                 showNestedScroll()
 
-            } catch (e: Exception) { // No internet connection
+            } catch (e: Exception) {
 
                 _error.value = e.toString()
                 showCardError()

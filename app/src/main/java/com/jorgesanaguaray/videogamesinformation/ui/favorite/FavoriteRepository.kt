@@ -12,9 +12,13 @@ import javax.inject.Inject
 class FavoriteRepository @Inject constructor(private val favoriteDao: FavoriteDao) {
 
     suspend fun getFavorites(): List<GameItem> {
-        return favoriteDao.getFavorites().map {
+
+        val games = favoriteDao.getFavorites().map {
             it.toGameItem()
         }
+
+        return games.shuffled()
+
     }
 
     suspend fun deleteFavorites() {

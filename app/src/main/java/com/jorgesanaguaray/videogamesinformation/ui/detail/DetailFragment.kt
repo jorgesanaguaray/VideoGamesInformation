@@ -28,7 +28,7 @@ class DetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var detailViewModel: DetailViewModel
-    private lateinit var screenshotAdapter: ScreenshotAdapter
+    private lateinit var detailAdapter: DetailAdapter
     private var gameId = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -40,7 +40,7 @@ class DetailFragment : Fragment() {
         super.onStart()
 
         detailViewModel = ViewModelProvider(this).get()
-        screenshotAdapter = ScreenshotAdapter()
+        detailAdapter = DetailAdapter()
         gameId = arguments?.getInt(KEY_GAME_ID)!!
 
     }
@@ -52,7 +52,7 @@ class DetailFragment : Fragment() {
 
             (requireActivity() as AppCompatActivity).supportActionBar?.title = it.title
 
-            screenshotAdapter.setScreenshots(it.screenshots)
+            detailAdapter.setScreenshots(it.screenshots)
 
             binding.apply {
 
@@ -63,12 +63,6 @@ class DetailFragment : Fragment() {
                     crossfade(400)
                     transformations(RoundedCornersTransformation(5f))
                 }
-                mButtonGoToTheGamePage.setOnClickListener { _ ->
-                    val uri = Uri.parse(it.game_url)
-                    val intent2 = Intent(Intent.ACTION_VIEW, uri)
-                    startActivity(intent2)
-                }
-                mButtonFavorite.setOnClickListener { _ -> insertOrDeleteFavorite(it) }
                 mDescription.text = it.description
                 mStatus.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.status) + "</b>" + " " + it.status, HtmlCompat.FROM_HTML_MODE_LEGACY)
                 mGenre.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.genre) + "</b>" + " " + it.genre, HtmlCompat.FROM_HTML_MODE_LEGACY)
@@ -82,7 +76,13 @@ class DetailFragment : Fragment() {
                 mGraphics.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.graphics) + "</b>" + " " + it.minimum_system_requirements?.graphics, HtmlCompat.FROM_HTML_MODE_LEGACY)
                 mStorage.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.storage) + "</b>" + " " + it.minimum_system_requirements?.storage, HtmlCompat.FROM_HTML_MODE_LEGACY)
                 if (it.screenshots.isEmpty()) mScreenshots.text = resources.getString(R.string.no_screenshots)
-                mRecyclerView.adapter = screenshotAdapter
+                mRecyclerView.adapter = detailAdapter
+                mButtonUrl.setOnClickListener { _ ->
+                    val uri = Uri.parse(it.game_url)
+                    val intent = Intent(Intent.ACTION_VIEW, uri)
+                    startActivity(intent)
+                }
+                mButtonFavorite.setOnClickListener { _ -> insertOrDeleteFavorite(it) }
 
             }
 
@@ -126,17 +126,17 @@ class DetailFragment : Fragment() {
         if (isFavorite()) {
 
             detailViewModel.deleteFavoriteById(gameId)
-            binding.mButtonFavorite.text = resources.getString(R.string.save_to_favorites)
             Snackbar.make(requireView(), R.string.game_removed_from_favorites, Snackbar.LENGTH_LONG).show()
 
         } else {
 
             val gameItem = GameItem(id = game.id, title = game.title, thumbnail = game.thumbnail, short_description = game.short_description, game_url = game.game_url)
             detailViewModel.insertFavorite(gameItem)
-            binding.mButtonFavorite.text = resources.getString(R.string.remove_from_favorites)
             Snackbar.make(requireView(), R.string.game_saved_in_favorites, Snackbar.LENGTH_LONG).show()
 
         }
+
+        setStateOfButtonFavorite()
 
     }
 

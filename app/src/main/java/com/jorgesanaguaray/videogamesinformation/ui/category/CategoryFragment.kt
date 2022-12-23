@@ -29,13 +29,19 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CategoryFragment : Fragment() {
 
-    private lateinit var categoryViewModel: CategoryViewModel
-    private lateinit var categoryAdapter: CategoryAdapter
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private lateinit var categoryViewModel: CategoryViewModel
+    private lateinit var categoryAdapter: CategoryAdapter
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentCategoryBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
 
         categoryViewModel = ViewModelProvider(this).get()
         categoryAdapter = CategoryAdapter(
@@ -48,13 +54,8 @@ class CategoryFragment : Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentCategoryBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
 
         categoryViewModel.games.observe(viewLifecycleOwner) {
             categoryAdapter.setGames(it)
@@ -85,11 +86,6 @@ class CategoryFragment : Fragment() {
             categoryViewModel.getGamesByCategory(binding.mAutoComplete.text.toString())
             binding.mSwipeRefresh.isRefreshing = false
         }
-
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         val categories = resources.getStringArray(R.array.categories)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.text_view, categories)

@@ -6,18 +6,18 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.jorgesanaguaray.videogamesinformation.R
 import com.jorgesanaguaray.videogamesinformation.data.remote.models.Screenshot
-import com.jorgesanaguaray.videogamesinformation.databinding.ItemScreenshotBinding
+import com.jorgesanaguaray.videogamesinformation.databinding.ItemDetailBinding
 
 /**
  * Created by Jorge Sanaguaray
  */
 
-class ScreenshotAdapter : RecyclerView.Adapter<ScreenshotAdapter.MyScreenshotViewHolder>() {
+class DetailAdapter : RecyclerView.Adapter<DetailAdapter.MyScreenshotViewHolder>() {
 
     private var screenshots: List<Screenshot> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyScreenshotViewHolder {
-        return MyScreenshotViewHolder(ItemScreenshotBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return MyScreenshotViewHolder(ItemDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: MyScreenshotViewHolder, position: Int) {
@@ -41,7 +41,7 @@ class ScreenshotAdapter : RecyclerView.Adapter<ScreenshotAdapter.MyScreenshotVie
         return screenshots.size
     }
 
-    class MyScreenshotViewHolder(val binding: ItemScreenshotBinding): RecyclerView.ViewHolder(binding.root)
+    class MyScreenshotViewHolder(val binding: ItemDetailBinding): RecyclerView.ViewHolder(binding.root)
 
     fun setScreenshots(screenshots: List<Screenshot>) {
         this.screenshots = screenshots

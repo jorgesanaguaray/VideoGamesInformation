@@ -56,7 +56,7 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        homeViewModel.images.observe(viewLifecycleOwner) {
+        homeViewModel.gamesA.observe(viewLifecycleOwner) {
 
             val images = ArrayList<SlideModel>()
 
@@ -75,13 +75,13 @@ class HomeFragment : Fragment() {
 
         }
 
-        homeViewModel.games.observe(viewLifecycleOwner) {
+        homeViewModel.gamesB.observe(viewLifecycleOwner) {
             homeAdapter.setGames(it)
             binding.mRecyclerView.adapter = homeAdapter
         }
 
         homeViewModel.error.observe(viewLifecycleOwner) {
-            binding.mTextError.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.error) + "</b>" + " " + it + "." + "<br><br>" + "<b>" + resources.getString(R.string.possible_solution) + "</b>" + " " + resources.getString(R.string.check_your_internet_connection), HtmlCompat.FROM_HTML_MODE_LEGACY)
+            binding.mError.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.error) + "</b>" + " " + it + "." + "<br><br>" + "<b>" + resources.getString(R.string.possible_solution) + "</b>" + " " + resources.getString(R.string.check_your_internet_connection), HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
 
         homeViewModel.nestedScrollVisibility.observe(viewLifecycleOwner) {
