@@ -21,7 +21,8 @@
                 android:id="@+id/mTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="10dp"
                 android:hint="@string/games_by_category"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
@@ -39,6 +40,7 @@
                 android:id="@+id/mRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:scrollbars="vertical"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"

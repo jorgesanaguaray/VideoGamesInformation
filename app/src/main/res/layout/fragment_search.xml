@@ -27,6 +27,8 @@
                 android:id="@+id/mRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginBottom="5dp"
                 android:scrollbars="vertical"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
