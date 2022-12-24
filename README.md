@@ -6,8 +6,6 @@ API link: https://www.freetogame.com/
 APP link: https://play.google.com/store/apps/details?id=com.jorgesanaguaray.videogamesinformation
 
 <h2>App Features</h2>
-• No ads.
-<br>
 • Recommended games.
 <br>
 • Browse games by category.
@@ -31,24 +29,24 @@ APP link: https://play.google.com/store/apps/details?id=com.jorgesanaguaray.vide
 <br>
 <b>• ViewBinding:</b> To bind the views with their respective classes.
 <br>
-<b>• ViewModel with LiveData:</b> to watch data changes and update the UI automatically.
+<b>• ViewModel with LiveData:</b> to observe data changes and update the UI automatically.
 <br>
 <b>• Coroutines:</b> to do all the queries in a secondary thread.
 
 <h2>Screenshots:</h2>
 <div align="center">
-    <img src="https://pbs.twimg.com/media/Fg-ekNKWYAAkmsO?format=jpg&name=4096x4096" width="300px"</img> 
-    <img src="https://pbs.twimg.com/media/Fg-ekMIXkAECqCi?format=jpg&name=4096x4096" width="300px"</img> 
-    <img src="https://pbs.twimg.com/media/Fg-ekN-XkAIVSbb?format=jpg&name=4096x4096" width="300px"</img> 
+    <img src="https://pbs.twimg.com/media/FkwILAHX0AAikRa?format=jpg&name=large" width="250px"</img> 
+    <img src="https://pbs.twimg.com/media/FkwILAHWYAASyD_?format=jpg&name=large" width="250px"</img> 
+    <img src="https://pbs.twimg.com/media/FkwILAHXgAIo9pn?format=jpg&name=large" width="250px"</img> 
 </div>
 
 <div align="center">
-    <img src="https://pbs.twimg.com/media/Fg-ekM8WQAMQuON?format=jpg&name=4096x4096" width="300px"</img> 
-    <img src="https://pbs.twimg.com/media/Fg-eqCPXkAA6gJm?format=jpg&name=4096x4096" width="300px"</img> 
-    <img src="https://pbs.twimg.com/media/Fg-eqBbWYAAlLQ9?format=jpg&name=4096x4096" width="300px"</img> 
+    <img src="https://pbs.twimg.com/media/FkwILAIX0AEipFw?format=jpg&name=large" width="250px"</img> 
+    <img src="https://pbs.twimg.com/media/FkwIWXFWAAIhSbw?format=jpg&name=large" width="250px"</img> 
+    <img src="https://pbs.twimg.com/media/FkwIWXqXEAA-w3k?format=jpg&name=large" width="250px"</img> 
 </div>
 
 <div align="center">
-    <img src="https://pbs.twimg.com/media/Fg-eqB7XkAA2M2p?format=jpg&name=4096x4096" width="300px"</img> 
-    <img src="https://pbs.twimg.com/media/Fg-eqD1WQAAc8cW?format=jpg&name=4096x4096" width="300px"</img> 
+    <img src="https://pbs.twimg.com/media/FkwIWYXXEAALBeO?format=jpg&name=large" width="250px"</img> 
+    <img src="https://pbs.twimg.com/media/FkwIWY3XwAIxLU5?format=jpg&name=large" width="250px"</img> 
 </div>
