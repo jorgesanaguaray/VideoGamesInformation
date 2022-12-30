@@ -18,7 +18,8 @@ class HomeAdapter(
     private val itemPosition: (Int) -> Unit,
     private val onFavoriteClick: (GameItem) -> Unit,
     private val onButtonUrlClick: (String) -> Unit,
-    private val onCardGameClick: (Int) -> Unit
+    private val onCardGameShortClick: (Int) -> Unit,
+    private val onCardGameLongClick: (GameItem) -> Unit
 
 ) : RecyclerView.Adapter<HomeAdapter.MyHomeViewHolder>() {
 
@@ -43,7 +44,11 @@ class HomeAdapter(
             }
             mFavorite.setOnClickListener { itemPosition(position) ; onFavoriteClick(game) }
             mButtonUrl.setOnClickListener { onButtonUrlClick(game.game_url) }
-            mCardGame.setOnClickListener { onCardGameClick(game.id) }
+            mCardGame.setOnClickListener { onCardGameShortClick(game.id) }
+            mCardGame.setOnLongClickListener {
+                onCardGameLongClick(game)
+                true
+            }
         }
 
         setStateOfGame(game.id, holder.binding)

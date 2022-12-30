@@ -12,10 +12,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
+import coil.load
+import coil.transform.RoundedCornersTransformation
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.jorgesanaguaray.videogamesinformation.R
+import com.jorgesanaguaray.videogamesinformation.databinding.DialogDetailBinding
 import com.jorgesanaguaray.videogamesinformation.databinding.FragmentHomeBinding
 import com.jorgesanaguaray.videogamesinformation.domain.items.GameItem
 import com.jorgesanaguaray.videogamesinformation.util.Constants.Companion.KEY_GAME_ID
@@ -47,8 +51,9 @@ class HomeFragment : Fragment() {
             homeViewModel = homeViewModel,
             itemPosition = { homeAdapter.notifyItemChanged(it) },
             onFavoriteClick = { insertOrDeleteFavorite(it) },
-            onButtonUrlClick = { goToTheGamePage(it) },
-            onCardGameClick = { goToTheGameDetails(it) }
+            onButtonUrlClick = { goGamePage(it) },
+            onCardGameShortClick = { goGameDetail(it) },
+            onCardGameLongClick = { showDetailDialog(it) }
         )
 
     }
@@ -68,7 +73,7 @@ class HomeFragment : Fragment() {
                 mImageSlider.setImageList(images)
                 mImageSlider.setItemClickListener(object : ItemClickListener {
                     override fun onItemSelected(position: Int) {
-                        goToTheGameDetails(it[position].id)
+                        goGameDetail(it[position].id)
                     }
                 })
             }
@@ -120,15 +125,44 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun goToTheGamePage(gameUrl: String) {
+    private fun showDetailDialog(gameItem: GameItem) {
+
+        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
+        val binding: DialogDetailBinding = DialogDetailBinding.inflate(layoutInflater)
+
+        binding.apply {
+            mTitle.text = gameItem.title
+            mDescription.text = gameItem.short_description
+            mGenre.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.genre) + "</b>" + " " + gameItem.genre, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            mPlatform.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.platform) + "</b>" + " " + gameItem.platform, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            mPublisher.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.publisher) + "</b>" + " " + gameItem.publisher, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            mDeveloper.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.developer) + "</b>" + " " + gameItem.developer, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            mReleaseDate.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.release_date) + "</b>" + " " + gameItem.release_date, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            mImage.load(gameItem.thumbnail) {
+                placeholder(R.drawable.ic_image)
+                error(R.drawable.ic_image)
+                crossfade(true)
+                crossfade(400)
+                transformations(RoundedCornersTransformation(10f))
+            }
+            mClose.setOnClickListener { bottomSheetDialog.dismiss() }
+            mButtonUrl.setOnClickListener { goGamePage(gameItem.game_url) }
+        }
+
+        bottomSheetDialog.setContentView(binding.root)
+        bottomSheetDialog.show()
+
+    }
+
+    private fun goGameDetail(id: Int) {
+        val bundle = bundleOf(KEY_GAME_ID to id)
+        findNavController().navigate(R.id.action_nav_home_to_nav_detail, bundle)
+    }
+
+    private fun goGamePage(gameUrl: String) {
         val uri = Uri.parse(gameUrl)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
-    }
-
-    private fun goToTheGameDetails(id: Int) {
-        val bundle = bundleOf(KEY_GAME_ID to id)
-        findNavController().navigate(R.id.action_nav_home_to_nav_detail, bundle)
     }
 
 }

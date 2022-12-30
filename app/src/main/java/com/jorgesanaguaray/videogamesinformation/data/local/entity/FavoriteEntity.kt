@@ -16,8 +16,13 @@ data class FavoriteEntity(
     val title: String,
     val thumbnail: String,
     val short_description: String,
-    val game_url: String
+    val game_url: String,
+    val genre: String,
+    val platform: String,
+    val publisher: String,
+    val developer: String,
+    val release_date: String
 
 )
 
-fun GameItem.toFavoriteEntity() = FavoriteEntity(id, title, thumbnail, short_description, game_url)
+fun GameItem.toFavoriteEntity() = FavoriteEntity(id, title, thumbnail, short_description, game_url, genre, platform, publisher, developer, release_date)

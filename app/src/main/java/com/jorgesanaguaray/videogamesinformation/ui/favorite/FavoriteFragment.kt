@@ -10,11 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
+import coil.load
+import coil.transform.RoundedCornersTransformation
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.jorgesanaguaray.videogamesinformation.R
+import com.jorgesanaguaray.videogamesinformation.databinding.DialogDetailBinding
 import com.jorgesanaguaray.videogamesinformation.databinding.FragmentFavoriteBinding
 import com.jorgesanaguaray.videogamesinformation.domain.items.GameItem
 import com.jorgesanaguaray.videogamesinformation.util.Constants.Companion.KEY_GAME_ID
@@ -46,8 +51,9 @@ class FavoriteFragment : Fragment() {
             favoriteViewModel = favoriteViewModel,
             itemPosition = { favoriteAdapter.notifyItemChanged(it) },
             onFavoriteClick = { insertOrDeleteFavorite(it) },
-            onButtonUrlClick = { goToTheGamePage(it) },
-            onCardGameClick = { goToTheGameDetails(it) }
+            onButtonUrlClick = { goGamePage(it) },
+            onCardGameShortClick = { goGameDetail(it) },
+            onCardGameLongClick = { showDetailDialog(it) }
         )
 
     }
@@ -102,15 +108,33 @@ class FavoriteFragment : Fragment() {
 
     }
 
-    private fun goToTheGamePage(gameUrl: String) {
-        val uri = Uri.parse(gameUrl)
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
-    }
+    private fun showDetailDialog(gameItem: GameItem) {
 
-    private fun goToTheGameDetails(id: Int) {
-        val bundle = bundleOf(KEY_GAME_ID to id)
-        findNavController().navigate(R.id.action_nav_favorite_to_nav_detail, bundle)
+        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
+        val binding: DialogDetailBinding = DialogDetailBinding.inflate(layoutInflater)
+
+        binding.apply {
+            mTitle.text = gameItem.title
+            mDescription.text = gameItem.short_description
+            mGenre.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.genre) + "</b>" + " " + gameItem.genre, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            mPlatform.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.platform) + "</b>" + " " + gameItem.platform, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            mPublisher.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.publisher) + "</b>" + " " + gameItem.publisher, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            mDeveloper.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.developer) + "</b>" + " " + gameItem.developer, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            mReleaseDate.text = HtmlCompat.fromHtml("<b>" + resources.getString(R.string.release_date) + "</b>" + " " + gameItem.release_date, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            mImage.load(gameItem.thumbnail) {
+                placeholder(R.drawable.ic_image)
+                error(R.drawable.ic_image)
+                crossfade(true)
+                crossfade(400)
+                transformations(RoundedCornersTransformation(10f))
+            }
+            mClose.setOnClickListener { bottomSheetDialog.dismiss() }
+            mButtonUrl.setOnClickListener { goGamePage(gameItem.game_url) }
+        }
+
+        bottomSheetDialog.setContentView(binding.root)
+        bottomSheetDialog.show()
+
     }
 
     private fun showDeleteDialog() {
@@ -124,6 +148,17 @@ class FavoriteFragment : Fragment() {
         builder.setCancelable(false)
         builder.create().show()
 
+    }
+
+    private fun goGameDetail(id: Int) {
+        val bundle = bundleOf(KEY_GAME_ID to id)
+        findNavController().navigate(R.id.action_nav_favorite_to_nav_detail, bundle)
+    }
+
+    private fun goGamePage(gameUrl: String) {
+        val uri = Uri.parse(gameUrl)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 
 }

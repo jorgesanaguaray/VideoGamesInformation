@@ -13,9 +13,14 @@ data class GameItem(
     val title: String,
     val thumbnail: String,
     val short_description: String,
-    val game_url: String
+    val game_url: String,
+    val genre: String,
+    val platform: String,
+    val publisher: String,
+    val developer: String,
+    val release_date: String
 
 )
 
-fun GameModel.toGameItem() = GameItem(id, title, thumbnail, short_description, game_url)
-fun FavoriteEntity.toGameItem() = GameItem(id, title, thumbnail, short_description, game_url)
+fun GameModel.toGameItem() = GameItem(id, title, thumbnail, short_description, game_url, genre, platform, publisher, developer, release_date)
+fun FavoriteEntity.toGameItem() = GameItem(id, title, thumbnail, short_description, game_url, genre, platform, publisher, developer, release_date)

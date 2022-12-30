@@ -130,7 +130,7 @@ class DetailFragment : Fragment() {
 
         } else {
 
-            val gameItem = GameItem(id = game.id, title = game.title, thumbnail = game.thumbnail, short_description = game.short_description, game_url = game.game_url)
+            val gameItem = GameItem(id = game.id, title = game.title, thumbnail = game.thumbnail, short_description = game.short_description, game_url = game.game_url, genre = game.genre, platform = game.platform, publisher = game.publisher, developer = game.developer, release_date = game.release_date)
             detailViewModel.insertFavorite(gameItem)
             Snackbar.make(requireView(), R.string.game_saved_in_favorites, Snackbar.LENGTH_LONG).show()
 
