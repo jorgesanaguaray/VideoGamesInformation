@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.jorgesanaguaray.videogamesinformation.ui.home.HomeFragment"
+        android:name="com.jorgesanaguaray.videogamesinformation.home.presentation.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
 
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/nav_search"
-        android:name="com.jorgesanaguaray.videogamesinformation.ui.search.SearchFragment"
+        android:name="com.jorgesanaguaray.videogamesinformation.search.presentation.SearchFragment"
         android:label="@string/menu_search"
         tools:layout="@layout/fragment_search">
 
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/nav_category"
-        android:name="com.jorgesanaguaray.videogamesinformation.ui.category.CategoryFragment"
+        android:name="com.jorgesanaguaray.videogamesinformation.category.presentation.CategoryFragment"
         android:label="@string/menu_category"
         tools:layout="@layout/fragment_category">
 
@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/nav_favorite"
-        android:name="com.jorgesanaguaray.videogamesinformation.ui.favorite.FavoriteFragment"
+        android:name="com.jorgesanaguaray.videogamesinformation.favorite.presentation.FavoriteFragment"
         android:label="@string/menu_favorite"
         tools:layout="@layout/fragment_favorite">
 
@@ -55,7 +55,7 @@
 
     <fragment
         android:id="@+id/nav_detail"
-        android:name="com.jorgesanaguaray.videogamesinformation.ui.detail.DetailFragment"
+        android:name="com.jorgesanaguaray.videogamesinformation.detail.presentation.DetailFragment"
         android:label="@string/menu_detail"
         tools:layout="@layout/fragment_detail">
 

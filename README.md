@@ -32,19 +32,3 @@ Game Information is a mobile application that provides users with detailed infor
 
 - [API](https://www.freetogame.com/api-doc)
 - [APP](https://play.google.com/store/apps/details?id=com.jorgesanaguaray.videogamesinformation)
-
-## Screenshots
-
-<div align="start">
-    <img src="https://pbs.twimg.com/media/FkwILAHX0AAikRa?format=jpg&name=large" width="225px"</img> 
-    <img src="https://pbs.twimg.com/media/FkwILAHWYAASyD_?format=jpg&name=large" width="225px"</img> 
-    <img src="https://pbs.twimg.com/media/FkwILAHXgAIo9pn?format=jpg&name=large" width="225px"</img> 
-    <img src="https://pbs.twimg.com/media/FkwILAIX0AEipFw?format=jpg&name=large" width="225px"</img> 
-</div>
-
-<div align="start">
-    <img src="https://pbs.twimg.com/media/FkwIWXFWAAIhSbw?format=jpg&name=large" width="225px"</img> 
-    <img src="https://pbs.twimg.com/media/FkwIWXqXEAA-w3k?format=jpg&name=large" width="225px"</img> 
-    <img src="https://pbs.twimg.com/media/FkwIWYXXEAALBeO?format=jpg&name=large" width="225px"</img> 
-    <img src="https://pbs.twimg.com/media/FkwIWY3XwAIxLU5?format=jpg&name=large" width="225px"</img> 
-</div>
