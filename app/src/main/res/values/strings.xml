@@ -8,8 +8,8 @@
     <string name="menu_favorite">Favorites</string>
     <string name="menu_detail">Details</string>
 
-    <string name="go_to_the_game_page">Go to the game page</string>
-    <string name="search_games_by_name">Search games by name</string>
+    <string name="game_website">Game Website</string>
+    <string name="search_games">Search games</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="games_by_category">Games by category</string>
     <string name="category">2d</string>
@@ -28,10 +28,10 @@
     <string name="storage">Storage:</string>
     <string name="screenshots">Screenshots</string>
     <string name="no_screenshots">No screenshots</string>
-    <string name="save_to_favorites">Save to favorites</string>
+    <string name="add_to_favorites">Add to favorites</string>
     <string name="game_removed_from_favorites">Game removed from favorites</string>
     <string name="remove_from_favorites">Remove from favorites</string>
-    <string name="game_saved_in_favorites">Game saved in favorites</string>
+    <string name="game_added_in_favorites">Game added in favorites</string>
     <string name="no_favorite_games">No favorite games</string>
     <string name="delete_all_favorite_games">Delete all favorite games</string>
     <string name="are_you_sure_you_want_to_delete_all_your_favorite_games">Are you sure you want to delete all your favorite games?</string>

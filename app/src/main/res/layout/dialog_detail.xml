@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:text="@string/go_to_the_game_page"
+            android:text="@string/game_website"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
         <TextView

@@ -51,7 +51,7 @@ class SearchFragment : Fragment() {
             searchViewModel = searchViewModel,
             itemPosition = { searchAdapter.notifyItemChanged(it) },
             onFavoriteClick = { insertOrDeleteFavorite(it) },
-            onButtonUrlClick = { goGamePage(it) },
+            onButtonUrlClick = { goGameWebsite(it) },
             onCardGameShortClick = { goGameDetail(it) },
             onCardGameLongClick = { showDetailDialog(it) }
         )
@@ -74,6 +74,7 @@ class SearchFragment : Fragment() {
 
             override fun onQueryTextSubmit(query: String?): Boolean {
                 searchViewModel.getSearchedGames(query!!)
+                binding.mSearchView.clearFocus()
                 return true
             }
 
@@ -125,7 +126,7 @@ class SearchFragment : Fragment() {
             Snackbar.make(requireView(), R.string.game_removed_from_favorites, Snackbar.LENGTH_SHORT).show()
         } else {
             searchViewModel.insertFavorite(game)
-            Snackbar.make(requireView(), R.string.game_saved_in_favorites, Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(requireView(), R.string.game_added_in_favorites, Snackbar.LENGTH_SHORT).show()
         }
 
     }
@@ -151,7 +152,7 @@ class SearchFragment : Fragment() {
                 transformations(RoundedCornersTransformation(10f))
             }
             mClose.setOnClickListener { bottomSheetDialog.dismiss() }
-            mButtonUrl.setOnClickListener { goGamePage(game.game_url) }
+            mButtonUrl.setOnClickListener { goGameWebsite(game.game_url) }
         }
 
         bottomSheetDialog.setContentView(binding.root)
@@ -164,7 +165,7 @@ class SearchFragment : Fragment() {
         findNavController().navigate(R.id.action_nav_search_to_nav_detail, bundle)
     }
 
-    private fun goGamePage(gameUrl: String) {
+    private fun goGameWebsite(gameUrl: String) {
         val uri = Uri.parse(gameUrl)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)

@@ -56,7 +56,7 @@
                         android:layout_weight="1"
                         android:layout_marginEnd="5dp"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:text="@string/go_to_the_game_page"
+                        android:text="@string/game_website"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
                     <Button
@@ -66,7 +66,7 @@
                         android:layout_weight="1"
                         android:layout_marginStart="5dp"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:text="@string/save_to_favorites"
+                        android:text="@string/add_to_favorites"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
                 </LinearLayout>
@@ -276,7 +276,7 @@
         android:id="@+id/mProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 
 </RelativeLayout>

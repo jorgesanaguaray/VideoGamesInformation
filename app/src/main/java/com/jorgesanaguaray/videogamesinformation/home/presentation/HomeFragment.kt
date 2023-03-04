@@ -57,7 +57,7 @@ class HomeFragment : Fragment() {
             homeViewModel = homeViewModel,
             itemPosition = { homeAdapter.notifyItemChanged(it) },
             onFavoriteClick = { insertOrDeleteFavorite(it) },
-            onButtonUrlClick = { goGamePage(it) },
+            onButtonUrlClick = { goGameWebsite(it) },
             onCardGameShortClick = { goGameDetail(it) },
             onCardGameLongClick = { showDetailDialog(it) }
         )
@@ -120,7 +120,7 @@ class HomeFragment : Fragment() {
             Snackbar.make(requireView(), R.string.game_removed_from_favorites, Snackbar.LENGTH_SHORT).show()
         } else {
             homeViewModel.insertFavorite(game)
-            Snackbar.make(requireView(), R.string.game_saved_in_favorites, Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(requireView(), R.string.game_added_in_favorites, Snackbar.LENGTH_SHORT).show()
         }
 
     }
@@ -146,7 +146,7 @@ class HomeFragment : Fragment() {
                 transformations(RoundedCornersTransformation(10f))
             }
             mClose.setOnClickListener { bottomSheetDialog.dismiss() }
-            mButtonUrl.setOnClickListener { goGamePage(game.game_url) }
+            mButtonUrl.setOnClickListener { goGameWebsite(game.game_url) }
         }
 
         bottomSheetDialog.setContentView(binding.root)
@@ -159,7 +159,7 @@ class HomeFragment : Fragment() {
         findNavController().navigate(R.id.action_nav_home_to_nav_detail, bundle)
     }
 
-    private fun goGamePage(gameUrl: String) {
+    private fun goGameWebsite(gameUrl: String) {
         val uri = Uri.parse(gameUrl)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)

@@ -21,7 +21,7 @@
                 android:id="@+id/mSearchView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:queryHint="@string/search_games_by_name"/>
+                app:queryHint="@string/search_games"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/mRecyclerView"
@@ -78,7 +78,7 @@
         android:id="@+id/mProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 
 </RelativeLayout>

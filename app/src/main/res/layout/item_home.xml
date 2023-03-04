@@ -79,7 +79,7 @@
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:text="@string/go_to_the_game_page"
+            android:text="@string/game_website"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
     </LinearLayout>

@@ -128,7 +128,7 @@ class DetailFragment : Fragment() {
 
     }
 
-    private fun insertOrDeleteFavorite(game: SpecificGame) {
+    private fun insertOrDeleteFavorite(specificGame: SpecificGame) {
 
         if (isFavorite()) {
 
@@ -137,9 +137,9 @@ class DetailFragment : Fragment() {
 
         } else {
 
-            val gameItem = Game(id = game.id, title = game.title, thumbnail = game.thumbnail, short_description = game.short_description, game_url = game.game_url, genre = game.genre, platform = game.platform, publisher = game.publisher, developer = game.developer, release_date = game.release_date)
-            detailViewModel.insertFavorite(gameItem)
-            Snackbar.make(requireView(), R.string.game_saved_in_favorites, Snackbar.LENGTH_LONG).show()
+            val game = Game(id = specificGame.id, title = specificGame.title, thumbnail = specificGame.thumbnail, short_description = specificGame.short_description, game_url = specificGame.game_url, genre = specificGame.genre, platform = specificGame.platform, publisher = specificGame.publisher, developer = specificGame.developer, release_date = specificGame.release_date)
+            detailViewModel.insertFavorite(game)
+            Snackbar.make(requireView(), R.string.game_added_in_favorites, Snackbar.LENGTH_LONG).show()
 
         }
 
@@ -150,7 +150,7 @@ class DetailFragment : Fragment() {
     private fun setStateOfButtonFavorite() {
 
         if (isFavorite()) binding.mButtonFavorite.text = resources.getString(R.string.remove_from_favorites)
-        else binding.mButtonFavorite.text = resources.getString(R.string.save_to_favorites)
+        else binding.mButtonFavorite.text = resources.getString(R.string.add_to_favorites)
 
     }
 
