@@ -12,4 +12,10 @@ interface FavoriteRepository {
 
     suspend fun deleteFavorites()
 
+    suspend fun insertFavorite(game: Game)
+
+    suspend fun deleteFavoriteById(id: Int)
+
+    suspend fun isFavorite(id: Int): Boolean
+
 }

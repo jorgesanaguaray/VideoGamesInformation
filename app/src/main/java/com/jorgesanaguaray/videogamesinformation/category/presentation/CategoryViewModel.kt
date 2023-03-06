@@ -4,9 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jorgesanaguaray.videogamesinformation.category.domain.CategoryRepository
 import com.jorgesanaguaray.videogamesinformation.core.items.Game
-import com.jorgesanaguaray.videogamesinformation.usecases.DeleteFavoriteByIdUseCase
-import com.jorgesanaguaray.videogamesinformation.usecases.InsertFavoriteUseCase
-import com.jorgesanaguaray.videogamesinformation.usecases.IsFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,14 +17,7 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class CategoryViewModel @Inject constructor(
-
-    private val categoryRepository: CategoryRepository,
-    private val insertFavoriteUseCase: InsertFavoriteUseCase,
-    private val deleteFavoriteByIdUseCase: DeleteFavoriteByIdUseCase,
-    private val isFavoriteUseCase: IsFavoriteUseCase
-
-) : ViewModel() {
+class CategoryViewModel @Inject constructor(private val categoryRepository: CategoryRepository) : ViewModel() {
 
     private val _categoryState = MutableStateFlow(CategoryState())
     val categoryState: StateFlow<CategoryState> = _categoryState.asStateFlow()
@@ -62,10 +52,10 @@ class CategoryViewModel @Inject constructor(
 
     }
 
-    fun insertFavorite(gameItem: Game) {
+    fun insertFavorite(game: Game) {
 
         viewModelScope.launch {
-            insertFavoriteUseCase(gameItem)
+            categoryRepository.insertFavorite(game)
         }
 
     }
@@ -73,7 +63,7 @@ class CategoryViewModel @Inject constructor(
     fun deleteFavoriteById(id: Int) {
 
         viewModelScope.launch {
-            deleteFavoriteByIdUseCase(id)
+            categoryRepository.deleteFavoriteById(id)
         }
 
     }
@@ -83,7 +73,7 @@ class CategoryViewModel @Inject constructor(
         var result = false
 
         viewModelScope.launch {
-            result = isFavoriteUseCase(id)
+            result = categoryRepository.isFavorite(id)
         }
 
         return result

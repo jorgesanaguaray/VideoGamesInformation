@@ -6,9 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jorgesanaguaray.videogamesinformation.core.items.Game
 import com.jorgesanaguaray.videogamesinformation.core.items.SpecificGame
-import com.jorgesanaguaray.videogamesinformation.usecases.DeleteFavoriteByIdUseCase
-import com.jorgesanaguaray.videogamesinformation.usecases.InsertFavoriteUseCase
-import com.jorgesanaguaray.videogamesinformation.usecases.IsFavoriteUseCase
 import com.jorgesanaguaray.videogamesinformation.detail.domain.DetailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,14 +20,7 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(
-
-    private val detailRepository: DetailRepository,
-    private val insertFavoriteUseCase: InsertFavoriteUseCase,
-    private val deleteFavoriteByIdUseCase: DeleteFavoriteByIdUseCase,
-    private val isFavoriteUseCase: IsFavoriteUseCase
-
-) : ViewModel() {
+class DetailViewModel @Inject constructor(private val detailRepository: DetailRepository) : ViewModel() {
 
     private val _game = MutableLiveData<SpecificGame>()
     val game: LiveData<SpecificGame> get() = _game
@@ -66,10 +56,10 @@ class DetailViewModel @Inject constructor(
 
     }
 
-    fun insertFavorite(gameItem: Game) {
+    fun insertFavorite(game: Game) {
 
         viewModelScope.launch {
-            insertFavoriteUseCase(gameItem)
+            detailRepository.insertFavorite(game)
         }
 
     }
@@ -77,7 +67,7 @@ class DetailViewModel @Inject constructor(
     fun deleteFavoriteById(id: Int) {
 
         viewModelScope.launch {
-            deleteFavoriteByIdUseCase(id)
+            detailRepository.deleteFavoriteById(id)
         }
 
     }
@@ -87,7 +77,7 @@ class DetailViewModel @Inject constructor(
         var result = false
 
         viewModelScope.launch {
-            result = isFavoriteUseCase(id)
+            result = detailRepository.isFavorite(id)
         }
 
         return result

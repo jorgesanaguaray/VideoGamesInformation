@@ -3,9 +3,6 @@ package com.jorgesanaguaray.videogamesinformation.favorite.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jorgesanaguaray.videogamesinformation.core.items.Game
-import com.jorgesanaguaray.videogamesinformation.usecases.DeleteFavoriteByIdUseCase
-import com.jorgesanaguaray.videogamesinformation.usecases.InsertFavoriteUseCase
-import com.jorgesanaguaray.videogamesinformation.usecases.IsFavoriteUseCase
 import com.jorgesanaguaray.videogamesinformation.favorite.domain.FavoriteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,14 +17,7 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class FavoriteViewModel @Inject constructor(
-
-    private val favoriteRepository: FavoriteRepository,
-    private val insertFavoriteUseCase: InsertFavoriteUseCase,
-    private val deleteFavoriteByIdUseCase: DeleteFavoriteByIdUseCase,
-    private val isFavoriteUseCase: IsFavoriteUseCase
-
-) : ViewModel() {
+class FavoriteViewModel @Inject constructor(private val favoriteRepository: FavoriteRepository) : ViewModel() {
 
     private val _favoriteState = MutableStateFlow(FavoriteState())
     val favoriteState: StateFlow<FavoriteState> = _favoriteState.asStateFlow()
@@ -77,10 +67,10 @@ class FavoriteViewModel @Inject constructor(
 
     }
 
-    fun insertFavorite(gameItem: Game) {
+    fun insertFavorite(game: Game) {
 
         viewModelScope.launch {
-            insertFavoriteUseCase(gameItem)
+            favoriteRepository.insertFavorite(game)
         }
 
     }
@@ -88,7 +78,7 @@ class FavoriteViewModel @Inject constructor(
     fun deleteFavoriteById(id: Int) {
 
         viewModelScope.launch {
-            deleteFavoriteByIdUseCase(id)
+            favoriteRepository.deleteFavoriteById(id)
         }
 
     }
@@ -98,7 +88,7 @@ class FavoriteViewModel @Inject constructor(
         var result = false
 
         viewModelScope.launch {
-            result = isFavoriteUseCase(id)
+            result = favoriteRepository.isFavorite(id)
         }
 
         return result

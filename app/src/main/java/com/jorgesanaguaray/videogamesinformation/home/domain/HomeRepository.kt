@@ -12,4 +12,10 @@ interface HomeRepository {
 
     suspend fun getGamesB(): Result<List<Game>>
 
+    suspend fun insertFavorite(game: Game)
+
+    suspend fun deleteFavoriteById(id: Int)
+
+    suspend fun isFavorite(id: Int): Boolean
+
 }

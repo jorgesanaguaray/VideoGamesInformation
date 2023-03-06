@@ -1,5 +1,6 @@
 package com.jorgesanaguaray.videogamesinformation.home.di
 
+import com.jorgesanaguaray.videogamesinformation.core.local.FavoriteDao
 import com.jorgesanaguaray.videogamesinformation.core.remote.GameApi
 import com.jorgesanaguaray.videogamesinformation.home.data.HomeRepositoryImpl
 import com.jorgesanaguaray.videogamesinformation.home.domain.HomeRepository
@@ -19,8 +20,8 @@ object HomeModule {
 
     @Singleton
     @Provides
-    fun provideRepository(gameApi: GameApi): HomeRepository {
-        return HomeRepositoryImpl(gameApi)
+    fun provideRepository(gameApi: GameApi, favoriteDao: FavoriteDao): HomeRepository {
+        return HomeRepositoryImpl(gameApi, favoriteDao)
     }
 
 }

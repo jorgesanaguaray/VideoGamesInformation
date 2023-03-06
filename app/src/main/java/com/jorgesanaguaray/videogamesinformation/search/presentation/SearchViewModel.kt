@@ -3,9 +3,6 @@ package com.jorgesanaguaray.videogamesinformation.search.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jorgesanaguaray.videogamesinformation.core.items.Game
-import com.jorgesanaguaray.videogamesinformation.usecases.DeleteFavoriteByIdUseCase
-import com.jorgesanaguaray.videogamesinformation.usecases.InsertFavoriteUseCase
-import com.jorgesanaguaray.videogamesinformation.usecases.IsFavoriteUseCase
 import com.jorgesanaguaray.videogamesinformation.search.domain.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,14 +17,7 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(
-
-    private val searchRepository: SearchRepository,
-    private val insertFavoriteUseCase: InsertFavoriteUseCase,
-    private val deleteFavoriteByIdUseCase: DeleteFavoriteByIdUseCase,
-    private val isFavoriteUseCase: IsFavoriteUseCase
-
-) : ViewModel() {
+class SearchViewModel @Inject constructor(private val searchRepository: SearchRepository) : ViewModel() {
 
     private val _searchState = MutableStateFlow(SearchState())
     val searchState: StateFlow<SearchState> = _searchState.asStateFlow()
@@ -78,10 +68,10 @@ class SearchViewModel @Inject constructor(
 
     }
 
-    fun insertFavorite(gameItem: Game) {
+    fun insertFavorite(game: Game) {
 
         viewModelScope.launch {
-            insertFavoriteUseCase(gameItem)
+            searchRepository.insertFavorite(game)
         }
 
     }
@@ -89,7 +79,7 @@ class SearchViewModel @Inject constructor(
     fun deleteFavoriteById(id: Int) {
 
         viewModelScope.launch {
-            deleteFavoriteByIdUseCase(id)
+            searchRepository.deleteFavoriteById(id)
         }
 
     }
@@ -99,7 +89,7 @@ class SearchViewModel @Inject constructor(
         var result = false
 
         viewModelScope.launch {
-            result = isFavoriteUseCase(id)
+            result = searchRepository.isFavorite(id)
         }
 
         return result

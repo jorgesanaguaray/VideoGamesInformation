@@ -12,4 +12,10 @@ interface SearchRepository {
 
     suspend fun getSearchedGames(query: String): Result<List<Game>>
 
+    suspend fun insertFavorite(game: Game)
+
+    suspend fun deleteFavoriteById(id: Int)
+
+    suspend fun isFavorite(id: Int): Boolean
+
 }
