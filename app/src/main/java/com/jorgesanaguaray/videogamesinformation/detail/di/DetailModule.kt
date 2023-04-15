@@ -1,7 +1,6 @@
 package com.jorgesanaguaray.videogamesinformation.detail.di
 
-import com.jorgesanaguaray.videogamesinformation.core.local.FavoriteDao
-import com.jorgesanaguaray.videogamesinformation.core.remote.GameApi
+import com.jorgesanaguaray.videogamesinformation.core.data.remote.GameApi
 import com.jorgesanaguaray.videogamesinformation.detail.data.DetailRepositoryImpl
 import com.jorgesanaguaray.videogamesinformation.detail.domain.DetailRepository
 import dagger.Module
@@ -20,8 +19,8 @@ object DetailModule {
 
     @Singleton
     @Provides
-    fun provideRepository(gameApi: GameApi, favoriteDao: FavoriteDao): DetailRepository {
-        return DetailRepositoryImpl(gameApi, favoriteDao)
+    fun provideRepository(gameApi: GameApi): DetailRepository {
+        return DetailRepositoryImpl(gameApi)
     }
 
 }

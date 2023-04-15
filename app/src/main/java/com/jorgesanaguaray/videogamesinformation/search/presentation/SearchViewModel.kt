@@ -2,7 +2,8 @@ package com.jorgesanaguaray.videogamesinformation.search.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jorgesanaguaray.videogamesinformation.core.items.Game
+import com.jorgesanaguaray.videogamesinformation.core.domain.CoreRepository
+import com.jorgesanaguaray.videogamesinformation.core.domain.models.Game
 import com.jorgesanaguaray.videogamesinformation.search.domain.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,12 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val searchRepository: SearchRepository) : ViewModel() {
+class SearchViewModel @Inject constructor(
+
+    private val searchRepository: SearchRepository,
+    private val coreRepository: CoreRepository
+
+) : ViewModel() {
 
     private val _searchState = MutableStateFlow(SearchState())
     val searchState: StateFlow<SearchState> = _searchState.asStateFlow()
@@ -71,7 +77,7 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
     fun insertFavorite(game: Game) {
 
         viewModelScope.launch {
-            searchRepository.insertFavorite(game)
+            coreRepository.insertFavorite(game)
         }
 
     }
@@ -79,7 +85,7 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
     fun deleteFavoriteById(id: Int) {
 
         viewModelScope.launch {
-            searchRepository.deleteFavoriteById(id)
+            coreRepository.deleteFavoriteById(id)
         }
 
     }
@@ -89,7 +95,7 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
         var result = false
 
         viewModelScope.launch {
-            result = searchRepository.isFavorite(id)
+            result = coreRepository.isFavorite(id)
         }
 
         return result

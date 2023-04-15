@@ -2,8 +2,7 @@ package com.jorgesanaguaray.videogamesinformation.category.di
 
 import com.jorgesanaguaray.videogamesinformation.category.data.CategoryRepositoryImpl
 import com.jorgesanaguaray.videogamesinformation.category.domain.CategoryRepository
-import com.jorgesanaguaray.videogamesinformation.core.local.FavoriteDao
-import com.jorgesanaguaray.videogamesinformation.core.remote.GameApi
+import com.jorgesanaguaray.videogamesinformation.core.data.remote.GameApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,8 +19,8 @@ object CategoryModule {
 
     @Singleton
     @Provides
-    fun provideRepository(gameApi: GameApi, favoriteDao: FavoriteDao): CategoryRepository {
-        return CategoryRepositoryImpl(gameApi, favoriteDao)
+    fun provideRepository(gameApi: GameApi): CategoryRepository {
+        return CategoryRepositoryImpl(gameApi)
     }
 
 }

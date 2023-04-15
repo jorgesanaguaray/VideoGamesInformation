@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.jorgesanaguaray.videogamesinformation.R
-import com.jorgesanaguaray.videogamesinformation.core.items.Game
+import com.jorgesanaguaray.videogamesinformation.core.domain.models.Game
 import com.jorgesanaguaray.videogamesinformation.databinding.ItemHomeBinding
 
 /**

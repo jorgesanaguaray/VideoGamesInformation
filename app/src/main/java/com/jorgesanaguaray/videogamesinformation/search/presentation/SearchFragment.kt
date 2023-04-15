@@ -21,7 +21,7 @@ import com.jorgesanaguaray.videogamesinformation.R
 import com.jorgesanaguaray.videogamesinformation.databinding.DialogDetailBinding
 import com.jorgesanaguaray.videogamesinformation.databinding.FragmentSearchBinding
 import com.jorgesanaguaray.videogamesinformation.Constants.Companion.KEY_GAME_ID
-import com.jorgesanaguaray.videogamesinformation.core.items.Game
+import com.jorgesanaguaray.videogamesinformation.core.domain.models.Game
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

@@ -1,16 +1,11 @@
-package com.jorgesanaguaray.videogamesinformation.core.local
-
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+package com.jorgesanaguaray.videogamesinformation.core.data.remote.dto
 
 /**
  * Created by Jorge Sanaguaray
  */
 
-@Entity(tableName = "favorite_table")
-data class FavoriteEntity(
+data class GameDto(
 
-    @PrimaryKey
     val id: Int,
     val title: String,
     val thumbnail: String,
@@ -20,6 +15,7 @@ data class FavoriteEntity(
     val platform: String,
     val publisher: String,
     val developer: String,
-    val release_date: String
+    val release_date: String,
+    val freetogame_profile_url: String
 
 )

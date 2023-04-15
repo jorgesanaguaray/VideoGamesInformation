@@ -1,4 +1,4 @@
-package com.jorgesanaguaray.videogamesinformation.core.local
+package com.jorgesanaguaray.videogamesinformation.core.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

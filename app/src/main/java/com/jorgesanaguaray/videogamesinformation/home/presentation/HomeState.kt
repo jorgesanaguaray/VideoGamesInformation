@@ -1,6 +1,6 @@
 package com.jorgesanaguaray.videogamesinformation.home.presentation
 
-import com.jorgesanaguaray.videogamesinformation.core.items.Game
+import com.jorgesanaguaray.videogamesinformation.core.domain.models.Game
 
 /**
  * Created by Jorge Sanaguaray

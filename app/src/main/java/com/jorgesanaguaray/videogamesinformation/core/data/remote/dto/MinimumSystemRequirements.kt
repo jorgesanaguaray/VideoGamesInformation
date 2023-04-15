@@ -1,4 +1,4 @@
-package com.jorgesanaguaray.videogamesinformation.core.remote.dtos
+package com.jorgesanaguaray.videogamesinformation.core.data.remote.dto
 
 data class MinimumSystemRequirements(
 

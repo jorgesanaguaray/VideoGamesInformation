@@ -2,7 +2,8 @@ package com.jorgesanaguaray.videogamesinformation.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jorgesanaguaray.videogamesinformation.core.items.Game
+import com.jorgesanaguaray.videogamesinformation.core.domain.CoreRepository
+import com.jorgesanaguaray.videogamesinformation.core.domain.models.Game
 import com.jorgesanaguaray.videogamesinformation.home.domain.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,12 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val homeRepository: HomeRepository) : ViewModel() {
+class HomeViewModel @Inject constructor(
+
+    private val homeRepository: HomeRepository,
+    private val coreRepository: CoreRepository
+
+) : ViewModel() {
 
     private val _homeState = MutableStateFlow(HomeState())
     val homeState: StateFlow<HomeState> = _homeState.asStateFlow()
@@ -63,7 +69,7 @@ class HomeViewModel @Inject constructor(private val homeRepository: HomeReposito
     fun insertFavorite(game: Game) {
 
         viewModelScope.launch {
-            homeRepository.insertFavorite(game)
+            coreRepository.insertFavorite(game)
         }
 
     }
@@ -71,7 +77,7 @@ class HomeViewModel @Inject constructor(private val homeRepository: HomeReposito
     fun deleteFavoriteById(id: Int) {
 
         viewModelScope.launch {
-            homeRepository.deleteFavoriteById(id)
+            coreRepository.deleteFavoriteById(id)
         }
 
     }
@@ -81,7 +87,7 @@ class HomeViewModel @Inject constructor(private val homeRepository: HomeReposito
         var result = false
 
         viewModelScope.launch {
-            result = homeRepository.isFavorite(id)
+            result = coreRepository.isFavorite(id)
         }
 
         return result

@@ -1,11 +1,16 @@
-package com.jorgesanaguaray.videogamesinformation.core.items
+package com.jorgesanaguaray.videogamesinformation.core.data.local
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 /**
  * Created by Jorge Sanaguaray
  */
 
-data class Game(
+@Entity(tableName = "favorite_table")
+data class FavoriteEntity(
 
+    @PrimaryKey
     val id: Int,
     val title: String,
     val thumbnail: String,

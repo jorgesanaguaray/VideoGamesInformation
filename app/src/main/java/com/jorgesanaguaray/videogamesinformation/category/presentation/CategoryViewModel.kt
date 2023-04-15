@@ -3,7 +3,8 @@ package com.jorgesanaguaray.videogamesinformation.category.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jorgesanaguaray.videogamesinformation.category.domain.CategoryRepository
-import com.jorgesanaguaray.videogamesinformation.core.items.Game
+import com.jorgesanaguaray.videogamesinformation.core.domain.CoreRepository
+import com.jorgesanaguaray.videogamesinformation.core.domain.models.Game
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,7 +18,12 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class CategoryViewModel @Inject constructor(private val categoryRepository: CategoryRepository) : ViewModel() {
+class CategoryViewModel @Inject constructor(
+
+    private val categoryRepository: CategoryRepository,
+    private val coreRepository: CoreRepository
+
+) : ViewModel() {
 
     private val _categoryState = MutableStateFlow(CategoryState())
     val categoryState: StateFlow<CategoryState> = _categoryState.asStateFlow()
@@ -55,7 +61,7 @@ class CategoryViewModel @Inject constructor(private val categoryRepository: Cate
     fun insertFavorite(game: Game) {
 
         viewModelScope.launch {
-            categoryRepository.insertFavorite(game)
+            coreRepository.insertFavorite(game)
         }
 
     }
@@ -63,7 +69,7 @@ class CategoryViewModel @Inject constructor(private val categoryRepository: Cate
     fun deleteFavoriteById(id: Int) {
 
         viewModelScope.launch {
-            categoryRepository.deleteFavoriteById(id)
+            coreRepository.deleteFavoriteById(id)
         }
 
     }
@@ -73,7 +79,7 @@ class CategoryViewModel @Inject constructor(private val categoryRepository: Cate
         var result = false
 
         viewModelScope.launch {
-            result = categoryRepository.isFavorite(id)
+            result = coreRepository.isFavorite(id)
         }
 
         return result

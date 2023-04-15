@@ -1,10 +1,10 @@
-package com.jorgesanaguaray.videogamesinformation.core.remote.dtos
+package com.jorgesanaguaray.videogamesinformation.core.domain.models
 
 /**
  * Created by Jorge Sanaguaray
  */
 
-data class GameDto(
+data class Game(
 
     val id: Int,
     val title: String,
@@ -15,7 +15,6 @@ data class GameDto(
     val platform: String,
     val publisher: String,
     val developer: String,
-    val release_date: String,
-    val freetogame_profile_url: String
+    val release_date: String
 
 )

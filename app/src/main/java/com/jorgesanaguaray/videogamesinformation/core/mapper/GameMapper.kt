@@ -1,10 +1,10 @@
 package com.jorgesanaguaray.videogamesinformation.core.mapper
 
-import com.jorgesanaguaray.videogamesinformation.core.local.FavoriteEntity
-import com.jorgesanaguaray.videogamesinformation.core.remote.dtos.GameDto
-import com.jorgesanaguaray.videogamesinformation.core.remote.dtos.SpecificGameDto
-import com.jorgesanaguaray.videogamesinformation.core.items.Game
-import com.jorgesanaguaray.videogamesinformation.core.items.SpecificGame
+import com.jorgesanaguaray.videogamesinformation.core.data.local.FavoriteEntity
+import com.jorgesanaguaray.videogamesinformation.core.data.remote.dto.GameDto
+import com.jorgesanaguaray.videogamesinformation.core.data.remote.dto.SpecificGameDto
+import com.jorgesanaguaray.videogamesinformation.core.domain.models.Game
+import com.jorgesanaguaray.videogamesinformation.core.domain.models.SpecificGame
 
 /**
  * Created by Jorge Sanaguaray

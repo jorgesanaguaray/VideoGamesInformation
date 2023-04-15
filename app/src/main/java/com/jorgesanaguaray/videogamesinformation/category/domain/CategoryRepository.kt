@@ -1,6 +1,6 @@
 package com.jorgesanaguaray.videogamesinformation.category.domain
 
-import com.jorgesanaguaray.videogamesinformation.core.items.Game
+import com.jorgesanaguaray.videogamesinformation.core.domain.models.Game
 
 /**
  * Created by Jorge Sanaguaray
@@ -9,11 +9,5 @@ import com.jorgesanaguaray.videogamesinformation.core.items.Game
 interface CategoryRepository {
 
     suspend fun getGamesByCategory(category: String): Result<List<Game>>
-
-    suspend fun insertFavorite(game: Game)
-
-    suspend fun deleteFavoriteById(id: Int)
-
-    suspend fun isFavorite(id: Int): Boolean
 
 }

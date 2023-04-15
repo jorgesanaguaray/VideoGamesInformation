@@ -1,6 +1,6 @@
 package com.jorgesanaguaray.videogamesinformation.favorite.di
 
-import com.jorgesanaguaray.videogamesinformation.core.local.FavoriteDao
+import com.jorgesanaguaray.videogamesinformation.core.data.local.FavoriteDao
 import com.jorgesanaguaray.videogamesinformation.favorite.data.FavoriteRepositoryImpl
 import com.jorgesanaguaray.videogamesinformation.favorite.domain.FavoriteRepository
 import dagger.Module

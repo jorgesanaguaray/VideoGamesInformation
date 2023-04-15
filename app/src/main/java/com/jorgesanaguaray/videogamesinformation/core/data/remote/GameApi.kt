@@ -1,7 +1,7 @@
-package com.jorgesanaguaray.videogamesinformation.core.remote
+package com.jorgesanaguaray.videogamesinformation.core.data.remote
 
-import com.jorgesanaguaray.videogamesinformation.core.remote.dtos.GameDto
-import com.jorgesanaguaray.videogamesinformation.core.remote.dtos.SpecificGameDto
+import com.jorgesanaguaray.videogamesinformation.core.data.remote.dto.GameDto
+import com.jorgesanaguaray.videogamesinformation.core.data.remote.dto.SpecificGameDto
 import com.jorgesanaguaray.videogamesinformation.Constants.Companion.CATEGORY_ENDPOINT
 import com.jorgesanaguaray.videogamesinformation.Constants.Companion.GAMES_ENDPOINT
 import com.jorgesanaguaray.videogamesinformation.Constants.Companion.GAME_ID_ENDPOINT

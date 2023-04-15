@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jorgesanaguaray.videogamesinformation.core.items.Game
-import com.jorgesanaguaray.videogamesinformation.core.items.SpecificGame
+import com.jorgesanaguaray.videogamesinformation.core.domain.CoreRepository
+import com.jorgesanaguaray.videogamesinformation.core.domain.models.Game
+import com.jorgesanaguaray.videogamesinformation.core.domain.models.SpecificGame
 import com.jorgesanaguaray.videogamesinformation.detail.domain.DetailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +21,12 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(private val detailRepository: DetailRepository) : ViewModel() {
+class DetailViewModel @Inject constructor(
+
+    private val detailRepository: DetailRepository,
+    private val coreRepository: CoreRepository
+
+) : ViewModel() {
 
     private val _game = MutableLiveData<SpecificGame>()
     val game: LiveData<SpecificGame> get() = _game
@@ -59,7 +65,7 @@ class DetailViewModel @Inject constructor(private val detailRepository: DetailRe
     fun insertFavorite(game: Game) {
 
         viewModelScope.launch {
-            detailRepository.insertFavorite(game)
+            coreRepository.insertFavorite(game)
         }
 
     }
@@ -67,7 +73,7 @@ class DetailViewModel @Inject constructor(private val detailRepository: DetailRe
     fun deleteFavoriteById(id: Int) {
 
         viewModelScope.launch {
-            detailRepository.deleteFavoriteById(id)
+            coreRepository.deleteFavoriteById(id)
         }
 
     }
@@ -77,7 +83,7 @@ class DetailViewModel @Inject constructor(private val detailRepository: DetailRe
         var result = false
 
         viewModelScope.launch {
-            result = detailRepository.isFavorite(id)
+            result = coreRepository.isFavorite(id)
         }
 
         return result

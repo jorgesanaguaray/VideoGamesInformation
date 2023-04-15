@@ -1,7 +1,7 @@
-package com.jorgesanaguaray.videogamesinformation.core.items
+package com.jorgesanaguaray.videogamesinformation.core.domain.models
 
-import com.jorgesanaguaray.videogamesinformation.core.remote.dtos.MinimumSystemRequirements
-import com.jorgesanaguaray.videogamesinformation.core.remote.dtos.Screenshot
+import com.jorgesanaguaray.videogamesinformation.core.data.remote.dto.MinimumSystemRequirements
+import com.jorgesanaguaray.videogamesinformation.core.data.remote.dto.Screenshot
 
 /**
  * Created by Jorge Sanaguaray
