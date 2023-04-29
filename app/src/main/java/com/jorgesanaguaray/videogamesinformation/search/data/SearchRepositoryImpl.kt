@@ -2,7 +2,7 @@ package com.jorgesanaguaray.videogamesinformation.search.data
 
 import com.jorgesanaguaray.videogamesinformation.core.data.remote.GameApi
 import com.jorgesanaguaray.videogamesinformation.core.domain.models.Game
-import com.jorgesanaguaray.videogamesinformation.core.mapper.toDomain
+import com.jorgesanaguaray.videogamesinformation.core.data.mapper.toDomain
 import com.jorgesanaguaray.videogamesinformation.search.domain.SearchRepository
 
 /**

@@ -3,7 +3,7 @@ package com.jorgesanaguaray.videogamesinformation.category.data
 import com.jorgesanaguaray.videogamesinformation.category.domain.CategoryRepository
 import com.jorgesanaguaray.videogamesinformation.core.data.remote.GameApi
 import com.jorgesanaguaray.videogamesinformation.core.domain.models.Game
-import com.jorgesanaguaray.videogamesinformation.core.mapper.toDomain
+import com.jorgesanaguaray.videogamesinformation.core.data.mapper.toDomain
 
 /**
  * Created by Jorge Sanaguaray

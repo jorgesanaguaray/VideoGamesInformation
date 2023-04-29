@@ -1,4 +1,4 @@
-package com.jorgesanaguaray.videogamesinformation.core.mapper
+package com.jorgesanaguaray.videogamesinformation.core.data.mapper
 
 import com.jorgesanaguaray.videogamesinformation.core.data.local.FavoriteEntity
 import com.jorgesanaguaray.videogamesinformation.core.data.remote.dto.GameDto

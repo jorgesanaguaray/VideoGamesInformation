@@ -1,4 +1,4 @@
-package com.jorgesanaguaray.videogamesinformation.core.di
+package com.jorgesanaguaray.videogamesinformation.core.data.di
 
 import android.content.Context
 import androidx.room.Room

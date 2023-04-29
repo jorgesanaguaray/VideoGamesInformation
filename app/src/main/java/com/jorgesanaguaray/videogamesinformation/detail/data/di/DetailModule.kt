@@ -1,4 +1,4 @@
-package com.jorgesanaguaray.videogamesinformation.detail.di
+package com.jorgesanaguaray.videogamesinformation.detail.data.di
 
 import com.jorgesanaguaray.videogamesinformation.core.data.remote.GameApi
 import com.jorgesanaguaray.videogamesinformation.detail.data.DetailRepositoryImpl

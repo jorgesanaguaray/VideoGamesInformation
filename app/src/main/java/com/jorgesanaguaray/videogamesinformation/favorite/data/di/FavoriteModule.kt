@@ -1,4 +1,4 @@
-package com.jorgesanaguaray.videogamesinformation.favorite.di
+package com.jorgesanaguaray.videogamesinformation.favorite.data.di
 
 import com.jorgesanaguaray.videogamesinformation.core.data.local.FavoriteDao
 import com.jorgesanaguaray.videogamesinformation.favorite.data.FavoriteRepositoryImpl

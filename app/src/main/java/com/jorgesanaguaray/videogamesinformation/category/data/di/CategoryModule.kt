@@ -1,4 +1,4 @@
-package com.jorgesanaguaray.videogamesinformation.category.di
+package com.jorgesanaguaray.videogamesinformation.category.data.di
 
 import com.jorgesanaguaray.videogamesinformation.category.data.CategoryRepositoryImpl
 import com.jorgesanaguaray.videogamesinformation.category.domain.CategoryRepository

@@ -4,7 +4,7 @@ import com.jorgesanaguaray.videogamesinformation.core.data.local.FavoriteDao
 import com.jorgesanaguaray.videogamesinformation.core.data.local.FavoriteEntity
 import com.jorgesanaguaray.videogamesinformation.core.domain.CoreRepository
 import com.jorgesanaguaray.videogamesinformation.core.domain.models.Game
-import com.jorgesanaguaray.videogamesinformation.core.mapper.toDatabase
+import com.jorgesanaguaray.videogamesinformation.core.data.mapper.toDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 

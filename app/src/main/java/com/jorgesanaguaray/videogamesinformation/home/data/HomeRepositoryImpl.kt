@@ -2,8 +2,7 @@ package com.jorgesanaguaray.videogamesinformation.home.data
 
 import com.jorgesanaguaray.videogamesinformation.core.data.remote.GameApi
 import com.jorgesanaguaray.videogamesinformation.core.domain.models.Game
-import com.jorgesanaguaray.videogamesinformation.core.data.local.FavoriteDao
-import com.jorgesanaguaray.videogamesinformation.core.mapper.toDomain
+import com.jorgesanaguaray.videogamesinformation.core.data.mapper.toDomain
 import com.jorgesanaguaray.videogamesinformation.home.domain.HomeRepository
 
 /**

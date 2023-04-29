@@ -1,4 +1,4 @@
-package com.jorgesanaguaray.videogamesinformation.search.di
+package com.jorgesanaguaray.videogamesinformation.search.data.di
 
 import com.jorgesanaguaray.videogamesinformation.core.data.remote.GameApi
 import com.jorgesanaguaray.videogamesinformation.search.data.SearchRepositoryImpl

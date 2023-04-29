@@ -2,7 +2,7 @@ package com.jorgesanaguaray.videogamesinformation.favorite.data
 
 import com.jorgesanaguaray.videogamesinformation.core.data.local.FavoriteDao
 import com.jorgesanaguaray.videogamesinformation.core.domain.models.Game
-import com.jorgesanaguaray.videogamesinformation.core.mapper.toDomain
+import com.jorgesanaguaray.videogamesinformation.core.data.mapper.toDomain
 import com.jorgesanaguaray.videogamesinformation.favorite.domain.FavoriteRepository
 
 /**
